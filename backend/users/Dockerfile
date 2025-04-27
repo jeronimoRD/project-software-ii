@@ -1,6 +1,7 @@
 FROM node:23.11-slim
-RUN npm i -g @nestjs/cli
 WORKDIR /app
+COPY package*.json ./
+RUN npm install -g @nestjs/cli && npm install
 COPY . .
 EXPOSE 3000
 CMD ["npm", "run", "start:dev"]
