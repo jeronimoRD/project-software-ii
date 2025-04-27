@@ -1,0 +1,14 @@
+26-04-2025
+    ||Configuración||
+        Dockerización - Se dockerizó con respecto a mongodb.
+        .gitignore - Se creó proyectos sin git pero con .gitignore.
+
+    ||Registro||
+        Interfaz - Se creó una interfaz provicional para ingresar datos
+
+    !!ERRORES¡¡
+        Mandar Datos - Suelta error al intentar dar al botón de sign in.
+
+            TEORIAS:
+                    Se teorizá que es debido a una mala dockerización con respecto al backend (puede que sea por dependencias).
+                    Toca hacer un debug para ver en que punto empieza el problema.
