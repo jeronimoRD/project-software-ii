@@ -16,6 +16,7 @@
 27-04-2025
     ||Configuración||
         Enviroment - Se eliminó el enviroment de docker.
+        CROD restricción - Para enviar datos de diferentes dominios, hay que permitirlo en el main.ts del backend.
         
     ||Dependencias||
         Dependencias instaladas: 
