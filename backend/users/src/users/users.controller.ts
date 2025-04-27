@@ -22,48 +22,47 @@ import {
   export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
+    //Register
+    @Post()
     async create(@Body() createUserDto: CreateUserDto) {
-      await this.usersService.create(createUserDto);
-      return {
-        message:
-          'User registered successfully. Please check your email for verification code.',
-      };
+      return await this.usersService.create(createUserDto);
     }
   
+    
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    login(@Body() loginDto: LoginDto) {
+    async login(@Body() loginDto: LoginDto) {
       return this.usersService.login(loginDto);
     }
   
     @HttpCode(HttpStatus.OK)
     @Post('refresh-token')
-    refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+    async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
       return this.usersService.refreshToken(refreshTokenDto.refreshToken);
     }
   
     @Get()
-    findAll() {
+    async findAll() {
       return this.usersService.findAll();
     }
   
     @Get(':id')
-    findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: string) {
       return this.usersService.findOne(id);
     }
   
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
       return this.usersService.update(id, updateUserDto);
     }
   
     @Delete(':id')
-    remove(@Param('id') id: string) {
+    async remove(@Param('id') id: string) {
       return this.usersService.remove(id);
     }
   
     @Post(':id/change-password')
-    changePassword(
+    async changePassword(
       @Param('id') id: string,
       @Body() changePasswordDto: ChangePasswordDto,
     ) {

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, HttpClientModule],
+  imports: [FormsModule],
   providers: [UserService], 
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
@@ -20,8 +19,6 @@ export class RegisterComponent {
     phone: string = '';
     password: string = '';
     
-    
-
   constructor(private userService: UserService) {}
 
   registerUser(): void {
@@ -34,15 +31,15 @@ export class RegisterComponent {
         password: this.password
     };
 
-    this.userService.register(user).subscribe(
-      (response) => {
+    this.userService.register(user).subscribe({
+      next: (response) => {
         console.log('Usuario registrado exitosamente:', response);
         alert('Usuario registrado exitosamente');
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al registrar el Usuario:', error);
         alert('Hubo un error al registrar el Usuario.');
       }
-    );
+    });
   }
 }

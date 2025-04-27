@@ -11,6 +11,6 @@ import { Observable } from 'rxjs';
     constructor(private http: HttpClient) {}
  
     register(user: any): Observable<any> {
-        return this.http.post(`${this.apiUrl}/signup`, user);
+        return this.http.post(`${this.apiUrl}/`, user);
     }
 } 

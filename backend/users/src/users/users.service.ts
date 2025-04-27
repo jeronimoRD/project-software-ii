@@ -44,9 +44,7 @@ import {
   
       // Hash password
       const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-  
-  
-  
+
       // Create new user
       const newUser = new this.userModel({
         ...createUserDto,
@@ -55,7 +53,6 @@ import {
   
       const savedUser = await newUser.save();
   
-      // Return user without sensitive data
       return this.toUserInterface(savedUser);
     }
   
