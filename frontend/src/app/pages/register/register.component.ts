@@ -13,23 +13,25 @@ import { HttpClientModule } from '@angular/common/http';
 })
 
 export class RegisterComponent {
-    name: string = '';
-    last_name: string = '';
+    firstName: string = '';
+    lastName: string = '';
     username: string = '';
-    password: string = '';
-    correo: string = '';
+    email: string = '';
     phone: string = '';
+    password: string = '';
+    
+    
 
   constructor(private userService: UserService) {}
 
   registerUser(): void {
     const user = {
-        name: this.name,
-        last_name: this.last_name,
+        firstName: this.firstName,
+        lastName: this.lastName,
         username: this.username,
-        password: this.password,
-        correo: this.correo,
-        phone: this.phone
+        email: this.email,
+        phone: this.phone,
+        password: this.password
     };
 
     this.userService.register(user).subscribe(

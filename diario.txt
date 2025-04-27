@@ -1,7 +1,7 @@
 26-04-2025
     ||Configuración||
         Dockerización - Se dockerizó con respecto a mongodb.
-        .gitignore - Se creó proyectos sin git pero con .gitignore.
+        .gitignore - Se creó proyectos (Nest y Angular) sin git pero con .gitignore.
 
     ||Registro||
         Interfaz - Se creó una interfaz provicional para ingresar datos
@@ -17,9 +17,12 @@
     ||Configuración||
         Enviroment - Se eliminó el enviroment de docker.
         CROD restricción - Para enviar datos de diferentes dominios, hay que permitirlo en el main.ts del backend.
-        
+
+    ||Conexión BackendFrontend||
+        register - Se puede registrar usuarios.
+
     ||Dependencias||
-        Dependencias instaladas: 
+        Dependencias instaladas en Backend(Users): 
             -npm install class-validator --save 
             -npm install @nestjs/mongoose mongoose --save 
             -npm install @nestjs/passport passport-jwt passport --save
@@ -27,4 +30,7 @@
             -npm install @nestjs/jwt --save
             -npm install bcryptjs --save # No sirve bcrypt para docker
             -npm install @types/bcrypt --save-dev  # Dependencia de desarrollo
-        
+
+    ||Recomendaciones||
+        nombres - Los nombres del json de Angular deben ser iguales al de Nest.
+        Lógica de negocios - El backend no debería enviar mensajes
