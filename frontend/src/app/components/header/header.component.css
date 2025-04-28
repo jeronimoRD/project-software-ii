@@ -13,7 +13,8 @@
     text-decoration: none;
     
     &:hover {
-      color: #531a4a;
+      cursor: pointer;
+      color: #8e4d84;
     }
   }
 

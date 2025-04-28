@@ -1,70 +1,77 @@
-<div class="container-register">  
-    <div class="title">
-        <h1>Sign-in</h1>
+<main class="page-register">
+  <section class="container-register">
+
+    <div class="information-register">
+      <div class="logo-register">
+        <img src="/generic-logo.jpg" alt="Logo" />
+      </div>
+      <div class="inputs-information-register">
+        <div class="title-register">
+          <h1>¡Uneté a nosotros!</h1>
+        </div>
+        <div class="inputs-register">
+          <div class="input-register">
+            <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre"
+            [(ngModel)]="firstName"
+            name="nombre"
+            required>
+          </div>
+          <div class="input-register">
+              <input
+              type="text"
+              class="form-control"
+              placeholder="Apellido"
+              [(ngModel)]="lastName"
+              name="apellido"
+              required>
+          </div>
+
+          <div class="input-register">
+            <input
+            type="text"
+            class="form-control"
+            placeholder="Username"
+            [(ngModel)]="username"
+            name="username"
+            required>
+          </div>
+          <div class="input-register">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Contraseña"
+            [(ngModel)]="password"
+            name="contraseña"
+            required>
+          </div>
+          <div class="input-register">
+            <input
+            type="email"
+            class="form-control"
+            placeholder="Correo"
+            [(ngModel)]="email"
+            name="correo"
+            required>
+          </div>
+          <div class="input-register">
+              <input
+              type="text"
+              class="form-control"
+              placeholder="Celular"
+              [(ngModel)]="phone"
+              name="celular"
+              required>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="input-group mb-3">
-        <input 
-        type="text"
-        class="form-control"
-        placeholder="Nombre"
-        [(ngModel)]="firstName"
-        name="nombre"
-        required>
+    <div class="button-register">
+        <button (click)="registerUser()">Crear cuenta</button>
     </div>
 
-    <div class="input-group mb-3">
-        <input 
-        type="text"
-        class="form-control"
-        placeholder="Apellido"
-        [(ngModel)]="lastName"
-        name="apellido"
-        required>
-    </div>
-
-    <div class="input-group mb-3">
-      <input 
-      type="text"
-      class="form-control"
-      placeholder="Username"
-      [(ngModel)]="username"
-      name="username"
-      required>
-    </div>
-  
-    <div class="mb-3">
-    <input 
-      type="password"
-      class="form-control"
-      placeholder="Contraseña"
-      [(ngModel)]="password"
-      name="contraseña"
-      required>
-    </div>
-  
-    <div class="input-group mb-3">
-      <input 
-      type="email"
-      class="form-control"
-      placeholder="Correo"
-      [(ngModel)]="email"
-      name="correo"
-      required>
-    </div>
-
-    <div class="input-group mb-3">
-        <input 
-        type="text"
-        class="form-control"
-        placeholder="Celular"
-        [(ngModel)]="phone"
-        name="celular"
-        required>
-    </div>
-  
-    <!-- Register -->
-    <div class="button-sign">
-      <button (click)="registerUser()">Sign</button>
-    </div>  
-  </div>
+  </section>
+</main>

@@ -1,6 +1,6 @@
 .fondo {
     position: relative; /* o fixed */
-    background-image: url('/fondo.jpg'); /* Aquí ahora sí va la imagen */
+    background-image: url('/fondo.jpg');
     background-size: cover; /* Opcional: para que se ajuste */
     padding: 2rem;
     min-height: 100vh;
