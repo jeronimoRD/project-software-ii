@@ -1,6 +1,8 @@
-import {} from '../dto/hotel.dto';
+import {
+    FilterHotelsDto
+} from '../dto/hotel.dto';
   
-  export interface Hotel {
+export interface Hotel {
     _id?: string; // MongoDB
     id: string;
     name: string;
@@ -8,7 +10,8 @@ import {} from '../dto/hotel.dto';
     lower_price?: number;
     higher_price?: number;
     rating?: number;
-  }
+}
   
-  export interface HotelServiceInterface {
-  }
+export interface HotelServiceInterface {
+    filterHotels(findHotelsDto: FilterHotelsDto): Promise<Hotel[]>;
+}

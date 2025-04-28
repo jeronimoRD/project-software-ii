@@ -46,3 +46,7 @@
             -npm install @nestjs/mongoose mongoose --save 
             -npm install @nestjs/config --save
             -npm install class-validator --save 
+
+    ||Hoteles||
+        Creación - Se creó y se conecto con mongo el proyecto Hoteles.
+        Filtrar - Se creó metodo para filtrar hoteles
