@@ -1,0 +1,46 @@
+<header class="header-container">
+  <div class="logo-section">
+    <a routerLink="/" class="app-name" (click)="navigateToHome()">{{ appName }}</a>
+  </div>
+  
+  <nav class="nav-section">
+    <!-- Icono corregido -->
+    <button mat-icon-button class="favorites-btn">
+      <mat-icon>
+        favorite_border</mat-icon>
+    </button>
+
+    <!-- Menú de idioma -->
+    <div class="dropdown-container">
+      <button mat-button [matMenuTriggerFor]="languageMenu"> <!-- Corregido J por T -->
+        {{ selectedLanguage }}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #languageMenu="matMenu">
+        <!-- *ngFor con sintaxis correcta -->
+        <button mat-menu-item *ngFor="let lang of languages" (click)="changeLanguage(lang)">
+          {{ lang }}
+        </button>
+      </mat-menu>
+    </div>
+
+    <!-- Menú de moneda -->
+    <div class="dropdown-container">
+      <button mat-button [matMenuTriggerFor]="currencyMenu"> <!-- Corregido J por T -->
+        {{ selectedCurrency }}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #currencyMenu="matMenu">
+        <button mat-menu-item *ngFor="let curr of currencies" (click)="changeCurrency(curr)">
+          {{ curr }}
+        </button>
+      </mat-menu>
+    </div>
+
+    <!-- Botón de login -->
+    <button mat-raised-button color="primary" class="login-btn" (click)="navigateToLogin()">
+      <mat-icon>account_circle</mat-icon>
+      Iniciar sesión
+    </button>
+  </nav>
+</header>

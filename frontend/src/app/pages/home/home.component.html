@@ -1,0 +1,81 @@
+<div class="fondo">
+  <form [formGroup]="searchForm" class="search-container">
+    <!-- Búsqueda de País -->
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>País</mat-label>
+        <input 
+          type="text" 
+          matInput 
+          formControlName="country"
+          [matAutocomplete]="autoCountry"
+          (input)="filterCountries($any($event.target).value)"
+        >
+        <mat-autocomplete #autoCountry="matAutocomplete">
+          <mat-option *ngFor="let country of filteredCountries" [value]="country">
+            {{ country }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <!-- Búsqueda de Ciudad -->
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Ciudad</mat-label>
+        <input 
+          type="text" 
+          matInput 
+          formControlName="city"
+          [matAutocomplete]="autoCity"
+          (input)="filterCities($any($event.target).value)"
+        >
+        <mat-autocomplete #autoCity="matAutocomplete">
+          <mat-option *ngFor="let city of filteredCities" [value]="city">
+            {{ city }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <!-- Slider de Precios -->
+    <div class="form-field">
+      <mat-label>Rango de precios (COP)</mat-label>
+      <mat-slider 
+        [min]="50000" 
+        [max]="1000000" 
+        [step]="50000" 
+        [displayWith]="formatPrice"
+      >
+        <input matSliderThumb [formControl]="priceRangeControl">
+      </mat-slider>
+    </div>
+
+    <!-- Personas y Habitaciones -->
+    <div class="combo-field">
+      <div class="counter">
+        <label>Personas</label>
+        <button mat-icon-button (click)="searchForm.get('guests')?.setValue(searchForm.value.guests - 1)">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span>{{ searchForm.value.guests }}</span>
+        <button mat-icon-button (click)="searchForm.get('guests')?.setValue(searchForm.value.guests + 1)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div class="counter">
+        <label>Habitaciones</label>
+        <button mat-icon-button (click)="searchForm.get('rooms')?.setValue(searchForm.value.rooms - 1)">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span>{{ searchForm.value.rooms }}</span>
+        <button mat-icon-button (click)="searchForm.get('rooms')?.setValue(searchForm.value.rooms + 1)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" class="search-button">Buscar</button>
+  </form>
+</div>

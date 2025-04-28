@@ -1,0 +1,33 @@
+<div class="container-register">  
+    <div class="title">
+        <h1>Login</h1>
+    </div>
+
+    <div class="input-group mb-3">
+      <input 
+      type="email"
+      class="form-control"
+      placeholder="Correo"
+      [(ngModel)]="email"
+      name="correo"
+      required>
+    </div>
+
+    <div class="mb-3">
+    <input 
+      type="password"
+      class="form-control"
+      placeholder="Contraseña"
+      [(ngModel)]="password"
+      name="contraseña"
+      required>
+    </div>
+  
+
+
+  
+    <!-- Register -->
+    <div class="button-sign">
+      <button (click)="loginUser()">Login</button>
+    </div>  
+  </div>

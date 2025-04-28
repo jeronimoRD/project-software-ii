@@ -13,4 +13,7 @@ import { Observable } from 'rxjs';
     register(user: any): Observable<any> {
         return this.http.post(`${this.apiUrl}/`, user);
     }
-} 
+    login(user: any): Observable<any> {
+        return this.http.post(`${this.apiUrl}/login`, user);
+    }
+}
