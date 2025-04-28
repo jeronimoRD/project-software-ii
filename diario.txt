@@ -6,7 +6,7 @@
     ||Registro||
         Interfaz - Se creó una interfaz provicional para ingresar datos
 
-    !!ERRORES¡¡
+    !!ERRORES¡¡ - SOLUCIONADO
         Mandar Datos - Suelta error al intentar dar al botón de sign in.
 
             TEORIAS:
@@ -41,3 +41,8 @@
         Lógica de negocios - El backend no debería enviar mensajes
 
 28-04-2025
+    ||Dependencias||
+        Dependencias instaladas en Backend(Hotels):
+            -npm install @nestjs/mongoose mongoose --save 
+            -npm install @nestjs/config --save
+            -npm install class-validator --save 
