@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  standalone: true, // Si usas standalone components
+  standalone: true, 
   imports: [
     CommonModule,
     MatIconModule,
@@ -24,7 +24,7 @@ export class HeaderComponent {
   languages = ["ES", "EN", "FR"];
   currencies = ["COP", "USD", "EUR"];
 
-  constructor(private router: Router, ) {}
+  constructor(private router: Router) {}
 
   navigateToLogin() {
     this.router.navigate(['/login']);

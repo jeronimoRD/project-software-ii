@@ -1,9 +1,9 @@
-<div class="container-register">  
-    <div class="title">
+<main class="page-login">
+  <div class="container-login">  
+    <div class="title-login">
         <h1>Login</h1>
     </div>
-
-    <div class="input-group mb-3">
+    <div class="inputs-login">
       <input 
       type="email"
       class="form-control"
@@ -11,10 +11,7 @@
       [(ngModel)]="email"
       name="correo"
       required>
-    </div>
-
-    <div class="mb-3">
-    <input 
+      <input 
       type="password"
       class="form-control"
       placeholder="Contraseña"
@@ -22,12 +19,9 @@
       name="contraseña"
       required>
     </div>
-  
-
-
-  
-    <!-- Register -->
-    <div class="button-sign">
+    <div class="button-login">
+      <span (click)="navigateToRegister()">¿No tienes cuenta? ¡Registrate Aquí!</span>
       <button (click)="loginUser()">Login</button>
     </div>  
   </div>
+</main>

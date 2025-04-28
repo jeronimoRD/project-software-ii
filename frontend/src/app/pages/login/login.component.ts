@@ -1,19 +1,24 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
-  providers: [UserService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  imports: [FormsModule],
+  providers: [UserService]
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
+  }
 
   loginUser(): void {
     const user = {
@@ -32,5 +37,4 @@ export class LoginComponent {
       }
     });
   }
-
 }

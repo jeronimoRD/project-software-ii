@@ -20,6 +20,7 @@
 
     ||Conexión BackendFrontend||
         register - Se puede registrar usuarios.
+        login - Se puede logear usuarios.
 
     ||Dependencias||
         Dependencias instaladas en Backend(Users): 
@@ -30,6 +31,9 @@
             -npm install @nestjs/jwt --save
             -npm install bcryptjs --save # No sirve bcrypt para docker
             -npm install @types/bcrypt --save-dev  # Dependencia de desarrollo
+            
+        Dependencias instaladas en Frontend:
+            -ng add @angular/material
 
     ||Recomendaciones||
         nombres - Los nombres del json de Angular deben ser iguales al de Nest.

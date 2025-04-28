@@ -1,21 +1,24 @@
-.container-register{
+.container-login{
     margin-top:30px;
     margin-left: 50px;
     margin-right: 50px;
     padding: 150px;
 }
-.button-sign{
+.button-login{
+    display: flex;
     margin-top: 8px;
     display: flex;
-    justify-content: center
+    justify-content: center;
+
+    span{
+        color: #007bff; /* Azul estándar */
+        text-decoration: underline;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        margin-right: 15px;
+    }
 }
-.contrasena{
-    position: relative;
-    flex: 1 1 auto;
-    width: 1%;
-    min-width: 0;
-}
-.title{
+.title-login{
     display: flex;
-    justify-content: center
+    justify-content: center;
 }
