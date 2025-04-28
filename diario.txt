@@ -39,3 +39,5 @@
         CSS - Hacer nombres muy diferenciables y únicos
         nombres - Los nombres del json de Angular deben ser iguales al de Nest.
         Lógica de negocios - El backend no debería enviar mensajes
+
+28-04-2025
