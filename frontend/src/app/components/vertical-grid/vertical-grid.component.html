@@ -1,0 +1,26 @@
+<div class="vertical-grid" [class.maximized]="!minimized">
+  <!-- Imagen siempre visible -->
+  <div class="image-container">
+    <img [src]="imageUrl" alt="{{ title }}" class="grid-image" />
+    <!-- Botón de minimizar/maximizar -->
+    <button class="toggle-button" (click)="toggleMinimize()">
+      <img
+        [src]="minimized ? './funcionalidades/minimizar.svg' : './funcionalidades/maximizar.svg'"
+        alt="Minimizar/Maximizar"
+      />
+    </button>
+  </div>
+
+  <!-- Contenido adicional -->
+  <div class="details">
+    <!-- Columna izquierda: Información -->
+    <div class="info-left">
+      <h3 class="title">{{ title }}</h3>
+      <p class="description">{{ description }}</p>
+      <p class="price"><strong>Precio:</strong> {{ price }}</p>
+      <p class="location"><strong>Ubicación:</strong> {{ location }}</p>
+    </div>
+
+  </div>
+
+</div>

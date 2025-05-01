@@ -78,4 +78,46 @@
 
     <button mat-raised-button color="primary" class="search-button">Buscar</button>
   </form>
+  
+  <div class="search-bar" (click)="toggleSearchOptions()">
+    <button class="search-icon">
+      <img src="./funcionalidades/lupa.svg" alt="Buscar" />
+    </button>
+    <input type="text" class="search-input" placeholder="Nombre de la obra" [(ngModel)]="nombre" />
+  </div>
+
+  <!-- Opciones de búsqueda -->
+  <div class="search-options" *ngIf="showSearchOptions">
+    <div class="search-option">
+      <label for="categoria">Categoría:</label>
+      <select id="categoria" [(ngModel)]="categoria">
+        <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+      </select>
+    </div>
+    <div class="search-option">
+      <label for="fechaInicio">Fecha Inicio:</label>
+      <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" />
+    </div>
+    <div class="search-option">
+      <label for="lugar">Lugar:</label>
+      <select id="lugar" [(ngModel)]="lugar">
+        <option *ngFor="let lugar of lugares" [value]="lugar">{{ lugar }}</option>
+      </select>
+    </div>
+    <button class="search-btn" (click)="buscarEventos()">Buscar</button>
+  </div>
+
+  <app-horizontal-grid title="Hoteles Recomendados" iconUrl="assets/hotel-icon.svg">
+    <div class="category-content">
+      <app-vertical-grid
+        *ngFor="let hotel of sampleHotels"
+        [imageUrl]="hotel.imageUrl"
+        [title]="hotel.name"
+        [description]="hotel.description"
+        [price]="hotel.price"
+        [location]="hotel.location"
+        [comentarios]="hotel.comments"
+      ></app-vertical-grid>
+    </div>
+  </app-horizontal-grid>
 </div>

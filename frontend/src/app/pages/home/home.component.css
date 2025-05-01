@@ -66,4 +66,91 @@
       content: '$';
     }
   }
+
+  .category-content {
+    display: flex;
+    justify-content: flex-start; 
+    margin-left: 0vw; 
+    margin-right: -6vw; 
+    flex-wrap: wrap; 
+    gap: -5vw;
+  }
+
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #333333; /* Fondo oscuro para la barra */
+    border-radius: 20px; /* Esquinas redondeadas */
+    padding: 0.5vw 1vw; /* Espaciado interior */
+    width: 40vw; /* Ancho relativo, ajusta según sea necesario */
+    cursor: pointer;
+  }
   
+  /* Ícono de la lupa */
+  .search-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 1vw; /* Espaciado entre el icono y el input */
+  }
+  
+  .search-icon img {
+    width: 2vw; /* Tamaño del icono */
+    height: 2vw;
+  }
+  
+  /* Estilo para el input de búsqueda */
+  .search-input {
+    width: 100%; /* Ocupa el espacio restante */
+    padding: 0.5vw;
+    border: none;
+    border-radius: 20px;
+    background-color: #333333; /* Fondo oscuro */
+    color: white;
+    font-size: 1vw; /* Tamaño del texto */
+  }
+  
+  /* Opciones de búsqueda */
+  .search-options {
+    position: absolute;
+    width: 39vw;
+    top: 100%;
+    left: 45.7%;
+    transform: translateX(-50%);
+    background-color: #333333;
+    border-radius: 10px;
+    padding: 1vw;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  
+  .search-option {
+    margin-bottom: 1vw;
+  }
+  
+  .search-option label {
+    display: block;
+    margin-bottom: 0.5vw;
+    color: white;
+  }
+  
+  .search-option select,
+  .search-option input {
+    width: 100%;
+    padding: 0.5vw;
+    border: none;
+    border-radius: 5px;
+    background-color: #444444;
+    color: white;
+  }
+  
+  .search-btn {
+    background-color: #555555;
+    color: white;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    padding: 0.5vw 1vw;
+    cursor: pointer;
+  }
