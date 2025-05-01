@@ -50,3 +50,4 @@
     ||Hoteles||
         Creación - Se creó y se conecto con mongo el proyecto Hoteles.
         Filtrar - Se creó metodo para filtrar hoteles
+        HotelServicio - Se creó un servicio para hotel en el frontend.

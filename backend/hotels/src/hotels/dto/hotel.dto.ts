@@ -3,7 +3,6 @@ import {
     IsOptional,
     IsNumber,
     Min,
-    Max,
 } from 'class-validator';
 
 export class FilterHotelsDto {
