@@ -51,3 +51,27 @@
         Creación - Se creó y se conecto con mongo el proyecto Hoteles.
         Filtrar - Se creó metodo para filtrar hoteles
         HotelServicio - Se creó un servicio para hotel en el frontend.
+
+03-05-2025
+    ||Estructura||
+        HotelesHijos - En el frontend, se subdividió la carpeta hoteles en carpetas para sus divisiones (por lo que app-routes cambió).
+        RouterLink - Se utiliza routerLink para ir de pagina en pagina. 
+                Nota:
+                     "/ruta" para paginas raíces.
+                     "ruta" Para rutas hijas.
+    
+    ||Hoteles||
+        Dinamic router - se usó RouterModule para cambiar dinamicamente con los hijos de una pagina.
+
+04-05-2025
+    ||Dependencias||
+     En el frontend:
+        npm install @angular/router (jero)
+        npm install @angular/platform-server@latest
+        npm install @angular/core@latest @angular/cli@latest
+
+    ||Estructura||
+        Carrousel - Se agregó una estructura de carrousel.
+
+    ||Funcionalidad||
+        Filtrar hoteles - Se puede filtrar hoteles

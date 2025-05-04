@@ -1,0 +1,35 @@
+<div class="container-hotel">
+    <!-- Banner -->
+    <header class="banner-hotel">
+      <img src="banner-image.jpg" alt="Banner del hotel" class="banner-image-hotel">
+    </header>
+  
+    <!-- Principal -->
+    <main class="hotel-main-section">
+      <!-- Foto and name -->
+      <section class="hotel-info-section">
+        <img src="hotel-image.jpg" alt="Foto del hotel" class="hotel-image-main">
+        <h1 class="hotel-name-title">Nombre del Hotel</h1>
+      </section>
+  
+      <!-- Nav -->
+      <nav class="hotel-navigation-tabs">
+        <a class="hotel-tab-link" 
+           routerLink="recommendations" 
+           routerLinkActive="active">Recomendaciones</a>
+           
+        <a class="hotel-tab-link" 
+           routerLink="rooms" 
+           routerLinkActive="active">Cuartos</a>
+           
+        <a class="hotel-tab-link" 
+           routerLink="reviews" 
+           routerLinkActive="active">Reviews</a>
+      </nav>
+  
+      <!-- Dinamic content -->
+      <div class="dynamic-container-hotel">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
