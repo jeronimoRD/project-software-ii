@@ -1,0 +1,84 @@
+/* horizontal-grid.component.css */
+.horizontal-grid {
+  margin-top: 1vw; 
+  background-color: #d8ccf4;
+  border-radius: 8px;
+  margin: 1rem 1;
+  width: 80vw;
+  margin-left: 10%;
+  max-height: 50vw;
+  overflow-x: hidden; /* Evita que se muestre el scroll horizontal */
+  overflow-y: scroll; /* Permite el desplazamiento vertical */
+  padding-right: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  }
+  /* Personalización del scroll */
+.horizontal-grid::-webkit-scrollbar {
+  width: 8px; /* Ancho de la barra de desplazamiento */
+}
+
+.horizontal-grid::-webkit-scrollbar-track {
+  background: #333; /* Color de fondo de la pista del scroll */
+  border-radius: 10px;
+}
+
+.horizontal-grid::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color de la barra de desplazamiento */
+  border-radius: 10px;
+  border: 2px solid #333; /* Agrega un borde al thumb */
+}
+
+.horizontal-grid::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Cambia el color del thumb cuando el usuario lo pasa por encima */
+}
+
+  
+  .mini-header {
+    position: sticky; /* Hace que el mini-header se quede fijo */
+    top: 0; /* Lo posiciona en la parte superior del contenedor */
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 0.5rem;
+    width: 100%;
+    background: #b09cec;
+    z-index: 1;
+  }
+  
+  .icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  .title {
+    margin-left: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .actions button {
+    margin-left: 3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .content.hidden {
+    display: none; /* Esto oculta el contenido cuando 'minimized' es verdadero */
+  }
+  
+  .content {
+    padding: 1rem;
+    transition: all 0.3s ease; /* Añadimos una transición para que el cambio de visibilidad sea suave */
+  }
+  
+  
+  .minimize-button,
+  .maximize-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+  }

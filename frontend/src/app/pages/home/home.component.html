@@ -1,0 +1,70 @@
+<div class="fondo">
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="search-container">
+
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre de Hotel</mat-label>
+        <input 
+          type="text" 
+          matInput 
+          formControlName="name"
+          placeholder="buscar por nombre">
+      </mat-form-field>
+    </div>
+
+    <!-- Búsqueda de Ciudad -->
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Ciudad</mat-label>
+        <input 
+          type="text" 
+          matInput 
+          formControlName="city"
+          [matAutocomplete]="autoCity"
+          (input)="filterCities($any($event.target).value)">
+        <mat-autocomplete #autoCity="matAutocomplete">
+          <mat-option *ngFor="let city of filteredCities" [value]="city">
+            {{ city }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <!-- de Precios (COP) -->
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+          <mat-label>precio minimo</mat-label>
+          <input 
+            type="number" 
+            matInput 
+            formControlName="lower_price">
+        </mat-form-field>
+      </div>
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+          <mat-label>precio maximo</mat-label>
+          <input 
+            type="number" 
+            matInput 
+            formControlName="higher_price">
+        </mat-form-field>
+      </div>
+    <!-- Personas y Habitaciones -->
+
+    <button type="submit" mat-raised-button color="primary" class="search-button">Buscar</button>
+  </form>
+
+  <app-horizontal-grid title="Hoteles Recomendados" iconUrl="assets/hotel-icon.svg">
+    <div class="category-content">
+      <app-vertical-grid
+        *ngFor="let hotel of hotels"
+        [imageUrl]="hotel.imageUrl"
+        [title]="hotel.name"
+        [location]="hotel.location"
+        [lower_price]="hotel.lower_price"
+        [higher_price]="hotel.higher_price"
+        [rating]="hotel.rating"
+      ></app-vertical-grid>
+    </div>
+  </app-horizontal-grid>
+</div>

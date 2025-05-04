@@ -1,14 +1,53 @@
 26-04-2025
     ||Configuración||
         Dockerización - Se dockerizó con respecto a mongodb.
-        .gitignore - Se creó proyectos sin git pero con .gitignore.
+        .gitignore - Se creó proyectos (Nest y Angular) sin git pero con .gitignore.
 
     ||Registro||
         Interfaz - Se creó una interfaz provicional para ingresar datos
 
-    !!ERRORES¡¡
+    !!ERRORES¡¡ - SOLUCIONADO
         Mandar Datos - Suelta error al intentar dar al botón de sign in.
 
             TEORIAS:
                     Se teorizá que es debido a una mala dockerización con respecto al backend (puede que sea por dependencias).
                     Toca hacer un debug para ver en que punto empieza el problema.
+
+27-04-2025
+    ||Configuración||
+        Enviroment - Se eliminó el enviroment de docker.
+        CROD restricción - Para enviar datos de diferentes dominios, hay que permitirlo en el main.ts del backend.
+
+    ||Conexión BackendFrontend||
+        register - Se puede registrar usuarios.
+        login - Se puede logear usuarios.
+
+    ||Dependencias||
+        Dependencias instaladas en Backend(Users): 
+            -npm install class-validator --save 
+            -npm install @nestjs/mongoose mongoose --save 
+            -npm install @nestjs/passport passport-jwt passport --save
+            -npm install @nestjs/config --save
+            -npm install @nestjs/jwt --save
+            -npm install bcryptjs --save # No sirve bcrypt para docker
+            -npm install @types/bcrypt --save-dev  # Dependencia de desarrollo
+            
+        Dependencias instaladas en Frontend:
+            -ng add @angular/material
+
+    ||Recomendaciones||
+        CSS - Hacer nombres muy diferenciables y únicos
+        nombres - Los nombres del json de Angular deben ser iguales al de Nest.
+        Lógica de negocios - El backend no debería enviar mensajes
+
+28-04-2025
+    ||Dependencias||
+        Dependencias instaladas en Backend(Hotels):
+            -npm install @nestjs/mongoose mongoose --save 
+            -npm install @nestjs/config --save
+            -npm install class-validator --save 
+
+    ||Hoteles||
+        Creación - Se creó y se conecto con mongo el proyecto Hoteles.
+        Filtrar - Se creó metodo para filtrar hoteles
+        HotelServicio - Se creó un servicio para hotel en el frontend.

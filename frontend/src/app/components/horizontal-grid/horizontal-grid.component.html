@@ -1,0 +1,15 @@
+<div class="horizontal-grid">
+  <header class="mini-header">
+    <img [src]="iconUrl" alt="icon" class="icon" />
+    <span class="title">{{ title }}</span>
+    <div class="actions">
+      <button (click)="toggleMinimize()">
+        <img [src]="minimized ? './funcionalidades/minimizar.svg' : './funcionalidades/maximizar.svg'" alt="Minimizar/Maximizar" />
+      </button>
+    </div>
+  </header>
+  <div class="content" [style.display]="minimized ? 'none' : 'block'">
+    <ng-content></ng-content>
+  </div>
+</div>
+  

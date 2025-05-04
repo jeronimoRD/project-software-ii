@@ -1,0 +1,63 @@
+services:
+  #New nest projects
+  backend-users:
+    container_name: backend-users
+    build:
+      context: ./backend/users
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3000
+    volumes:
+      - ./backend/users:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - network-software2
+
+  backend-hotels:
+    container_name: backend-hotels
+    build:
+      context: ./backend/hotels
+      dockerfile: Dockerfile
+    ports:
+      - 3002:3000
+    volumes:
+      - ./backend/hotels:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - network-software2
+
+  frontend-software2:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 4200:4200
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on: #New nest projects
+      - backend-users
+      - backend-hotels
+    networks:
+      - network-software2
+
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - network-software2
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+
+networks:
+  network-software2:
