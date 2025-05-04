@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root', 
   })
-  export class UserService {
-    private apiUrl = 'http://localhost:3002/hotels'; //URL Backend
+  export class HotelService {
+    private apiUrl = 'http://localhost:3000/hotels'; //URL Backend
   
     constructor(private http: HttpClient) {}
  
     filterHotels(hotel: any): Observable<any> {
-        return this.http.get(`${this.apiUrl}/filter`, hotel);
+        return this.http.post(`${this.apiUrl}/filter`, hotel);
     }
 }

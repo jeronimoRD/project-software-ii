@@ -11,10 +11,10 @@ import { CommonModule } from '@angular/common'; // Importa CommonModule
 export class VerticalGridComponent {
   @Input() imageUrl: string = './predeterminada.png';
   @Input() title: string = 'Título por defecto';
-  @Input() price: number = 0.00;
-  @Input() description: string = 'Sin descripción disponible';
   @Input() location: string = 'Lugar no especificado';
-  @Input() comentarios: Array<any> = [];
+  @Input() lower_price: number = 0;
+  @Input() higher_price: number = 0;
+  @Input() rating: number = 0;
 
 
   ngOnInit() {

@@ -34,6 +34,7 @@ export class LoginComponent {
       error: (error) => {
         console.error('Error al loguear el Usuario:', error);
         alert('Hubo un error al loguear el Usuario.');
+        console.log(user);
       }
     });
   }

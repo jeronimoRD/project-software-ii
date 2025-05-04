@@ -1,30 +1,14 @@
 <div class="fondo">
-  <form [formGroup]="searchForm" class="search-container">
-    <!-- Search Hotel Name -->
-    <div class="home-input-name-hotel">
-      <input
-            type="text"
-            placeholder="Nombre de Hotel"
-            name="nombreHotel"
-            required>
-    </div>
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="search-container">
 
-    <!-- Búsqueda de País -->
     <div class="form-field">
       <mat-form-field appearance="outline">
-        <mat-label>País</mat-label>
+        <mat-label>Nombre de Hotel</mat-label>
         <input 
           type="text" 
           matInput 
-          formControlName="country"
-          [matAutocomplete]="autoCountry"
-          (input)="filterCountries($any($event.target).value)"
-        >
-        <mat-autocomplete #autoCountry="matAutocomplete">
-          <mat-option *ngFor="let country of filteredCountries" [value]="country">
-            {{ country }}
-          </mat-option>
-        </mat-autocomplete>
+          formControlName="name"
+          placeholder="buscar por nombre">
       </mat-form-field>
     </div>
 
@@ -37,8 +21,7 @@
           matInput 
           formControlName="city"
           [matAutocomplete]="autoCity"
-          (input)="filterCities($any($event.target).value)"
-        >
+          (input)="filterCities($any($event.target).value)">
         <mat-autocomplete #autoCity="matAutocomplete">
           <mat-option *ngFor="let city of filteredCities" [value]="city">
             {{ city }}
@@ -47,85 +30,40 @@
       </mat-form-field>
     </div>
 
-    <!-- Slider de Precios -->
-    <div class="form-field">
-      <mat-label>Rango de precios (COP)</mat-label>
-      <mat-slider 
-        [min]="50000" 
-        [max]="1000000" 
-        [step]="50000" 
-        [displayWith]="formatPrice"
-      >
-        <input matSliderThumb [formControl]="priceRangeControl">
-      </mat-slider>
-    </div>
-
+    <!-- de Precios (COP) -->
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+          <mat-label>precio minimo</mat-label>
+          <input 
+            type="number" 
+            matInput 
+            formControlName="lower_price">
+        </mat-form-field>
+      </div>
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+          <mat-label>precio maximo</mat-label>
+          <input 
+            type="number" 
+            matInput 
+            formControlName="higher_price">
+        </mat-form-field>
+      </div>
     <!-- Personas y Habitaciones -->
-    <div class="combo-field">
-      <div class="counter">
-        <label>Personas</label>
-        <button mat-icon-button (click)="searchForm.get('guests')?.setValue(searchForm.value.guests - 1)">
-          <mat-icon>remove</mat-icon>
-        </button>
-        <span>{{ searchForm.value.guests }}</span>
-        <button mat-icon-button (click)="searchForm.get('guests')?.setValue(searchForm.value.guests + 1)">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
 
-      <div class="counter">
-        <label>Habitaciones</label>
-        <button mat-icon-button (click)="searchForm.get('rooms')?.setValue(searchForm.value.rooms - 1)">
-          <mat-icon>remove</mat-icon>
-        </button>
-        <span>{{ searchForm.value.rooms }}</span>
-        <button mat-icon-button (click)="searchForm.get('rooms')?.setValue(searchForm.value.rooms + 1)">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <button mat-raised-button color="primary" class="search-button">Buscar</button>
+    <button type="submit" mat-raised-button color="primary" class="search-button">Buscar</button>
   </form>
-  
-  <div class="search-bar" (click)="toggleSearchOptions()">
-    <button class="search-icon">
-      <img src="./funcionalidades/lupa.svg" alt="Buscar" />
-    </button>
-    <input type="text" class="search-input" placeholder="Nombre de la obra" [(ngModel)]="nombre" />
-  </div>
-
-  <!-- Opciones de búsqueda -->
-  <div class="search-options" *ngIf="showSearchOptions">
-    <div class="search-option">
-      <label for="categoria">Categoría:</label>
-      <select id="categoria" [(ngModel)]="categoria">
-        <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
-      </select>
-    </div>
-    <div class="search-option">
-      <label for="fechaInicio">Fecha Inicio:</label>
-      <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" />
-    </div>
-    <div class="search-option">
-      <label for="lugar">Lugar:</label>
-      <select id="lugar" [(ngModel)]="lugar">
-        <option *ngFor="let lugar of lugares" [value]="lugar">{{ lugar }}</option>
-      </select>
-    </div>
-    <button class="search-btn" (click)="buscarEventos()">Buscar</button>
-  </div>
 
   <app-horizontal-grid title="Hoteles Recomendados" iconUrl="assets/hotel-icon.svg">
     <div class="category-content">
       <app-vertical-grid
-        *ngFor="let hotel of sampleHotels"
+        *ngFor="let hotel of hotels"
         [imageUrl]="hotel.imageUrl"
         [title]="hotel.name"
-        [description]="hotel.description"
-        [price]="hotel.price"
         [location]="hotel.location"
-        [comentarios]="hotel.comments"
+        [lower_price]="hotel.lower_price"
+        [higher_price]="hotel.higher_price"
+        [rating]="hotel.rating"
       ></app-vertical-grid>
     </div>
   </app-horizontal-grid>
