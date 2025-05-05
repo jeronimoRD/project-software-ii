@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { RoomsService } from './rooms.service';
-import { FilterRoomsHotelDto } from './dto/room.dto';
+import { FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
 
 @Controller('rooms')
 export class RoomsController {
@@ -21,5 +21,9 @@ export class RoomsController {
   @Post('filter')
   async findRooms(@Body() findRoomsDto: FilterRoomsHotelDto) {
     return this.roomsService.filterRoomsbyHotel(findRoomsDto);
+  }
+  @Post('filter-universal')
+  async findRoomsUniversal(@Body() findRoomsDto: FilterRoomsUniversalDto) {
+    return this.roomsService.filterRoomsUniversal(findRoomsDto);
   }
 }
