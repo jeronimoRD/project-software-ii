@@ -7,7 +7,6 @@ export interface Hotel {
     id: string;
     name: string;
     location: string;
-    banner?: string;
     photo?: string;
     description?: string;
     lower_price?: number;

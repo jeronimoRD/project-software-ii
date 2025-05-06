@@ -13,12 +13,6 @@ export class Hotel {
 
   @Prop({
     required: true,
-    default: 'https://ejemplo.com/banner-default.jpg'
-  })
-  banner: string;
-
-  @Prop({
-    required: true,
     default: 'https://ejemplo.com/foto-default.jpg'
   })
   photo: string;
