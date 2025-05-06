@@ -17,9 +17,13 @@ export class HotelsController {
 constructor(private readonly hotelsService: HotelsService) {}
 
     //endpoints
-    @Post('filter')
-    async findHotels(@Body() findHotelsDto: FilterHotelsDto) {
-      return this.hotelsService.filterHotels(findHotelsDto);
+    @Get(':id')
+    async findOne(@Param('id') id: string) { 
+    return this.hotelsService.findHotelById(id);
     }
 
+    @Post('filter')
+    async filterHotels(@Body() findHotelsDto: FilterHotelsDto) {
+      return this.hotelsService.filterHotels(findHotelsDto);
+    }
 }

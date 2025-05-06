@@ -1,26 +1,23 @@
-<div class="vertical-grid" [class.maximized]="!minimized">
-  <!-- Imagen siempre visible -->
+<div class="vertical-grid" 
+     [class.maximized]="!minimized"
+     (click)="onCardClick($event)"> 
   <div class="image-container">
     <img [src]="imageUrl" alt="{{ title }}" class="grid-image" />
-    <!-- Botón de minimizar/maximizar -->
-    <button class="toggle-button" (click)="toggleMinimize()">
+    <button class="toggle-button" (click)="toggleMinimize(); $event.stopPropagation()">
       <img
-        [src]="minimized ? './funcionalidades/minimizar.svg' : './funcionalidades/maximizar.svg'"
+        [src]="minimized ? './funcionalidades/minimizar.svg' : './funcucionalidades/maximizar.svg'"
         alt="Minimizar/Maximizar"
       />
     </button>
   </div>
 
-  <!-- Contenido adicional -->
   <div class="details">
-    <!-- Columna izquierda: Información -->
     <div class="info-left">
       <h3 class="title">{{ title }}</h3>
       <p class="location"><strong>Ubicación:</strong> {{ location }}</p>
       <p class="price"><strong>Precio:</strong> ${{ lower_price }} - ${{ higher_price }}</p>
       <p class="rating"><strong>Valoración:</strong> {{ rating }}/5</p>
     </div>
-
   </div>
 
 </div>

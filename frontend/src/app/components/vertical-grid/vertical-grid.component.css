@@ -1,74 +1,73 @@
-/* Contenedor del grid */
 .vertical-grid {
-  display: flex; /* Flexbox para layout horizontal */
-  flex-direction: row; /* Dirección horizontal */
+  display: flex; 
+  flex-direction: row; 
   position: relative;
   background-color: #b09cec;
   border-radius: 8px;
-  width: 5vw; /* Tamaño fijo en estado minimizado */
-  height: 10vw; /* Altura fija */
+  width: 5vw; 
+  height: 10vw; 
   text-align: left;
   overflow: hidden;
-  transition: all 0.3s ease-in-out; /* Animación al expandir/reducir */
+  transition: all 0.3s ease-in-out; 
   cursor: pointer;
   margin-right: 1vw;
   margin-bottom: 1vw;
 }
 
 .image-container {
-  position: relative; /* Para posicionar el botón */
-  width: 5vw; /* Fija el ancho de la imagen */
-  height: 10vw; /* Mantén la altura proporcional al grid */
+  position: relative; 
+  width: 5vw; 
+  height: 10vw; 
 }
 
 .grid-image {
-  width: 100%; /* Ajusta al contenedor */
-  height: 100%; /* Ocupa toda la altura */
-  object-fit: cover; /* Asegura que la imagen se vea bien */
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
 }
 
 .details {
   margin-left: 4vw;
-  display: none; /* Oculta los detalles inicialmente */
+  display: none; 
   background-color: #b09cec;
   padding: 1rem;
   border-radius: 8px;
   color: #fff;
-  width: 88vw; /* Ancho cuando está maximizado (80% del horizontal grid menos márgenes) */
-  height: 88vw; /* Igualar altura al grid */
-  overflow-y: auto; /* Scroll si es necesario */
-  transition: all 0.3s ease-in-out; /* Suavizar la aparición */
+  width: 88vw; 
+  height: 88vw; 
+  overflow-y: auto; 
+  transition: all 0.3s ease-in-out; 
 }
 
 .vertical-grid.maximized {
-  width: 78vw; /* Ancho relativo al contenedor padre */
-  height: 20vw; /* Mantén la altura fija */
+  width: 78vw; 
+  height: 20vw; 
 }
 
 .vertical-grid.maximized .details {
-  display: flex; /* Muestra el contenido */
-  flex-direction: row; /* Divide en dos columnas */
+  display: flex; 
+  flex-direction: row; 
   gap: 1rem;
 }
 
 .info-left {
-  flex: 1; /* Ocupa dos tercios del espacio */
+  flex: 1; 
   display: flex;
   flex-direction: column;
   gap: -20rem;
 }
 
 .info-left h3 {
-  margin-bottom: 0.2rem; /* Reducir espacio debajo del título */
+  margin-bottom: 0.2rem; 
 }
 
 .info-left p {
-  margin-bottom: 0.2rem; /* Reducir espacio entre párrafos */
+  margin-bottom: 0.2rem; 
 }
 
 .info-right {
-  flex: 1; /* Ocupa un tercio del espacio */
-  background-color: #555; /* Color más claro */
+  flex: 1; 
+  background-color: #555; 
   border-radius: 8px;
   margin-left: 1rem;
   max-height: 18vw;
@@ -96,28 +95,40 @@
   filter: brightness(1.2);
 }
 
-/* Botón de cartera en la esquina derecha inferior */
 .wallet-button {
   position: absolute;
-  bottom: 1rem;  /* Ajusta la distancia desde el borde inferior */
-  right: 1rem;   /* Ajusta la distancia desde el borde derecho */
+  bottom: 1rem;  
+  right: 1rem;   
   background-color: #2c2c2c;
   border-radius: 2vw;
   cursor: pointer;
   border: none;
   
-  z-index: 10;   /* Asegura que el botón esté encima de otros elementos */
+  z-index: 10;  
 }
 
 .wallet-button img {
-  width: 4vw; /* Ajusta el tamaño del icono */
+  width: 4vw; 
   height: 4vw;
   
   
 }
 
-/* Efecto al pasar el ratón por encima */
 .wallet-button:hover img {
-  transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el ratón */
+  transform: scale(1.1); 
   transition: transform 0.2s ease;
+}
+
+.vertical-grid {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.vertical-grid:hover {
+  transform: translateY(-5px);
+}
+
+.toggle-button {
+  cursor: pointer;
+  z-index: 2; 
 }

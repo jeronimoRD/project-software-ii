@@ -1,28 +1,28 @@
-<div class="fondo">
-  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="search-container">
+<div class="hotel-search-page">
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="hotel-search-form">
 
-    <div class="form-field">
+    <div class="hotel-search-field">
       <mat-form-field appearance="outline">
         <mat-label>Nombre de Hotel</mat-label>
         <input 
           type="text" 
           matInput 
           formControlName="name"
-          placeholder="buscar por nombre">
+          placeholder="Buscar por nombre">
       </mat-form-field>
     </div>
 
-    <!-- Búsqueda de Ciudad -->
-    <div class="form-field">
+    <!-- Search Town -->
+    <div class="hotel-search-field">
       <mat-form-field appearance="outline">
         <mat-label>Ciudad</mat-label>
         <input 
           type="text" 
           matInput 
           formControlName="city"
-          [matAutocomplete]="autoCity"
+          [matAutocomplete]="hotelCityAutocomplete"
           (input)="filterCities($any($event.target).value)">
-        <mat-autocomplete #autoCity="matAutocomplete">
+        <mat-autocomplete #hotelCityAutocomplete="matAutocomplete">
           <mat-option *ngFor="let city of filteredCities" [value]="city">
             {{ city }}
           </mat-option>
@@ -30,35 +30,40 @@
       </mat-form-field>
     </div>
 
-    <!-- de Precios (COP) -->
-      <div class="form-field">
-        <mat-form-field appearance="outline">
-          <mat-label>precio minimo</mat-label>
-          <input 
-            type="number" 
-            matInput 
-            formControlName="lower_price">
-        </mat-form-field>
-      </div>
-      <div class="form-field">
-        <mat-form-field appearance="outline">
-          <mat-label>precio maximo</mat-label>
-          <input 
-            type="number" 
-            matInput 
-            formControlName="higher_price">
-        </mat-form-field>
-      </div>
-    <!-- Personas y Habitaciones -->
+    <!-- Prices -->
+    <div class="hotel-search-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Precio mínimo</mat-label>
+        <input 
+          type="number" 
+          matInput 
+          formControlName="lower_price">
+      </mat-form-field>
+    </div>
+    
+    <div class="hotel-search-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Precio máximo</mat-label>
+        <input 
+          type="number" 
+          matInput 
+          formControlName="higher_price">
+      </mat-form-field>
+    </div>
 
-    <button type="submit" mat-raised-button color="primary" class="search-button">Buscar</button>
+    <!-- Search -->
+    <button type="submit" mat-raised-button color="primary" class="hotel-search-button">
+      Buscar
+    </button>
   </form>
 
+  <!-- Hotels list -->
   <app-horizontal-grid title="Hoteles Recomendados" iconUrl="assets/hotel-icon.svg">
-    <div class="category-content">
+    <div class="hotel-grid-content">
       <app-vertical-grid
         *ngFor="let hotel of hotels"
-        [imageUrl]="hotel.imageUrl"
+        [id]="hotel.id"
+        (cardClicked)="navigateToHotel($event)"
         [title]="hotel.name"
         [location]="hotel.location"
         [lower_price]="hotel.lower_price"

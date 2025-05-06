@@ -5,6 +5,8 @@ import {
     Min,
 } from 'class-validator';
 
+export class CreateHotelsDto {} //Future to Admin
+
 export class FilterHotelsDto {
     @IsOptional()
     @IsString()

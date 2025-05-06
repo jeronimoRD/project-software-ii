@@ -3,6 +3,7 @@ import {
     Injectable,
     NotFoundException,
     UnauthorizedException,
+    BadRequestException 
   } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,6 +11,7 @@ import { Model } from 'mongoose';
 import { Hotel as SchemaHotel, HotelDocument } from './schema/hotel.schema';
 import { FilterHotelsDto } from './dto/hotel.dto';
 import { Hotel, HotelServiceInterface } from './interfaces/hotel.interface';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class HotelsService implements HotelServiceInterface {
@@ -27,6 +29,20 @@ constructor(
     }
 
     //methods
+    async findHotelById(id: string): Promise<Hotel> {
+        if (!mongoose.isValidObjectId(id)) {
+          throw new BadRequestException('ID de hotel inválido');
+        }
+        
+        const hotel = await this.hotelModel.findById(id).exec();
+        
+        if (!hotel) {
+          throw new NotFoundException('Hotel no encontrado');
+        }
+        
+        return this.toHotelInterface(hotel);
+      }
+
     async filterHotels(filterHotelsDto: FilterHotelsDto): Promise<Hotel[]> {
         const query: any = {};
     

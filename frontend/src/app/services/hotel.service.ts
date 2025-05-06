@@ -10,7 +10,11 @@ import { Observable } from 'rxjs';
   
     constructor(private http: HttpClient) {}
  
+    findHotelById(id: string): Observable<any> {
+      return this.http.get(`${this.apiUrl}/${id}`);
+    }
+
     filterHotels(hotel: any): Observable<any> {
-        return this.http.post(`${this.apiUrl}/filter`, hotel);
+      return this.http.post(`${this.apiUrl}/filter`, hotel);
     }
 }

@@ -9,9 +9,29 @@ export class Hotel {
   name: string;
 
   @Prop({ required: true })
-  location: string; //THIS NEED BE A MODULE!
+  location: string;
 
-  @Prop({ required: false, min: 0, default: 0  })
+  @Prop({
+    required: true,
+    default: 'https://ejemplo.com/banner-default.jpg'
+  })
+  banner: string;
+
+  @Prop({
+    required: true,
+    default: 'https://ejemplo.com/foto-default.jpg'
+  })
+  photo: string;
+
+  @Prop({
+    required: true,
+    default: 'Descripción no disponible',
+    minlength: 20,
+    maxlength: 2000
+  })
+  description: string;
+
+  @Prop({ required: false, min: 0, default: 0 })
   lower_price: number;
 
   @Prop({ required: false, min: 0, default: 0 })

@@ -1,4 +1,3 @@
-// home.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -10,9 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { VerticalGridComponent } from '../../components/vertical-grid/vertical-grid.component';
 import { HorizontalGridComponent } from '../../components/horizontal-grid/horizontal-grid.component';
 import { HotelService } from '../../services/hotel.service';
+import { Router } from '@angular/router';
 
 interface Hotel {
   id: string;
+  photo: string;
   name: string;
   location: string;
   lower_price: number;
@@ -36,21 +37,18 @@ interface Hotel {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent {
   searchForm: FormGroup;
-  hotels: any[] = [];
-
-  name: string = '';
-  location: string = '';
-  lower_price: number = 0;
-  higher_price: number = 0;
+  hotels: Hotel[] = []
 
   cities = ['Bogotá', 'Medellin', 'Cartagena', 'Cali', 'Santa Marta'];
   filteredCities: string[] = this.cities;
 
   constructor(
     private fb: FormBuilder,
-    private hotelService: HotelService
+    private hotelService: HotelService,
+    private router: Router
 
   ) {
     this.searchForm = this.fb.group({
@@ -75,6 +73,10 @@ export class HomeComponent {
     return `$${value.toLocaleString('es-CO')}`;
   }
 
+  navigateToHotel(Id: string) {
+    this.router.navigate(['/hotel', Id]);
+  }
+
   submitSearch(): void {
     const hotel = {
       name: this.searchForm.value.name,
@@ -90,7 +92,6 @@ export class HomeComponent {
       error: (error) => {
         console.error('Error al buscar los Hoteles:', error);
         console.log(hotel);
-        console.log(hotel.name);
         alert('Hubo un error al buscar los Hoteles.');
       }
     });

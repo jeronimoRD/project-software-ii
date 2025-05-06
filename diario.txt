@@ -75,3 +75,4 @@
 
     ||Funcionalidad||
         Filtrar hoteles - Se puede filtrar hoteles
+        Funcío Cuartos - Se puede buscar cuartos

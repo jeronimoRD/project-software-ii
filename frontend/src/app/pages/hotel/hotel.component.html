@@ -1,35 +1,58 @@
-<div class="container-hotel">
-    <!-- Banner -->
-    <header class="banner-hotel">
-      <img src="banner-image.jpg" alt="Banner del hotel" class="banner-image-hotel">
-    </header>
-  
-    <!-- Principal -->
-    <main class="hotel-main-section">
-      <!-- Foto and name -->
-      <section class="hotel-info-section">
-        <img src="hotel-image.jpg" alt="Foto del hotel" class="hotel-image-main">
-        <h1 class="hotel-name-title">Nombre del Hotel</h1>
-      </section>
-  
-      <!-- Nav -->
-      <nav class="hotel-navigation-tabs">
-        <a class="hotel-tab-link" 
-           routerLink="recommendations" 
-           routerLinkActive="active">Recomendaciones</a>
-           
-        <a class="hotel-tab-link" 
-           routerLink="rooms" 
-           routerLinkActive="active">Cuartos</a>
-           
-        <a class="hotel-tab-link" 
-           routerLink="reviews" 
-           routerLinkActive="active">Reviews</a>
-      </nav>
-  
-      <!-- Dinamic content -->
-      <div class="dynamic-container-hotel">
-        <router-outlet></router-outlet>
+<div class="hotel-page-container">
+  <main class="hotel-main-content">
+    <section class="hotel-primary-section">
+      <div class="hotel-profile-grid">
+        <div class="hotel-main-photo">
+          <img [src]="hotel?.photo?.[0] || '/default-hotel-photo.jpg'" alt="Foto del hotel"
+               class="hotel-featured-image">
+        </div>
+
+        <div class="hotel-info-wrapper">
+          <header class="hotel-header">
+            <h1 class="hotel-title">{{ hotel?.name }}</h1>
+            <div class="hotel-location-badge">
+              <mat-icon class="location-icon">place</mat-icon>
+              <span class="hotel-location-text">{{ hotel?.location }}</span>
+            </div>
+          </header>
+          
+          <div class="hotel-price-card">
+            <p class="price-guide">Precio por noche</p>
+            <div class="price-range-display">
+              <span class="price-from">{{ hotel?.lower_price | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="price-separator">—</span>
+              <span class="price-to">{{ hotel?.higher_price | currency:'COP':'symbol':'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </main>
-  </div>
+    </section>
+
+    <nav class="hotel-nav-tabs">
+      <a class="hotel-tab-link" 
+         routerLink="recommendations" 
+         routerLinkActive="hotel-active-tab">
+         <mat-icon>thumb_up</mat-icon>
+         Recomendaciones
+      </a>
+         
+      <a class="hotel-tab-link" 
+         routerLink="rooms" 
+         routerLinkActive="hotel-active-tab">
+         <mat-icon>hotel</mat-icon>
+         Habitaciones
+      </a>
+
+      <a class="hotel-tab-link" 
+         routerLink="reviews" 
+         routerLinkActive="hotel-active-tab">
+         <mat-icon>reviews</mat-icon>
+         Reseñas
+      </a>
+    </nav>
+
+    <div class="hotel-dynamic-content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

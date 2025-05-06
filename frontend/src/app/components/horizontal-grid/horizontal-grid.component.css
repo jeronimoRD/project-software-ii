@@ -1,5 +1,7 @@
 /* horizontal-grid.component.css */
-.horizontal-grid {
+
+/* Main container styling - 'hg' prefix for Horizontal Grid */
+.hg-container {
   margin-top: 1vw; 
   background-color: #d8ccf4;
   border-radius: 8px;
@@ -7,78 +9,93 @@
   width: 80vw;
   margin-left: 10%;
   max-height: 50vw;
-  overflow-x: hidden; /* Evita que se muestre el scroll horizontal */
-  overflow-y: scroll; /* Permite el desplazamiento vertical */
+  overflow-x: hidden;
+  overflow-y: scroll;
   padding-right: 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  }
-  /* Personalización del scroll */
-.horizontal-grid::-webkit-scrollbar {
-  width: 8px; /* Ancho de la barra de desplazamiento */
 }
 
-.horizontal-grid::-webkit-scrollbar-track {
-  background: #333; /* Color de fondo de la pista del scroll */
+/* Custom scrollbar styling */
+.hg-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.hg-container::-webkit-scrollbar-track {
+  background: #333;
   border-radius: 10px;
 }
 
-.horizontal-grid::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color de la barra de desplazamiento */
+.hg-container::-webkit-scrollbar-thumb {
+  background-color: #888;
   border-radius: 10px;
-  border: 2px solid #333; /* Agrega un borde al thumb */
+  border: 2px solid #333;
 }
 
-.horizontal-grid::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Cambia el color del thumb cuando el usuario lo pasa por encima */
+.hg-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
-  
-  .mini-header {
-    position: sticky; /* Hace que el mini-header se quede fijo */
-    top: 0; /* Lo posiciona en la parte superior del contenedor */
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    padding: 0.5rem;
-    width: 100%;
-    background: #b09cec;
-    z-index: 1;
-  }
-  
-  .icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-  }
-  
-  .title {
-    margin-left: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .actions button {
-    margin-left: 3rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .content.hidden {
-    display: none; /* Esto oculta el contenido cuando 'minimized' es verdadero */
-  }
-  
-  .content {
-    padding: 1rem;
-    transition: all 0.3s ease; /* Añadimos una transición para que el cambio de visibilidad sea suave */
-  }
-  
-  
-  .minimize-button,
-  .maximize-button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
+/* Header section */
+.hg-header {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 0.5rem;
+  width: 100%;
+  background: #b09cec;
+  z-index: 1;
+}
+
+/* Header icon */
+.hg-header-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+/* Title styling */
+.hg-title {
+  margin-left: 0.5rem;
+  font-weight: bold;
+}
+
+/* Action buttons container */
+.hg-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Toggle button */
+.hg-toggle-btn {
+  margin-left: 3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Toggle icon */
+.hg-toggle-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.hg-toggle-btn:hover .hg-toggle-icon {
+  transform: scale(1.1);
+}
+
+/* Content area */
+.hg-content {
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Hidden state */
+.hg-content[style*="display: none"] {
+  display: none !important;
+}

@@ -12,12 +12,12 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'hotel', component: HotelComponent,
+  { path: 'hotel/:id', component: HotelComponent,
     children: [
       { path: 'recommendations', component: RecommendationsComponent },
       { path: 'rooms', component: RoomsComponent },
       { path: 'reviews', component: ReviewsComponent },
-      { path: '', redirectTo: 'recommendations', pathMatch: 'full' }
+      { path: '', redirectTo: 'recommendations', pathMatch: 'full' } 
     ]
   },
   { path: '**', redirectTo: '' }

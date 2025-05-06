@@ -14,6 +14,6 @@ export class HorizontalGridComponent {
 
   toggleMinimize() {
     this.minimized = !this.minimized;
-    console.log('Minimizado:', this.minimized); // Esto ayudará a depurar
+    console.log('Minimizado:', this.minimized);
   }
 }
