@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { HotelService } from '../../services/hotel.service';
-import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 
 interface Hotel {

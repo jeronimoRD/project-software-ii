@@ -76,3 +76,7 @@
     ||Funcionalidad||
         Filtrar hoteles - Se puede filtrar hoteles
         Funcío Cuartos - Se puede buscar cuartos
+
+06-05-2025
+    ||Funcionalidad||
+    Cuartos - Se creó cuartos y se muestran en las paginas de hotel.
