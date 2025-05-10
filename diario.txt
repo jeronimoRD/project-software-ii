@@ -79,4 +79,17 @@
 
 06-05-2025
     ||Funcionalidad||
-    Cuartos - Se creó cuartos y se muestran en las paginas de hotel.
+        Cuartos - Se creó cuartos y se muestran en las paginas de hotel.
+
+10-05-2025
+    ||Dependencias||
+        npm uninstall @nestjs/mongoose mongoose
+        npm install @nestjs/typeorm typeorm mysql2
+
+    ||Estructura||
+        Se cambió usuarios de mongoDb a MySQL
+
+    ||Funcionamiento||
+        docker-compose exec mysql bash
+        mysql -u nestuser -p
+        

@@ -7,28 +7,30 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3001:3000
+    env_file:
+      - ./backend/users/.env 
     volumes:
       - ./backend/users:/app
       - /app/node_modules
     depends_on:
-      - mongodb
+      - mysql
     networks:
       - network-software2
 
-  backend-hotels:
-    container_name: backend-hotels
-    build:
-      context: ./backend/hotels
-      dockerfile: Dockerfile
-    ports:
-      - 3002:3000
-    volumes:
-      - ./backend/hotels:/app
-      - /app/node_modules
-    depends_on:
-      - mongodb
-    networks:
-      - network-software2
+  #backend-hotels:
+  #  container_name: backend-hotels
+  #  build:
+  #    context: ./backend/hotels
+  #    dockerfile: Dockerfile
+  #  ports:
+  #    - 3002:3000
+  #  volumes:
+  #    - ./backend/hotels:/app
+  #    - /app/node_modules
+  #  depends_on:
+  #    - mongodb
+  #  networks:
+  #    - network-software2
 
   frontend-software2:
     container_name: frontend
@@ -42,22 +44,27 @@ services:
       - /app/node_modules
     depends_on: #New nest projects
       - backend-users
-      - backend-hotels
+      #- backend-hotels
     networks:
       - network-software2
 
-  mongodb:
-    container_name: mongodb
-    image: mongo
+  mysql:
+    container_name: mysql
+    image: mysql:8.4.4
     ports:
-      - 27017:27017
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: nestdb
+      MYSQL_USER: nestuser
+      MYSQL_PASSWORD: nestpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
     networks:
       - network-software2
-    volumes:
-      - mongo_data:/data/db
 
 volumes:
-  mongo_data:
+  mysql_data:
 
 networks:
   network-software2:

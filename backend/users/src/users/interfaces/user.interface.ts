@@ -6,7 +6,6 @@ import {
   } from '../dto/user.dto';
   
   export interface User {
-    _id?: string; // MongoDB
     id: string;
     firstName: string;
     lastName: string;
