@@ -88,8 +88,17 @@
 
     ||Estructura||
         Se cambió usuarios de mongoDb a MySQL
+        Se cambió hoteles y rooms para MYSQL
 
     ||Funcionamiento||
-        docker-compose exec mysql bash
-        mysql -u nestuser -p
+        Chequear MYSQL:
+            docker-compose exec mysql bash
+            mysql -u nestuser -p
         
+        Hace pruebas en MYSQL
+            insert into hotel (id, name, location, description) values (UUID(), "hotelEpico", "Medellin", "Lugar super epico para estar");
+
+            insert into room (id, hotel_id, capacity, price, isOccupied) values (UUID(),"ad44fbc5-2ded-11f0-91e9-0242ac120002", 2, 200, false);
+
+            DELETE FROM room WHERE id = "42075c95-2dee-11f0-91e9-0242ac120002";
+            DELETE FROM hotel WHERE id = "ad44fbc5-2ded-11f0-91e9-0242ac120002";

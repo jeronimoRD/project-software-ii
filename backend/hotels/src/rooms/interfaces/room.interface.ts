@@ -1,9 +1,9 @@
-import { FilterRoomsHotelDto } from '../dto/room.dto';
+import { FilterRoomsHotelDto, FilterRoomsUniversalDto } from '../dto/room.dto';
+import { Hotel } from '../../hotels/entities/hotel.entity'
 
 export interface Room {
-  _id: string;
   id: string;
-  hotel: string;
+  hotel: Hotel;
   capacity: number;
   type: string;
   price: number;
@@ -12,4 +12,5 @@ export interface Room {
 
 export interface RoomServiceInterface {
   filterRoomsbyHotel(filter: FilterRoomsHotelDto): Promise<Room[]>;
+  filterRoomsUniversal(filterRoomsUniversalDto: FilterRoomsUniversalDto): Promise<Room[]>;
 }

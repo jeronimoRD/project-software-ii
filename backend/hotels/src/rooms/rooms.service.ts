@@ -4,96 +4,104 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Room as SchemaRoom, RoomDocument } from './schema/room.schema';
+import { Repository, Like, In, Between } from 'typeorm';
+import { Room } from './entities/room.entity';
+import { Hotel } from '../hotels/entities/hotel.entity';
 import { FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
-import { Room, RoomServiceInterface } from './interfaces/room.interface';
-import {
-  Hotel as SchemaHotel,
-  HotelDocument,
-} from 'src/hotels/schema/hotel.schema';
+import { RoomServiceInterface } from './interfaces/room.interface';
 
 @Injectable()
 export class RoomsService implements RoomServiceInterface {
   constructor(
-    @InjectModel(SchemaRoom.name) private roomModel: Model<RoomDocument>,
-    @InjectModel(SchemaHotel.name) private hotelModel: Model<HotelDocument>,
+    @InjectRepository(Room)
+    private roomRepository: Repository<Room>,
+    @InjectRepository(Hotel)
+    private hotelRepository: Repository<Hotel>,
     private configService: ConfigService,
   ) {}
 
-  private toRoomInterface(roomDoc: RoomDocument): Room {
-    const roomObj = roomDoc.toObject();
-    roomObj.id = roomObj._id.toString();
-    delete roomObj._id;
-    delete roomObj.__v;
-    return roomObj as Room;
+  private sanitizeRoom(room: Room): Omit<Room, 'createdAt' | 'updatedAt'> {
+    const { ...sanitized } = room;
+    return sanitized;
   }
 
-  //methods
-  async filterRoomsbyHotel(
-    filterRoomsHotelDto: FilterRoomsHotelDto,
-  ): Promise<Room[]> {
-    const hotel = await this.hotelModel.findById(filterRoomsHotelDto.hotel);
-  
-    if (!hotel) {
-      throw new NotFoundException('Hotel not found');
+  private isValidUUID(uuid: string): boolean {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(uuid);
+  }
+
+  async filterRoomsbyHotel(filterRoomsHotelDto: FilterRoomsHotelDto): Promise<Room[]> {
+    if (!this.isValidUUID(filterRoomsHotelDto.hotel)) {
+      throw new NotFoundException('Hotel inválido');
     }
-  
+
+    const hotel = await this.hotelRepository.findOneBy({ 
+      id: filterRoomsHotelDto.hotel 
+    });
+
+    if (!hotel) {
+      throw new NotFoundException('Hotel no encontrado');
+    }
+
     const query: any = {
-      isOccupied: false,
-      hotel: hotel._id,
+      where: {
+        isOccupied: false,
+        hotel: { id: filterRoomsHotelDto.hotel }
+      }
     };
 
     if (filterRoomsHotelDto.capacity) {
-      query.capacity = filterRoomsHotelDto.capacity;
+      query.where.capacity = filterRoomsHotelDto.capacity;
     }
 
     if (filterRoomsHotelDto.type) {
-      query.type = filterRoomsHotelDto.type;
+      query.where.type = filterRoomsHotelDto.type;
     }
 
     if (filterRoomsHotelDto.price) {
-      query.price = filterRoomsHotelDto.price;
+      query.where.price = Between(
+        filterRoomsHotelDto.price - 50, 
+        filterRoomsHotelDto.price + 50
+      );
     }
-    const rooms = await this.roomModel.find(query).exec();
-    return rooms.map((room) => this.toRoomInterface(room));
+
+    const rooms = await this.roomRepository.find(query);
+    return rooms.map(room => this.sanitizeRoom(room));
   }
 
-  async filterRoomsUniversal(
-    filterRoomsUniversalDto: FilterRoomsUniversalDto,
-  ): Promise<Room[]> {
-    const query: any = {};
-  
+  async filterRoomsUniversal(filterRoomsUniversalDto: FilterRoomsUniversalDto): Promise<Room[]> {
+    const query: any = { where: { isOccupied: false } };
+
     if (filterRoomsUniversalDto.location) {
-      const hotels = await this.hotelModel.find({
-        location: { $regex: `${filterRoomsUniversalDto.location}`, $options: 'i' },
-      }).exec();
-  
-      if (!hotels.length) {
-        return [];
-      }
-  
-      const hotelIds = hotels.map(h => h._id);
-      query.hotel = { $in: hotelIds };
+      const hotels = await this.hotelRepository.find({
+        where: {
+          location: Like(`%${filterRoomsUniversalDto.location}%`)
+        }
+      });
+
+      if (hotels.length === 0) return [];
       
+      query.where.hotel = { id: In(hotels.map(h => h.id)) };
     }
-    query.isOccupied = false;
-    
+
     if (filterRoomsUniversalDto.capacity) {
-      query.capacity = filterRoomsUniversalDto.capacity;
+      query.where.capacity = filterRoomsUniversalDto.capacity;
     }
-  
+
     if (filterRoomsUniversalDto.type) {
-      query.type = filterRoomsUniversalDto.type;
+      query.where.type = filterRoomsUniversalDto.type;
     }
-  
+
     if (filterRoomsUniversalDto.price) {
-      query.price = filterRoomsUniversalDto.price;
+      query.where.price = Between(
+        filterRoomsUniversalDto.price - 100,
+        filterRoomsUniversalDto.price + 100
+      );
     }
-  
-    const rooms = await this.roomModel.find(query).exec();
-    return rooms.map((room) => this.toRoomInterface(room));
+
+    const rooms = await this.roomRepository.find(query);
+    return rooms.map(room => this.sanitizeRoom(room));
   }
-} 
+}

@@ -17,20 +17,22 @@ services:
     networks:
       - network-software2
 
-  #backend-hotels:
-  #  container_name: backend-hotels
-  #  build:
-  #    context: ./backend/hotels
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - 3002:3000
-  #  volumes:
-  #    - ./backend/hotels:/app
-  #    - /app/node_modules
-  #  depends_on:
-  #    - mongodb
-  #  networks:
-  #    - network-software2
+  backend-hotels:
+    container_name: backend-hotels
+    build:
+      context: ./backend/hotels
+      dockerfile: Dockerfile
+    ports:
+      - 3002:3000
+    env_file:
+      - ./backend/hotels/.env 
+    volumes:
+      - ./backend/hotels:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
 
   frontend-software2:
     container_name: frontend
@@ -44,7 +46,7 @@ services:
       - /app/node_modules
     depends_on: #New nest projects
       - backend-users
-      #- backend-hotels
+      - backend-hotels
     networks:
       - network-software2
 
@@ -53,11 +55,8 @@ services:
     image: mysql:8.4.4
     ports:
       - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: nestdb
-      MYSQL_USER: nestuser
-      MYSQL_PASSWORD: nestpassword
+    env_file:
+      - ./backend/users/.env 
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
