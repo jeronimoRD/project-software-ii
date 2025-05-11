@@ -34,6 +34,23 @@ services:
     networks:
       - network-software2
 
+  backend-reserves:
+    container_name: backend-reserves
+    build:
+      context: ./backend/reserves
+      dockerfile: Dockerfile
+    ports:
+      - 3003:3000
+    env_file:
+      - ./backend/reserves/.env 
+    volumes:
+      - ./backend/reserves:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
+
   frontend-software2:
     container_name: frontend
     build:
@@ -47,6 +64,7 @@ services:
     depends_on: #New nest projects
       - backend-users
       - backend-hotels
+      - backend-reserves
     networks:
       - network-software2
 
