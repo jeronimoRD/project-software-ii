@@ -127,14 +127,16 @@
     NO SE PREOCUPE SI APARECE "ERROR [TypeOrmModule] Unable to connect to the database. Retrying (X).", SOLO ESPEAR.
 
     ||UTILES||
-    BD MYSQL: 
-        docker-compose exec mysql bash
-        mysql -u softwareuser -p
-
     ENTIDADES:
         Crearla MANUALMENTE (index.ts).
 
         ej de uso: import { User } from '@entity/entities/user.entity';
+        
+    BD MYSQL: 
+        docker-compose exec mysql bash
+        mysql -u softwareuser -p
+
+    
 
 
     
