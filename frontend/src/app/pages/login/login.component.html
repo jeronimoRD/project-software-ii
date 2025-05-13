@@ -1,0 +1,27 @@
+<main class="page-login">
+  <div class="container-login">  
+    <div class="title-login">
+        <h1>Login</h1>
+    </div>
+    <div class="inputs-login">
+      <input 
+      type="email"
+      class="form-control"
+      placeholder="Correo"
+      [(ngModel)]="email"
+      name="correo"
+      required>
+      <input 
+      type="password"
+      class="form-control"
+      placeholder="Contraseña"
+      [(ngModel)]="password"
+      name="contraseña"
+      required>
+    </div>
+    <div class="button-login">
+      <span (click)="navigateToRegister()">¿No tienes cuenta? ¡Registrate Aquí!</span>
+      <button (click)="loginUser()">Login</button>
+    </div>  
+  </div>
+</main>

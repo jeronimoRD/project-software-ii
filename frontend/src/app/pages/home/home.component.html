@@ -1,0 +1,75 @@
+<div class="hotel-search-page">
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="hotel-search-form">
+
+    <div class="hotel-search-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre de Hotel</mat-label>
+        <input 
+          type="text" 
+          matInput 
+          formControlName="name"
+          placeholder="Buscar por nombre">
+      </mat-form-field>
+    </div>
+
+    <!-- Search Town -->
+    <div class="hotel-search-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Ciudad</mat-label>
+        <input 
+          type="text" 
+          matInput 
+          formControlName="city"
+          [matAutocomplete]="hotelCityAutocomplete"
+          (input)="filterCities($any($event.target).value)">
+        <mat-autocomplete #hotelCityAutocomplete="matAutocomplete">
+          <mat-option *ngFor="let city of filteredCities" [value]="city">
+            {{ city }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <!-- Prices -->
+    <div class="hotel-search-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Precio mínimo</mat-label>
+        <input 
+          type="number" 
+          matInput 
+          formControlName="lower_price">
+      </mat-form-field>
+    </div>
+    
+    <div class="hotel-search-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Precio máximo</mat-label>
+        <input 
+          type="number" 
+          matInput 
+          formControlName="higher_price">
+      </mat-form-field>
+    </div>
+
+    <!-- Search -->
+    <button type="submit" mat-raised-button color="primary" class="hotel-search-button">
+      Buscar
+    </button>
+  </form>
+
+  <!-- Hotels list -->
+  <app-horizontal-grid title="Hoteles Recomendados" iconUrl="assets/hotel-icon.svg">
+    <div class="hotel-grid-content">
+      <app-vertical-grid
+        *ngFor="let hotel of hotels"
+        [id]="hotel.id"
+        (cardClicked)="navigateToHotel($event)"
+        [title]="hotel.name"
+        [location]="hotel.location"
+        [lower_price]="hotel.lower_price"
+        [higher_price]="hotel.higher_price"
+        [rating]="hotel.rating"
+      ></app-vertical-grid>
+    </div>
+  </app-horizontal-grid>
+</div>

@@ -1,0 +1,24 @@
+.container-login{
+    margin-top:30px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 150px;
+}
+.button-login{
+    display: flex;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+
+    span{
+        color: #007bff; /* Azul estándar */
+        text-decoration: underline;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        margin-right: 15px;
+    }
+}
+.title-login{
+    display: flex;
+    justify-content: center;
+}

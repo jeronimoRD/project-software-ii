@@ -1,0 +1,101 @@
+/* horizontal-grid.component.css */
+
+/* Main container styling - 'hg' prefix for Horizontal Grid */
+.hg-container {
+  margin-top: 1vw; 
+  background-color: #d8ccf4;
+  border-radius: 8px;
+  margin: 1rem 1;
+  width: 80vw;
+  margin-left: 10%;
+  max-height: 50vw;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-right: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar styling */
+.hg-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.hg-container::-webkit-scrollbar-track {
+  background: #333;
+  border-radius: 10px;
+}
+
+.hg-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #333;
+}
+
+.hg-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Header section */
+.hg-header {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 0.5rem;
+  width: 100%;
+  background: #b09cec;
+  z-index: 1;
+}
+
+/* Header icon */
+.hg-header-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+/* Title styling */
+.hg-title {
+  margin-left: 0.5rem;
+  font-weight: bold;
+}
+
+/* Action buttons container */
+.hg-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Toggle button */
+.hg-toggle-btn {
+  margin-left: 3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Toggle icon */
+.hg-toggle-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.hg-toggle-btn:hover .hg-toggle-icon {
+  transform: scale(1.1);
+}
+
+/* Content area */
+.hg-content {
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Hidden state */
+.hg-content[style*="display: none"] {
+  display: none !important;
+}

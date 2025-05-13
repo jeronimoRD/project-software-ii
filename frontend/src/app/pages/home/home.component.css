@@ -1,0 +1,96 @@
+/* Style of Principal page */
+.hotel-search-page {
+  position: relative; 
+  background-image: url('/fondo.jpg');
+  background-size: cover; 
+  background-position: center;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* Form Container */
+.hotel-search-form {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(216, 204, 244, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(145, 84, 135, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+/* Form fields */
+.hotel-search-field {
+  margin-bottom: 1.5rem;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+/* Search */
+.hotel-search-button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #c285b9, #915487);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(145, 84, 135, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.hotel-grid-content {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+/* Price */
+.hotel-price-format::before {
+  content: '$';
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .hotel-search-page {
+    padding: 1rem;
+  }
+  
+  .hotel-search-form {
+    padding: 1.5rem;
+  }
+  
+  .hotel-grid-content {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hotel-search-field {
+    margin-bottom: 1rem;
+  }
+  
+  .hotel-search-button {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}

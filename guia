@@ -1,0 +1,141 @@
+26-04-2025
+    ||Configuración||
+        Dockerización - Se dockerizó con respecto a mongodb.
+        .gitignore - Se creó proyectos (Nest y Angular) sin git pero con .gitignore.
+
+    ||Registro||
+        Interfaz - Se creó una interfaz provicional para ingresar datos
+
+    !!ERRORES¡¡ - SOLUCIONADO
+        Mandar Datos - Suelta error al intentar dar al botón de sign in.
+
+            TEORIAS:
+                    Se teorizá que es debido a una mala dockerización con respecto al backend (puede que sea por dependencias).
+                    Toca hacer un debug para ver en que punto empieza el problema.
+
+27-04-2025
+    ||Configuración||
+        Enviroment - Se eliminó el enviroment de docker.
+        CROD restricción - Para enviar datos de diferentes dominios, hay que permitirlo en el main.ts del backend.
+
+    ||Conexión BackendFrontend||
+        register - Se puede registrar usuarios.
+        login - Se puede logear usuarios.
+
+    ||Dependencias||
+        Dependencias instaladas en Backend(Users): 
+            -npm install class-validator --save 
+            -npm install @nestjs/mongoose mongoose --save 
+            -npm install @nestjs/passport passport-jwt passport --save
+            -npm install @nestjs/config --save
+            -npm install @nestjs/jwt --save
+            -npm install bcryptjs --save # No sirve bcrypt para docker
+            -npm install @types/bcrypt --save-dev  # Dependencia de desarrollo
+            
+        Dependencias instaladas en Frontend:
+            -ng add @angular/material
+
+    ||Recomendaciones||
+        CSS - Hacer nombres muy diferenciables y únicos
+        nombres - Los nombres del json de Angular deben ser iguales al de Nest.
+        Lógica de negocios - El backend no debería enviar mensajes
+
+28-04-2025
+    ||Dependencias||
+        Dependencias instaladas en Backend(Hotels):
+            -npm install @nestjs/mongoose mongoose --save 
+            -npm install @nestjs/config --save
+            -npm install class-validator --save 
+
+    ||Hoteles||
+        Creación - Se creó y se conecto con mongo el proyecto Hoteles.
+        Filtrar - Se creó metodo para filtrar hoteles
+        HotelServicio - Se creó un servicio para hotel en el frontend.
+
+03-05-2025
+    ||Estructura||
+        HotelesHijos - En el frontend, se subdividió la carpeta hoteles en carpetas para sus divisiones (por lo que app-routes cambió).
+        RouterLink - Se utiliza routerLink para ir de pagina en pagina. 
+                Nota:
+                     "/ruta" para paginas raíces.
+                     "ruta" Para rutas hijas.
+    
+    ||Hoteles||
+        Dinamic router - se usó RouterModule para cambiar dinamicamente con los hijos de una pagina.
+
+04-05-2025
+    ||Dependencias||
+     En el frontend:
+        npm install @angular/router (jero)
+        npm install @angular/platform-server@latest
+        npm install @angular/core@latest @angular/cli@latest
+
+    ||Estructura||
+        Carrousel - Se agregó una estructura de carrousel.
+
+    ||Funcionalidad||
+        Filtrar hoteles - Se puede filtrar hoteles
+        Funcío Cuartos - Se puede buscar cuartos
+
+06-05-2025
+    ||Funcionalidad||
+        Cuartos - Se creó cuartos y se muestran en las paginas de hotel.
+
+10-05-2025
+    ||Dependencias||
+        npm uninstall @nestjs/mongoose mongoose
+        npm install @nestjs/typeorm typeorm mysql2 --save
+
+    ||Estructura||
+        Se cambió usuarios de mongoDb a MySQL
+        Se cambió hoteles y rooms para MYSQL
+
+    ||Funcionamiento||
+        Chequear MYSQL:
+            docker-compose exec mysql bash
+            mysql -u softwareuser -p
+        
+        Hace pruebas en MYSQL
+            insert into hotel (id, name, location, description) values (UUID(), "hotelEpico", "Medellin", "Lugar super epico para estar");
+
+            insert into room (id, hotel_id, capacity, price, isOccupied) values (UUID(),"ad44fbc5-2ded-11f0-91e9-0242ac120002", 2, 200, false);
+
+            DELETE FROM room WHERE id = "42075c95-2dee-11f0-91e9-0242ac120002";
+            DELETE FROM hotel WHERE id = "ad44fbc5-2ded-11f0-91e9-0242ac
+
+12-05-2025
+    ||RE-ESTRUCUTRA||
+
+    TUTO: https://docs.nestjs.com/cli/monorepo
+
+    1. Crear projecto nest STANDART: nest new <nombre-de-app-principal> --skip-git
+    2. Crear el primer servicio: nest generate app <nombre-servicio>
+    3. Crear libreria: nest generate library 
+        3.1. Crear objeto (ej: entities)
+        3.2. Indicar nombre de llamada (ej: @entity)
+
+    ||DEPENDENCIAS||
+    npm install @nestjs/config --save
+    npm install @nestjs/typeorm typeorm mysql2 --save
+    npm install class-validator --save
+    npm install @nestjs/passport passport-jwt passport --save
+    npm install @nestjs/jwt --save
+    npm install bcryptjs --save 
+    npm install @types/bcrypt --save-dev 
+
+    ||ADVERTENCIA||
+    NO SE PREOCUPE SI APARECE "ERROR [TypeOrmModule] Unable to connect to the database. Retrying (X).", SOLO ESPEAR.
+
+    ||UTILES||
+    BD MYSQL: 
+        docker-compose exec mysql bash
+        mysql -u softwareuser -p
+
+    ENTIDADES:
+        Crearla MANUALMENTE (index.ts).
+
+        ej de uso: import { User } from '@entity/entities/user.entity';
+
+
+    
+
