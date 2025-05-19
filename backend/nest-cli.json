@@ -28,6 +28,24 @@
         "tsConfigPath": "libs/entities/tsconfig.lib.json"
       }
     },
+    "hotel": {
+      "type": "application",
+      "root": "apps/hotel",
+      "entryFile": "main",
+      "sourceRoot": "apps/hotel/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/hotel/tsconfig.app.json"
+      }
+    },
+    "rooms": {
+      "type": "application",
+      "root": "apps/rooms",
+      "entryFile": "main",
+      "sourceRoot": "apps/rooms/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/rooms/tsconfig.app.json"
+      }
+    },
     "user": {
       "type": "application",
       "root": "apps/user",

@@ -131,13 +131,19 @@
         Crearla MANUALMENTE (index.ts).
 
         ej de uso: import { User } from '@entity/entities/user.entity';
-        
+
+    SERVICIO:
+        Crearla con: nest generate app <nombre>
+
     BD MYSQL: 
         docker-compose exec mysql bash
         mysql -u softwareuser -p
 
-    
+19-06-2025
+    ||DEPENDENCIAS|| -> *honestamente, no sirvieron de mucho xd*
+        npm install reflect-metadata --save
+        npm install class-transformer --save
 
-
+    ||ERROR|| -> Falta organizar validaciones
     
 

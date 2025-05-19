@@ -15,7 +15,7 @@ services:
       - mysql
     networks:
       - network-software2
-
+  
   backend-user:
     container_name: backend-user
     build:
@@ -33,6 +33,42 @@ services:
     networks:
       - network-software2
 
+  backend-hotel:
+    container_name: backend-hotel
+    build:
+      context: ./backend
+      dockerfile: ./apps/hotel/Dockerfile
+    ports:
+      - 3002:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
+
+  backend-rooms:
+    container_name: backend-rooms
+    build:
+      context: ./backend
+      dockerfile: ./apps/rooms/Dockerfile
+    ports:
+      - 3003:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
+
+  #Add new containers
+
   frontend-software2:
     container_name: frontend
     build:
@@ -45,6 +81,8 @@ services:
       - /app/node_modules
     depends_on: #New nest projects
       - backend-user
+      - backend-hotel
+      - backend-rooms
     networks:
       - network-software2
 
