@@ -6,10 +6,11 @@ import { Reserve } from '@entity/entities/reserve.entity';
 import { User } from '@entity/entities/user.entity';
 import { UsersModule } from 'apps/user/src/users.module';
 import { RoomsModule } from 'apps/rooms/src/rooms.module';
+import { Room } from '@entity/entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Reserve,User]),
+    TypeOrmModule.forFeature([Reserve, User, Room]),
     UsersModule,
     RoomsModule,
   ],

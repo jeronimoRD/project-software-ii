@@ -28,7 +28,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: String, enum: Object.values(UserRole), default: UserRole.USER })
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
   @Column({ unique: true })
