@@ -3,9 +3,11 @@ import {
     PrimaryGeneratedColumn, 
     Column, 
     ManyToOne,
-    JoinColumn
+    JoinColumn,
+    OneToMany
 } from 'typeorm';
 import { Hotel } from './hotel.entity';
+import { Reserve } from './reserve.entity';
 
 export enum RoomType {
   STANDARD = 'standard',
@@ -22,6 +24,9 @@ export class Room {
     @JoinColumn({ name: 'hotel_id' }) 
     hotel: Hotel;
 
+    @OneToMany(() => Reserve, (reserve) => reserve.room)
+    reserves: Reserve[];
+    
     @Column({ type: 'int' })
     capacity: number;
 

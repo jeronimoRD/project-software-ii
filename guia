@@ -139,11 +139,19 @@
         docker-compose exec mysql bash
         mysql -u softwareuser -p
 
-19-06-2025
+19-05-2025
     ||DEPENDENCIAS|| -> *honestamente, no sirvieron de mucho xd*
         npm install reflect-metadata --save
         npm install class-transformer --save
 
     ||ERROR|| -> Falta organizar validaciones
     
+24-05-2025
+    ||estructura|| 
+        Se creó el microservicio de reservas.(falta pruebas en postman)
+        Se creo la libreria de autenticación.
+
+    ||ERROR|| -> nest start reserves no funciona errores de modulos
+
+
 

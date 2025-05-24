@@ -18,6 +18,12 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@auth/auth": [
+        "libs/auth/src"
+      ],
+      "@auth/auth/*": [
+        "libs/auth/src/*"
+      ],
       "@entity/entities": [
         "libs/entities/src"
       ],

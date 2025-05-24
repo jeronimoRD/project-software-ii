@@ -86,6 +86,7 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
+      "^@auth/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
       "^@entity/entities(|/.*)$": "<rootDir>/libs/entities/src/$1"
     }
   }

@@ -10,6 +10,15 @@
   "monorepo": true,
   "root": "apps/backend",
   "projects": {
+    "auth": {
+      "type": "library",
+      "root": "libs/auth",
+      "entryFile": "index",
+      "sourceRoot": "libs/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/auth/tsconfig.lib.json"
+      }
+    },
     "backend": {
       "type": "application",
       "root": "apps/backend",
@@ -35,6 +44,15 @@
       "sourceRoot": "apps/hotel/src",
       "compilerOptions": {
         "tsConfigPath": "apps/hotel/tsconfig.app.json"
+      }
+    },
+    "reserves": {
+      "type": "application",
+      "root": "apps/reserves",
+      "entryFile": "main",
+      "sourceRoot": "apps/reserves/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/reserves/tsconfig.app.json"
       }
     },
     "rooms": {

@@ -67,6 +67,22 @@ services:
     networks:
       - network-software2
 
+  backend-reserves:
+    container_name: backend-reserves
+    build:
+      context: ./backend
+      dockerfile: ./apps/reserves/Dockerfile
+    ports:
+      - 3004:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
   #Add new containers
 
   frontend-software2:
@@ -83,6 +99,7 @@ services:
       - backend-user
       - backend-hotel
       - backend-rooms
+      - backend-reserves
     networks:
       - network-software2
 
