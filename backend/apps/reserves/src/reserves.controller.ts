@@ -17,10 +17,4 @@ export class ReservesController {
   updateReserve(@Body() updateReserveDto) {
     return this.reservesService.updateReserve(updateReserveDto);
   }
-
-  @AdminOnly()
-  @Post('admin-approve-or-reject')
-  adminApproveOrRejectReserve(@Body() approveOrRejectReserveDto) {
-    return this.reservesService.adminApproveOrRejectReserve(approveOrRejectReserveDto);
-  }
 }

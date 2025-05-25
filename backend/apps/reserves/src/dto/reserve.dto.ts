@@ -42,12 +42,3 @@ export class UpdateReserveDto {
   @IsString()
   status?: reserveStatus;
 }
-
-export class ApproveorRejectReserveDto {
-  @IsNotEmpty()
-  @IsString()
-  id: string;
-  @IsNotEmpty()
-  @IsString()
-  decision: string;
-}

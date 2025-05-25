@@ -100,6 +100,23 @@ services:
       - mysql
     networks:
       - network-software2
+
+  backend-requests:
+    container_name: backend-requests
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 3006:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
   #Add new containers
 
   frontend-software2:

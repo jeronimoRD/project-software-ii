@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -9,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { Repository, Like, In, Between } from 'typeorm';
 import { Room } from '@entity/entities/room.entity';
 import { Hotel } from '@entity/entities/hotel.entity';
-import { FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
+import { ChangeStatusDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
 import { RoomServiceInterface } from './interface/room.interface';
 
 @Injectable()
@@ -30,6 +31,26 @@ export class RoomsService implements RoomServiceInterface {
   private isValidUUID(uuid: string): boolean {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidRegex.test(uuid);
+  }
+
+  async changeStatus(changeStatusDto: ChangeStatusDto): Promise<Room> {
+    const { roomId, isOccupied } = changeStatusDto;
+
+    if (!this.isValidUUID(roomId)) {
+      throw new BadRequestException(`El ID '${roomId}' no es un UUID válido.`);
+    }
+
+    // 2. Buscar la habitación
+    const room = await this.roomRepository.findOne({ where: { id: roomId } });
+    if (!room) {
+      throw new NotFoundException(`No existe la habitación con ID '${roomId}'.`);
+    }
+
+    // 3. Actualizar y guardar
+    room.isOccupied = isOccupied;
+    const updated = await this.roomRepository.save(room);
+
+    return this.sanitizeRoom(updated);
   }
 
   async filterRoomsbyHotel(filterRoomsHotelDto: FilterRoomsHotelDto): Promise<Room[]> {

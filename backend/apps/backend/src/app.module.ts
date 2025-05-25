@@ -9,6 +9,7 @@ import { RoomsModule } from 'apps/rooms/src/rooms.module';
 import { User, Hotel, Room, Reserve, Review, Request } from '@entity/entities';
 import { ReservesModule } from 'apps/reserves/src/reserves.module';
 import { ReviewsModule } from 'apps/reviews/src/reviews.module';
+import { RequestsModule } from 'apps/requests/src/requests.module';
 
 @Module({
   imports: [
@@ -34,7 +35,8 @@ import { ReviewsModule } from 'apps/reviews/src/reviews.module';
     HotelsModule,
     RoomsModule,
     ReservesModule,
-    ReviewsModule
+    ReviewsModule,
+    RequestsModule
   ],
   controllers: [AppController],
   providers: [AppService],

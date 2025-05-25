@@ -1,18 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { ReserveServiceInterface } from './interfaces/reserve.interface';
-import { CreateReserveDto, UpdateReserveDto, ApproveorRejectReserveDto } from './dto/reserve.dto';
+import { CreateReserveDto, UpdateReserveDto } from './dto/reserve.dto';
 import { Reserve } from '@entity/entities/reserve.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@entity/entities/user.entity';
 import { Room } from '@entity/entities/room.entity';
 import { Repository } from 'typeorm';
 import { Reserve as ReserveInterface } from './interfaces/reserve.interface';
+import { Request } from '@entity/entities';
 
 @Injectable()
 export class ReservesService implements ReserveServiceInterface {
   constructor(
     @InjectRepository(Reserve)
     private reserveRepository: Repository<Reserve>,
+    @InjectRepository(Request)
+    private requestRepository: Repository<Request>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
     @InjectRepository(Room)
@@ -63,6 +66,13 @@ export class ReservesService implements ReserveServiceInterface {
       relations: ['room', 'user'],
     });
     if (!reserveWithRelations) throw new Error('Reserve not found after creation');
+
+    const requestEntity = this.requestRepository.create({
+    admin: roomEntity.hotel.user,       
+    reserve: reserveWithRelations,      
+    });
+    await this.requestRepository.save(requestEntity);
+
     return this.sanitizeReserve(reserveWithRelations);
   }
 
@@ -117,27 +127,5 @@ export class ReservesService implements ReserveServiceInterface {
     });
     if (!reserveWithRelations) throw new Error('Reserve not found after update');
     return this.sanitizeReserve(reserveWithRelations);
-  }
-
-  async adminApproveOrRejectReserve(
-    ApproveorRejectReserveDto: ApproveorRejectReserveDto,
-  ): Promise<ReserveInterface> {
-    const { id, decision } = ApproveorRejectReserveDto;
-    const reserve = await this.reserveRepository.findOne({ 
-      where: { id }, 
-      relations: ['room', 'user'] 
-    });
-    if (!reserve) throw new Error('Reserve not found');
-
-    if (decision === 'approve') {
-      reserve.status = 'confirmed';
-    } else if (decision === 'reject') {
-      reserve.status = 'rejected';
-    } else {
-      throw new Error('Invalid decision');
-    }
-
-    const savedReserve = await this.reserveRepository.save(reserve);
-    return this.sanitizeReserve(savedReserve);
   }
 }

@@ -10,7 +10,7 @@ import { Room } from '@entity/entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Reserve, User, Room]),
+    TypeOrmModule.forFeature([Reserve, User, Room, Request]),
     UsersModule,
     RoomsModule,
   ],

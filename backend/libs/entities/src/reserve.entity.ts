@@ -12,9 +12,9 @@ import {
 
 export enum reserveStatus {
   RESERVED = 'reserved',
-  CONFIRMED = 'confirmed',
   REJECTED = 'rejected',
   CANCELLED = 'cancelled',
+  FINISHED = 'finished',
   PENDING = 'pending'
 }
 

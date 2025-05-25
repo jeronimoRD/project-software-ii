@@ -46,6 +46,15 @@
         "tsConfigPath": "apps/hotel/tsconfig.app.json"
       }
     },
+    "requests": {
+      "type": "application",
+      "root": "apps/requests",
+      "entryFile": "main",
+      "sourceRoot": "apps/requests/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/requests/tsconfig.app.json"
+      }
+    },
     "reserves": {
       "type": "application",
       "root": "apps/reserves",
