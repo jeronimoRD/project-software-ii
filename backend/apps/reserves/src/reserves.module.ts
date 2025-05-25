@@ -4,10 +4,16 @@ import { ReservesService } from './reserves.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Reserve } from '@entity/entities/reserve.entity';
 import { User } from '@entity/entities/user.entity';
-import { Room } from '@entity/entities/room.entity';
+import { UsersModule } from 'apps/user/src/users.module';
+import { RoomsModule } from 'apps/rooms/src/rooms.module';
+import { Room } from '@entity/entities';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Reserve, User, Room])],
+  imports: [
+    TypeOrmModule.forFeature([Reserve, User, Room]),
+    UsersModule,
+    RoomsModule,
+  ],
   controllers: [ReservesController],
   providers: [ReservesService],
   exports: [ReservesService],
