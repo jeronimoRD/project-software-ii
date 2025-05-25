@@ -19,7 +19,6 @@ export class RoomsService implements RoomServiceInterface {
     private roomRepository: Repository<Room>,
     @InjectRepository(Hotel)
     private hotelRepository: Repository<Hotel>,
-    private configService: ConfigService,
   ) {}
 
   private sanitizeRoom(room: Room): Omit<Room, 'createdAt' | 'updatedAt'> {

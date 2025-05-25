@@ -17,7 +17,6 @@ export class HotelsService implements HotelServiceInterface {
     constructor(
         @InjectRepository(Hotel)
         private hotelRepository: Repository<Hotel>,
-        private configService: ConfigService,
     ) {}
 
     private sanitizeHotel(hotel: Hotel): Hotel {

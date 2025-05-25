@@ -46,7 +46,7 @@
   align-items: center;
   padding: 0.5rem;
   width: 100%;
-  background: #b09cec;
+  background: #915487;
   z-index: 1;
 }
 
@@ -61,6 +61,7 @@
 .hg-title {
   margin-left: 0.5rem;
   font-weight: bold;
+  color: white;
 }
 
 /* Action buttons container */

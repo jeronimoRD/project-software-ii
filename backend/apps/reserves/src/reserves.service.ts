@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ReserveServiceInterface } from './interfaces/reserve.interface';
-import { CreateReserveDto, UpdateReserveDto, ApproveorRejectReserveDto } from './dto/reserve.dto';
+import {
+  CreateReserveDto,
+  UpdateReserveDto,
+  ApproveorRejectReserveDto,
+} from './dto/reserve.dto';
 import { Reserve } from '@entity/entities/reserve.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@entity/entities/user.entity';
@@ -18,7 +22,7 @@ export class ReservesService implements ReserveServiceInterface {
     @InjectRepository(Room)
     private roomRepository: Repository<Room>,
   ) {}
-    
+
   private sanitizeReserve(reserve: Reserve): ReserveInterface {
     return {
       id: reserve.id,
@@ -30,9 +34,11 @@ export class ReservesService implements ReserveServiceInterface {
     };
   }
 
-  async createReserve(createReserveDto: CreateReserveDto): Promise<ReserveInterface> {
+  async createReserve(
+    createReserveDto: CreateReserveDto,
+  ): Promise<ReserveInterface> {
     const { room: roomId, user: userId, startDate, endDate } = createReserveDto;
-    
+
     const overlappingReserve = await this.reserveRepository
       .createQueryBuilder('reserve')
       .innerJoin('reserve.room', 'room')
@@ -62,15 +68,25 @@ export class ReservesService implements ReserveServiceInterface {
       where: { id: savedReserve.id },
       relations: ['room', 'user'],
     });
-    if (!reserveWithRelations) throw new Error('Reserve not found after creation');
+    if (!reserveWithRelations)
+      throw new Error('Reserve not found after creation');
     return this.sanitizeReserve(reserveWithRelations);
   }
 
-  async updateReserve(updateReserveDto: UpdateReserveDto): Promise<ReserveInterface> {
-    const { id, room: roomId, user: userId, startDate, endDate, status } = updateReserveDto;
-    const reserve = await this.reserveRepository.findOne({ 
-      where: { id }, 
-      relations: ['room', 'user'] 
+  async updateReserve(
+    updateReserveDto: UpdateReserveDto,
+  ): Promise<ReserveInterface> {
+    const {
+      id,
+      room: roomId,
+      user: userId,
+      startDate,
+      endDate,
+      status,
+    } = updateReserveDto;
+    const reserve = await this.reserveRepository.findOne({
+      where: { id },
+      relations: ['room', 'user'],
     });
     if (!reserve) throw new Error('Reserve not found');
 
@@ -115,7 +131,8 @@ export class ReservesService implements ReserveServiceInterface {
       where: { id: updatedReserve.id },
       relations: ['room', 'user'],
     });
-    if (!reserveWithRelations) throw new Error('Reserve not found after update');
+    if (!reserveWithRelations)
+      throw new Error('Reserve not found after update');
     return this.sanitizeReserve(reserveWithRelations);
   }
 
@@ -123,9 +140,9 @@ export class ReservesService implements ReserveServiceInterface {
     ApproveorRejectReserveDto: ApproveorRejectReserveDto,
   ): Promise<ReserveInterface> {
     const { id, decision } = ApproveorRejectReserveDto;
-    const reserve = await this.reserveRepository.findOne({ 
-      where: { id }, 
-      relations: ['room', 'user'] 
+    const reserve = await this.reserveRepository.findOne({
+      where: { id },
+      relations: ['room', 'user'],
     });
     if (!reserve) throw new Error('Reserve not found');
 

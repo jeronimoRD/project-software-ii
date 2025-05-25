@@ -3,7 +3,7 @@ import { ReservesService } from './reserves.service';
 
 @Controller('reserves')
 export class ReservesController {
-  constructor(private readonly reservesService: ReservesService) {}
+  constructor(private reservesService: ReservesService) {}
 
   @Post()
   createReserve(@Body() createReserveDto) {

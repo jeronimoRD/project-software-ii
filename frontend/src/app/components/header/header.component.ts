@@ -32,6 +32,9 @@ export class HeaderComponent {
   navigateToHome() {
     this.router.navigate(['/home']);
   }
+  navigateToReserve() {
+    this.router.navigate(['/hotel/1/reserves']);
+  }
 
   changeLanguage(lang: string) {
     this.selectedLanguage = lang;

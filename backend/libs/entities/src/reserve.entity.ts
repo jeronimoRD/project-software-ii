@@ -1,11 +1,11 @@
 import { Room } from './room.entity';
 import { User } from './user.entity';
-import { 
-    Entity, 
-    PrimaryGeneratedColumn, 
-    Column, 
-    ManyToOne,
-    JoinColumn
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 export enum reserveStatus {
   RESERVED = 'reserved',
