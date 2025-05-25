@@ -55,6 +55,15 @@
         "tsConfigPath": "apps/reserves/tsconfig.app.json"
       }
     },
+    "reviews": {
+      "type": "application",
+      "root": "apps/reviews",
+      "entryFile": "main",
+      "sourceRoot": "apps/reviews/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/reviews/tsconfig.app.json"
+      }
+    },
     "rooms": {
       "type": "application",
       "root": "apps/rooms",

@@ -1,0 +1,38 @@
+import { IsNotEmpty, IsString, IsNumber, IsOptional, Length, Min, Max } from 'class-validator';
+
+export class CreateReviewDto {
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  hotelId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Length(5, 100)
+  title: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Length(20, 1000)
+  content: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  rating: number;
+}
+
+
+export class UpdateReviewDto {
+  @IsOptional()
+  @IsString()
+  content: string;
+
+  @IsOptional()
+  @IsNumber()
+  rating: number;
+}

@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Reserve } from './reserve.entity';
+import { Review } from './review.entity';
 
 export enum UserRole {
   admin = 'admin',
@@ -12,6 +13,9 @@ export class User {
   
   @OneToMany(() => Reserve, (room) => room.user)
   reserves: Reserve[];
+
+  @OneToMany(() => Review, (review) => review.user)
+  reviews: Review[];
 
   @Column()
   firstName: string;
