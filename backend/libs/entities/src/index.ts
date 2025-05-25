@@ -3,3 +3,4 @@ export * from './hotel.entity';
 export * from './room.entity';
 export * from './reserve.entity';
 export * from './review.entity';
+export * from './request.entity';

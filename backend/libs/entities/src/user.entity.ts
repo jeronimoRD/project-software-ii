@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 import { Reserve } from './reserve.entity';
+import { Request } from './request.entity';
 import { Review } from './review.entity';
 import { Hotel } from './hotel.entity';
 
@@ -7,12 +8,13 @@ export enum UserRole {
   admin = 'admin',
   USER = 'user',
 }
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(() => Review, (review) => review.user, { cascade: true })
+  @OneToMany(() => Review, (review) => review.user)
   reviews: Review[];
 
   @Column()
@@ -44,4 +46,7 @@ export class User {
 
   @Column({ nullable: true })
   refreshToken?: string;
+
+  @OneToMany(() => Request, (request) => request.admin)
+  requests: Request[];
 }

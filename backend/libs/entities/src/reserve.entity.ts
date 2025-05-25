@@ -1,17 +1,21 @@
 import { Room } from './room.entity';
 import { User } from './user.entity';
+import { Request } from './request.entity';
 import { 
     Entity, 
     PrimaryGeneratedColumn, 
     Column, 
     ManyToOne,
-    JoinColumn
+    JoinColumn,
+    OneToOne
 } from 'typeorm';
+
 export enum reserveStatus {
   RESERVED = 'reserved',
   CONFIRMED = 'confirmed',
   REJECTED = 'rejected',
   CANCELLED = 'cancelled',
+  PENDING = 'pending'
 }
 
 @Entity()
@@ -36,7 +40,10 @@ export class Reserve {
   @Column({
     type: 'enum',
     enum: Object.values(reserveStatus),
-    default: reserveStatus.RESERVED,
+    default: reserveStatus.PENDING,
   })
   status: string;
+
+  @OneToOne(() => Request, (request) => request.reserve)
+  request: Request;
 }
