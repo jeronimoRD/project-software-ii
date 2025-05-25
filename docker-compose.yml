@@ -83,6 +83,23 @@ services:
       - mysql
     networks:
       - network-software2
+
+  backend-reviews:
+    container_name: backend-reviews
+    build:
+      context: ./backend
+      dockerfile: ./apps/reviews/Dockerfile
+    ports:
+      - 3005:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
   #Add new containers
 
   frontend-software2:
@@ -100,6 +117,7 @@ services:
       - backend-hotel
       - backend-rooms
       - backend-reserves
+      - backend-reviews
     networks:
       - network-software2
 

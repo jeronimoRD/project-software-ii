@@ -6,8 +6,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from 'apps/user/src/users.module';
 import { HotelsModule } from 'apps/hotel/src/hotels.module';
 import { RoomsModule } from 'apps/rooms/src/rooms.module';
-import { User, Hotel, Room, Reserve } from '@entity/entities';
+import { User, Hotel, Room, Reserve, Review } from '@entity/entities';
 import { ReservesModule } from 'apps/reserves/src/reserves.module';
+import { ReviewsModule } from 'apps/reviews/src/reviews.module';
 
 
 
@@ -26,7 +27,7 @@ import { ReservesModule } from 'apps/reserves/src/reserves.module';
         username: configService.get('MYSQL_USER'),
         password: configService.get('MYSQL_PASSWORD'),
         database: configService.get('MYSQL_DATABASE'),
-        entities: [User, Hotel, Room, Reserve],
+        entities: [User, Hotel, Room, Reserve, Review], //New entities
         synchronize: true, //Only dev
       }),
     }),
@@ -35,6 +36,7 @@ import { ReservesModule } from 'apps/reserves/src/reserves.module';
     HotelsModule,
     RoomsModule,
     ReservesModule,
+    ReviewsModule
   ],
   controllers: [AppController],
   providers: [AppService],

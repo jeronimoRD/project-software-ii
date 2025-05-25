@@ -28,7 +28,6 @@ import {
       return await this.userService.create(createUserDto);
     }
   
-    
     @HttpCode(HttpStatus.OK)
     @Post('login')
     async login(@Body() loginDto: LoginDto) {
