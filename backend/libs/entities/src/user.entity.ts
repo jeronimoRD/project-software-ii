@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 import { Reserve } from './reserve.entity';
 import { Review } from './review.entity';
+import { Hotel } from './hotel.entity';
 
 export enum UserRole {
   admin = 'admin',
@@ -10,11 +11,8 @@ export enum UserRole {
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  
-  @OneToMany(() => Reserve, (room) => room.user)
-  reserves: Reserve[];
 
-  @OneToMany(() => Review, (review) => review.user)
+  @OneToMany(() => Review, (review) => review.user, { cascade: true })
   reviews: Review[];
 
   @Column()
@@ -34,6 +32,12 @@ export class User {
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
+
+  @OneToMany(() => Reserve, (room) => room.user)
+  reserves: Reserve[];
+
+  @OneToOne(() => Hotel, (hotel) => hotel.user) 
+  hotel: Hotel;
 
   @Column({ unique: true })
   phone: string;

@@ -62,7 +62,7 @@ export class UsersService implements UserServiceInterface {
     const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
     if (!isPasswordValid) throw new UnauthorizedException('Invalid credentials');
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.role);
     const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10);
     
     await this.userRepository.update(user.id, {
@@ -84,7 +84,7 @@ export class UsersService implements UserServiceInterface {
       const isValid = await bcrypt.compare(refreshToken, user.refreshToken);
       if (!isValid) throw new UnauthorizedException('Invalid token');
 
-      const tokens = await this.getTokens(user.id, user.email);
+      const tokens = await this.getTokens(user.id, user.email, user.role);
       const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10);
       
       await this.userRepository.update(user.id, {
@@ -158,17 +158,18 @@ export class UsersService implements UserServiceInterface {
   private async getTokens(
     userId: string,
     email: string,
+    role: string
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
-        { sub: userId, email },
+        { sub: userId, email, role},
         {
           secret: this.configService.get('JWT_ACCESS_SECRET'),
           expiresIn: this.configService.get('JWT_ACCESS_EXPIRATION'),
         },
       ),
       this.jwtService.signAsync(
-        { sub: userId, email },
+        { sub: userId, email, role},
         {
           secret: this.configService.get('JWT_REFRESH_SECRET'),
           expiresIn: this.configService.get('JWT_REFRESH_EXPIRATION'),

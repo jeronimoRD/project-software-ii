@@ -153,5 +153,10 @@
 
     ||ERROR|| -> nest start reserves no funciona errores de modulos
 
+25-05-2025
+    Ahora se usa el decorador AdminOnly() para trabajos de administradores.
+
+    
+
 
 

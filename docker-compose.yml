@@ -3,7 +3,7 @@ services:
     container_name: backend
     build:
       context: ./backend
-      dockerfile: ./apps/backend/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
     env_file:
@@ -20,7 +20,7 @@ services:
     container_name: backend-user
     build:
       context: ./backend
-      dockerfile: ./apps/user/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 3001:3000
     env_file:
@@ -37,7 +37,7 @@ services:
     container_name: backend-hotel
     build:
       context: ./backend
-      dockerfile: ./apps/hotel/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 3002:3000
     env_file:
@@ -54,7 +54,7 @@ services:
     container_name: backend-rooms
     build:
       context: ./backend
-      dockerfile: ./apps/rooms/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 3003:3000
     env_file:
@@ -71,7 +71,7 @@ services:
     container_name: backend-reserves
     build:
       context: ./backend
-      dockerfile: ./apps/reserves/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 3004:3000
     env_file:
@@ -88,7 +88,7 @@ services:
     container_name: backend-reviews
     build:
       context: ./backend
-      dockerfile: ./apps/reviews/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - 3005:3000
     env_file:
