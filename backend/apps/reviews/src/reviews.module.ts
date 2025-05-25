@@ -1,15 +1,20 @@
+// apps/reviews/src/reviews.module.ts
 import { Module } from '@nestjs/common';
-import { ReviewsController } from './reviews.controller';
-import { ReviewsService } from './reviews.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Hotel, Review, User } from '@entity/entities';
+import { Review, Hotel, User } from '@entity/entities';
+import { ReviewsService } from './reviews.service';
+import { ReviewsController } from './reviews.controller';
+import { AuthModule } from '@auth/auth';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from '@auth/auth/jwt.strategy';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Review, User, Hotel]),
-
+    TypeOrmModule.forFeature([Review, Hotel, User]),
+    JwtModule.register({}),
+    AuthModule,           
   ],
+  providers: [ReviewsService, JwtStrategy],
   controllers: [ReviewsController],
-  providers: [ReviewsService],
 })
 export class ReviewsModule {}

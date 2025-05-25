@@ -1,12 +1,11 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional, Length, Min, Max } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsOptional, Length, Min, Max, IsUUID } from 'class-validator';
 
 export class CreateReviewDto {
-  @IsNotEmpty()
-  @IsString()
+  @IsUUID()
   userId: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsUUID()
   hotelId: string;
 
   @IsNotEmpty()
@@ -25,7 +24,6 @@ export class CreateReviewDto {
   @Max(5)
   rating: number;
 }
-
 
 export class UpdateReviewDto {
   @IsOptional()
