@@ -1,71 +1,72 @@
-<main class="page-register">
+<div class="page-register">
   <section class="container-register">
 
     <div class="information-register">
       <div class="logo-register">
-        <img src="/generic-logo.jpg" alt="Logo" />
+        <img src="/asensorista/asensoristaradical.png" alt="Logo" />
       </div>
       <div class="inputs-information-register">
         <div class="title-register">
           <h1>¡Uneté a nosotros!</h1>
         </div>
-        <div class="inputs-register">
-          <div class="input-register">
-            <input
-            type="text"
-            placeholder="Nombre"
-            [(ngModel)]="firstName"
-            name="nombre"
-            required>
-          </div>
-          <div class="input-register">
+        <div class="register-section">
+          <div class="inputs-register">
+            <div class="input-register">
               <input
               type="text"
-              placeholder="Apellido"
-              [(ngModel)]="lastName"
-              name="apellido"
+              placeholder="Nombre"
+              [(ngModel)]="firstName"
+              name="nombre"
               required>
-          </div>
+            </div>
+            <div class="input-register">
+                <input
+                type="text"
+                placeholder="Apellido"
+                [(ngModel)]="lastName"
+                name="apellido"
+                required>
+            </div>
 
-          <div class="input-register">
-            <input
-            type="text"
-            placeholder="Username"
-            [(ngModel)]="username"
-            name="username"
-            required>
-          </div>
-          <div class="input-register">
-          <input
-            type="password"
-            placeholder="Contraseña"
-            [(ngModel)]="password"
-            name="contraseña"
-            required>
-          </div>
-          <div class="input-register">
-            <input
-            type="email"
-            placeholder="Correo"
-            [(ngModel)]="email"
-            name="correo"
-            required>
-          </div>
-          <div class="input-register">
+            <div class="input-register">
               <input
               type="text"
-              placeholder="Celular"
-              [(ngModel)]="phone"
-              name="celular"
+              placeholder="Username"
+              [(ngModel)]="username"
+              name="username"
               required>
+            </div>
+            <div class="input-register">
+            <input
+              type="password"
+              placeholder="Contraseña"
+              [(ngModel)]="password"
+              name="contraseña"
+              required>
+            </div>
+            <div class="input-register">
+              <input
+              type="email"
+              placeholder="Correo"
+              [(ngModel)]="email"
+              name="correo"
+              required>
+            </div>
+            <div class="input-register">
+                <input
+                type="text"
+                placeholder="Celular"
+                [(ngModel)]="phone"
+                name="celular"
+                required>
+            </div>
           </div>
         </div>
+          <button (click)="registerUser() " class="button-register">Crear cuenta</button>
       </div>
     </div>
 
-    <div class="button-register">
-        <button (click)="registerUser()">Crear cuenta</button>
-    </div>
+    
 
   </section>
-</main>
+</div>

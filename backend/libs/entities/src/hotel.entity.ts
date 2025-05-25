@@ -21,13 +21,13 @@ export class Hotel {
 
   @Column({
     default: 'https://ejemplo.com/foto-default.jpg',
-    length: 500
+    length: 500,
   })
   photo: string;
 
   @Column({
     default: 'Descripción no disponible',
-    length: 2000
+    length: 2000,
   })
   description: string;
 

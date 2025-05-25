@@ -1,6 +1,14 @@
 <div class="hotel-search-page">
-  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="hotel-search-form">
 
+  <div class="welcome-section">
+    <div class="welcome-content">
+      <h1 class="welcome-title">¡Bienvenido a Cowtel!</h1>
+    </div>
+    <img src="asensorista/asensoristabandera.png" alt="Hotel Cowtel" class="welcome-image">
+  </div>
+
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="hotel-search-form">
+    
     <div class="hotel-search-field">
       <mat-form-field appearance="outline">
         <mat-label>Nombre de Hotel</mat-label>

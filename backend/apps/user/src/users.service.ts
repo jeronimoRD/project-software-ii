@@ -17,6 +17,7 @@ import {
   UpdateUserDto,
 } from './dto/user.dto';
 import { UserServiceInterface } from './interfaces/user.interface';
+import { EmailService } from '@email/email/email.service';
 
 @Injectable()
 export class UsersService implements UserServiceInterface {
@@ -25,6 +26,7 @@ export class UsersService implements UserServiceInterface {
     private userRepository: Repository<User>,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private emailService: EmailService,
   ) {}
 
   private sanitizeUser(user: User): User {
@@ -49,22 +51,32 @@ export class UsersService implements UserServiceInterface {
     });
 
     const savedUser = await this.userRepository.save(newUser);
+    await this.emailService.sendWelcomeEmail(
+      savedUser.email,
+      savedUser.username,
+    );
     return this.sanitizeUser(savedUser);
   }
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string; refreshToken: string }> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     const user = await this.userRepository.findOne({
       where: { email: loginDto.email },
     });
 
     if (!user) throw new NotFoundException('User not found');
-    
-    const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
-    if (!isPasswordValid) throw new UnauthorizedException('Invalid credentials');
+
+    const isPasswordValid = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
+    if (!isPasswordValid)
+      throw new UnauthorizedException('Invalid credentials');
 
     const tokens = await this.getTokens(user.id, user.email);
     const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10);
-    
+
     await this.userRepository.update(user.id, {
       refreshToken: hashedRefreshToken,
     });
@@ -72,7 +84,9 @@ export class UsersService implements UserServiceInterface {
     return tokens;
   }
 
-  async refreshToken(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
+  async refreshToken(
+    refreshToken: string,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     try {
       const payload = this.jwtService.verify(refreshToken, {
         secret: this.configService.get('JWT_REFRESH_SECRET'),
@@ -86,7 +100,7 @@ export class UsersService implements UserServiceInterface {
 
       const tokens = await this.getTokens(user.id, user.email);
       const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10);
-      
+
       await this.userRepository.update(user.id, {
         refreshToken: hashedRefreshToken,
       });
@@ -99,7 +113,7 @@ export class UsersService implements UserServiceInterface {
 
   async findAll(): Promise<User[]> {
     const users = await this.userRepository.find();
-    return users.map(user => this.sanitizeUser(user));
+    return users.map((user) => this.sanitizeUser(user));
   }
 
   async findOne(id: string): Promise<User> {
@@ -110,7 +124,8 @@ export class UsersService implements UserServiceInterface {
 
   async findByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { email } });
-    if (!user) throw new NotFoundException(`User with email "${email}" not found`);
+    if (!user)
+      throw new NotFoundException(`User with email "${email}" not found`);
     return this.sanitizeUser(user);
   }
 
@@ -133,7 +148,7 @@ export class UsersService implements UserServiceInterface {
       ...user,
       ...updateUserDto,
     });
-    
+
     return this.sanitizeUser(updatedUser);
   }
 
@@ -144,12 +159,19 @@ export class UsersService implements UserServiceInterface {
     }
   }
 
-  async changePassword(id: string, changePasswordDto: ChangePasswordDto): Promise<void> {
+  async changePassword(
+    id: string,
+    changePasswordDto: ChangePasswordDto,
+  ): Promise<void> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) throw new NotFoundException(`User with ID "${id}" not found`);
 
-    const isValid = await bcrypt.compare(changePasswordDto.currentPassword, user.password);
-    if (!isValid) throw new UnauthorizedException('Current password is incorrect');
+    const isValid = await bcrypt.compare(
+      changePasswordDto.currentPassword,
+      user.password,
+    );
+    if (!isValid)
+      throw new UnauthorizedException('Current password is incorrect');
 
     const hashedPassword = await bcrypt.hash(changePasswordDto.newPassword, 10);
     await this.userRepository.update(id, { password: hashedPassword });

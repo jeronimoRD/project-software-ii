@@ -10,8 +10,6 @@ import { User, Hotel, Room, Reserve, Review } from '@entity/entities';
 import { ReservesModule } from 'apps/reserves/src/reserves.module';
 import { ReviewsModule } from 'apps/reviews/src/reviews.module';
 
-
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -36,7 +34,7 @@ import { ReviewsModule } from 'apps/reviews/src/reviews.module';
     HotelsModule,
     RoomsModule,
     ReservesModule,
-    ReviewsModule
+    ReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

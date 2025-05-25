@@ -69,6 +69,48 @@
   content: '$';
 }
 
+/* Contenedor principal flex */
+.welcome-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #c285b9, #915487);
+  border-radius: 12px;
+}
+
+/* Contenido de texto */
+.welcome-content {
+  flex: 1;
+}
+
+/* Estilos de la imagen */
+.welcome-image {
+  flex: 0 1 40%;
+  max-width: 1000px;
+  border-radius: 8px;
+}
+
+.welcome-title {
+  color: #dbd5d5;
+  font-size: 100px;
+  margin-bottom: 1rem;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .welcome-section {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .welcome-image {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
 /* Media queries */
 @media (max-width: 768px) {
   .hotel-search-page {
@@ -93,4 +135,5 @@
     padding: 0.8rem;
     font-size: 1rem;
   }
+  
 }

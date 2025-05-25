@@ -4,16 +4,19 @@
     align-items: center;      
     justify-content: center;  
     min-height: 100vh; 
+    background-image: url('/fondo.jpg');
 
     .information-register{
         display: flex;
         align-items: center;
         justify-content: center;
         padding-right: 20%;
+        background: linear-gradient(135deg, #c285b9, #915487);
+          border-radius: 12px;
 
         .inputs-information-register{
             .title-register {
-                color: rgb(182, 129, 234);
+                color: rgb(255, 255, 255);
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 margin-bottom: 20px;
             }
@@ -32,15 +35,41 @@
         }
     }
     .button-register { 
-        button {
-            padding: 12px 24px;
-            background-color: #3d283d; 
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;            
-            max-width: 400px;   
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #dfd3dd, #b89cb3);
+        color: rgb(104, 91, 91);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(145, 84, 135, 0.4);
+        }
+
+        &:active {
+            transform: translateY(0);
         }
     }
+}
+
+.image {
+  flex: 0 1 40%;
+  max-width: 1000px;
+  border-radius: 8px;
+}
+.section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  border-radius: 12px;
 }

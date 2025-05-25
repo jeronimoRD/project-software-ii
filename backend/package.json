@@ -31,11 +31,12 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "mysql2": "^3.14.1",
+    "nodemailer": "^7.0.3",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.23"
+    "typeorm": "^0.3.24"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -86,7 +87,9 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
+      "^@ase/asensorista(|/.*)$": "<rootDir>/libs/asensorista/src/$1",
       "^@auth/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
+      "^@email/email(|/.*)$": "<rootDir>/libs/email/src/$1",
       "^@entity/entities(|/.*)$": "<rootDir>/libs/entities/src/$1"
     }
   }

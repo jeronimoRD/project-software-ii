@@ -32,13 +32,14 @@ interface Hotel {
     ReactiveFormsModule,
     MatIconModule,
     VerticalGridComponent,
-    HorizontalGridComponent
+    HorizontalGridComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 
 export class HomeComponent {
+  
   searchForm: FormGroup;
   hotels: Hotel[] = []
 

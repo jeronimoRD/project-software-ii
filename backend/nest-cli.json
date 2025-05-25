@@ -10,6 +10,15 @@
   "monorepo": true,
   "root": "apps/backend",
   "projects": {
+    "asensorista": {
+      "type": "library",
+      "root": "libs/asensorista",
+      "entryFile": "index",
+      "sourceRoot": "libs/asensorista/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/asensorista/tsconfig.lib.json"
+      }
+    },
     "auth": {
       "type": "library",
       "root": "libs/auth",
@@ -26,6 +35,15 @@
       "sourceRoot": "apps/backend/src",
       "compilerOptions": {
         "tsConfigPath": "apps/backend/tsconfig.app.json"
+      }
+    },
+    "email": {
+      "type": "library",
+      "root": "libs/email",
+      "entryFile": "index",
+      "sourceRoot": "libs/email/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/email/tsconfig.lib.json"
       }
     },
     "entities": {

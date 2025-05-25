@@ -11,7 +11,7 @@
     justify-content: center;
 
     span{
-        color: #007bff; /* Azul estándar */
+        color: #a3bfdb; /* Azul estándar */
         text-decoration: underline;
         cursor: pointer;
         transition: color 0.3s ease;
@@ -21,4 +21,53 @@
 .title-login{
     display: flex;
     justify-content: center;
+    color : #ffffff; /* Azul estándar */
+}
+.image {
+  flex: 0 1 40%;
+  max-width: 1000px;
+  border-radius: 8px;
+}
+.section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #c285b9, #915487);
+  border-radius: 12px;
+}
+
+.page-register {
+  position: relative; 
+  background-image: url('/fondo.jpg');
+  background-size: cover; 
+  background-position: center;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.login-button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #dfd3dd, #b89cb3);
+  color: rgb(104, 91, 91);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(145, 84, 135, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }

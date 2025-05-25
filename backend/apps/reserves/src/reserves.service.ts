@@ -11,6 +11,7 @@ import { User } from '@entity/entities/user.entity';
 import { Room } from '@entity/entities/room.entity';
 import { Repository } from 'typeorm';
 import { Reserve as ReserveInterface } from './interfaces/reserve.interface';
+import { EmailService } from '@email/email/email.service';
 
 @Injectable()
 export class ReservesService implements ReserveServiceInterface {
@@ -21,8 +22,8 @@ export class ReservesService implements ReserveServiceInterface {
     private userRepository: Repository<User>,
     @InjectRepository(Room)
     private roomRepository: Repository<Room>,
+    private emailService: EmailService,
   ) {}
-
   private sanitizeReserve(reserve: Reserve): ReserveInterface {
     return {
       id: reserve.id,
@@ -70,6 +71,10 @@ export class ReservesService implements ReserveServiceInterface {
     });
     if (!reserveWithRelations)
       throw new Error('Reserve not found after creation');
+    await this.emailService.sendReserveCreationEmail(
+      reserveWithRelations.user.email,
+      reserveWithRelations.user.username,
+    );
     return this.sanitizeReserve(reserveWithRelations);
   }
 
@@ -155,6 +160,17 @@ export class ReservesService implements ReserveServiceInterface {
     }
 
     const savedReserve = await this.reserveRepository.save(reserve);
+    if (savedReserve.status === 'confirmed') {
+      await this.emailService.sendReserveConfirmationEmail(
+        savedReserve.user.email,
+        savedReserve.user.username,
+      );
+    } else if (savedReserve.status === 'rejected') {
+      await this.emailService.sendReserveRejectionEmail(
+        savedReserve.user.email,
+        savedReserve.user.username,
+      );
+    }
     return this.sanitizeReserve(savedReserve);
   }
 }
