@@ -34,6 +34,15 @@ export class ReservesService implements ReserveServiceInterface {
     };
   }
 
+  async findAllReservesByUser(userId: string): Promise<ReserveInterface[]> {
+    const reserves = await this.reserveRepository.find({
+      where: { user: { id: userId } },
+      relations: ['user', 'room'], 
+    });
+
+    return reserves.map((reserve) => this.sanitizeReserve(reserve));
+  }
+
   async createReserve(userId: string, dto: CreateReserveDto): Promise<ReserveInterface> {
     const { roomId, startDate, endDate } = dto;
 

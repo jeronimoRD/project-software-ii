@@ -6,9 +6,10 @@ import { HotelComponent } from './pages/hotel/hotel.component';
 import { RecommendationsComponent } from './pages/hotel/recommendations/recommendations.component';
 import { RoomsComponent } from './pages/hotel/rooms/rooms.component';
 import { ReviewsComponent } from './pages/hotel/reviews/reviews.component';
-import { ReserveComponent } from './pages/reserve/reserve.component';
+import { ReservesComponent } from './pages/reserve/reserve.component';
 import { AmdinHotelComponent } from './pages/amdin-hotel/amdin-hotel.component';
 import { AdminRoomsComponent } from './pages/admin-rooms/admin-rooms.component';
+import { RequestsAdminComponent } from './pages/requests/requests-admin.componen';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,13 +18,13 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'adminHotel', component: AmdinHotelComponent },
   { path: 'adminRooms', component: AdminRoomsComponent },
-  { path: 'hotel/:id', component: HotelComponent},
-  { path: 'hotel/:id/reserves', component: ReserveComponent,
+  { path: 'reserves', component: ReservesComponent },
+  { path: 'admin/requests', component: RequestsAdminComponent },
+  { path: 'hotel/:id', component: HotelComponent,
     children: [
       { path: 'recommendations', component: RecommendationsComponent },
       { path: 'rooms', component: RoomsComponent },
       { path: 'reviews', component: ReviewsComponent },
-      { path: 'reserves', component: ReserveComponent },
       { path: '', redirectTo: 'recommendations', pathMatch: 'full' } 
     ]
   },

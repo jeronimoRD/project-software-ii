@@ -1,34 +1,52 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { ReservesService } from '../../services/reserves.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
+
+interface Reserve {
+  id: string;
+  room: { id: string; price: number; };
+  startDate: string;
+  endDate: string;
+  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+}
+
 @Component({
-  selector: 'app-reserve',
-  imports: [],
+  selector: 'app-reserves',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgIf,
+    NgForOf,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule, 
+    MatChipsModule
+  ],
   templateUrl: './reserve.component.html',
-  styleUrl: './reserve.component.css'
+  styleUrls: ['./reserve.component.css']
 })
-export class ReserveComponent {
+export class ReservesComponent implements OnInit {
+  reserves: Reserve[] = [];
+  loading = true;
 
-  reserveForm: FormGroup;
+  constructor(private reservesService: ReservesService) {}
 
-  constructor(private fb: FormBuilder) {
-    this.reserveForm = this.fb.group({
-      room: ['', Validators.required],
-      userName: ['', [Validators.required, Validators.minLength(6)]],
-      userEmail: ['', [Validators.required, Validators.email]],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      paymetod: ['tarjeta', Validators.required],
+  ngOnInit() {
+    this.reservesService.findReserves().subscribe({
+      next: (data) => {
+        this.reserves = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar reservas', err);
+        this.loading = false;
+      }
     });
-  }
-
-  get hoy() {
-    return new Date().toISOString().split('T')[0];
-  }
-  onSubmit() {
-    if (this.reserveForm.valid) {
-      console.log('Formulario válido');
-    } else {
-      this.reserveForm.markAllAsTouched();
-    }
   }
 }

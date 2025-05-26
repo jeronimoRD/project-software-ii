@@ -1,0 +1,36 @@
+<mat-tab-group>
+  <mat-tab label="Pendientes">
+    <div *ngIf="loading" class="loading">Cargando solicitudes…</div>
+    <div *ngIf="!loading && pending.length === 0" class="empty">No hay solicitudes pendientes.</div>
+    <div *ngFor="let r of pending" class="req-card">
+      <mat-card>
+        <mat-card-title>Solicitud #{{ r.id | slice:0:8 }}</mat-card-title>
+        <mat-card-content>
+          Reserva: {{ r.reserveId | slice:0:8 }}<br>
+          Fecha creación: {{ r.createdAt | date:'dd MMM y HH:mm' }}
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="accept(r)">
+            <mat-icon>check_circle</mat-icon> Aceptar
+          </button>
+          <button mat-button color="warn" (click)="reject(r)">
+            <mat-icon>cancel</mat-icon> Rechazar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-tab>
+  <mat-tab label="Historial">
+    <div *ngIf="!loading && history.length === 0" class="empty">No hay solicitudes respondidas.</div>
+    <div *ngFor="let r of history" class="req-card">
+      <mat-card>
+        <mat-card-title>Solicitud #{{ r.id | slice:0:8 }}</mat-card-title>
+        <mat-card-content>
+          Reserva: {{ r.reserveId | slice:0:8 }}<br>
+          Creada: {{ r.createdAt | date:'dd MMM y' }}<br>
+          Estado: {{ r.status }}
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>
