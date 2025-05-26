@@ -15,7 +15,91 @@ services:
       - mysql
     networks:
       - network-software2
-  #Add new containers
+
+  backend-hotel:
+    container_name: backend-hotel
+    build:
+      context: ./backend
+      dockerfile: apps/hotel/Dockerfile
+    ports:
+      - 3002:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
+
+  backend-rooms:
+    container_name: backend-rooms
+    build:
+      context: ./backend
+      dockerfile: apps/rooms/Dockerfile
+    ports:
+      - 3003:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
+
+  backend-reviews:
+    container_name: backend-reviews
+    build:
+      context: ./backend
+      dockerfile: apps/reviews/Dockerfile
+    ports:
+      - 3004:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
+  
+  backend-reserves:
+    container_name: backend-reserves
+    build:
+      context: ./backend
+      dockerfile: apps/reserves/Dockerfile
+    ports:
+      - 3005:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
+
+  backend-requests:
+    container_name: backend-requests
+    build:
+      context: ./backend
+      dockerfile: apps/requests/Dockerfile
+    ports:
+      - 3006:3000
+    env_file:
+      - ./backend/.env 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    networks:
+      - network-software2
 
   frontend-software2:
     container_name: frontend
@@ -27,8 +111,13 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    depends_on: #New nest projects
+    depends_on: 
       - backend-user
+      - backend-hotel
+      - backend-rooms
+      - backend-reviews
+      - backend-reserves
+      - backend-requests
     networks:
       - network-software2
 

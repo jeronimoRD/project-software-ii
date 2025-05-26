@@ -12,7 +12,6 @@ import {
 } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto, UpdateReviewDto } from './dto/review.dto';
-import { Review } from '@entity/entities/review.entity';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('reviews')

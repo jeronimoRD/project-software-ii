@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RoomService {
-  private apiUrl = 'http://localhost:3000/rooms'; //URL Backend
+  private apiUrl = 'http://localhost:3003/rooms'; //URL Backend
 
   constructor(private http: HttpClient) {}
 

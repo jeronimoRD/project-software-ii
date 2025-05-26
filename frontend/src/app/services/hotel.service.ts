@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root', 
   })
   export class HotelService {
-    private apiUrl = 'http://localhost:3001/hotels'; //URL Backend
+    private apiUrl = 'http://localhost:3002/hotels'; //URL Backend
   
     constructor(private http: HttpClient) {}
  
@@ -16,5 +16,13 @@ import { Observable } from 'rxjs';
 
     filterHotels(hotel: any): Observable<any> {
       return this.http.post(`${this.apiUrl}/filter`, hotel);
+    }
+
+    updatePrice(hotel: any): Observable<any> {
+      return this.http.patch(`${this.apiUrl}/update-prices`, hotel);
+    }
+
+    updateRating(hotel: any): Observable<any> {
+      return this.http.patch(`${this.apiUrl}/update-rating`, hotel);
     }
 }

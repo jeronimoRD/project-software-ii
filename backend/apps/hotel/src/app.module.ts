@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users.module';
+import { HotelsModule } from './hotels.module';
 import { User, Hotel, Reserve, Review, Room, Request} from '@entity/entities';
 
 @Module({
@@ -17,11 +17,11 @@ import { User, Hotel, Reserve, Review, Room, Request} from '@entity/entities';
         username: config.get('MYSQL_USER'),
         password: config.get('MYSQL_PASSWORD'),
         database: config.get('MYSQL_DATABASE'),
-        entities: [User, Hotel, Room, Reserve, Review, Request],
+        entities: [Hotel, Room, Review, User, Reserve, Request],
         synchronize: true,
       }),
     }),
-    UsersModule,  //Only dev
+    HotelsModule,  //Only dev
   ],
 })
 export class AppModule {}
