@@ -5,8 +5,9 @@ import { Review } from './review.entity';
 import { Hotel } from './hotel.entity';
 
 export enum UserRole {
-  admin = 'admin',
+  ADMIN = 'admin',
   USER = 'user',
+  DEV = 'dev'
 }
 
 @Entity()

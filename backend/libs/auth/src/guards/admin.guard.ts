@@ -12,7 +12,7 @@ export class AdminGuard implements CanActivate {
     }
 
     console.log(user.role);
-    if (user.role !== UserRole.admin) {
+    if (user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('Solo los administradores pueden realizar esta acción');
     }
 

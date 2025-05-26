@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ReservesService } from './reserves.service';
-import { AdminOnly } from '@auth/auth/admin.decorator';
+import { AdminOnly } from '@auth/auth/decorators/admin.decorator';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('reserves')
