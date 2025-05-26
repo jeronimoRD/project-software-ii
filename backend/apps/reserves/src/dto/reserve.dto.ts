@@ -4,16 +4,14 @@ import {
   IsOptional,
   IsString,
   IsDateString,
+  IsUUID,
 } from 'class-validator';
 
 import { reserveStatus } from '@entity/entities/reserve.entity';
 export class CreateReserveDto {
   @IsNotEmpty()
-  @IsString()
-  room: string;
-  @IsNotEmpty()
-  @IsString()
-  user: string;
+  @IsUUID()
+  roomId: string;
   @IsNotEmpty()
   @IsDateString()
   startDate: Date;

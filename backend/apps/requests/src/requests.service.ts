@@ -1,4 +1,4 @@
-import { requestStatus, Reserve, User, Request, reserveStatus } from '@entity/entities';
+import { RequestStatus, Reserve, User, Request, reserveStatus } from '@entity/entities';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -35,7 +35,7 @@ export class RequestsService {
     // Asignar admin y reserva
     const request = this.requestRepository.create({
       ...createRequestDto,
-      status: requestStatus.PENDING,
+      status: RequestStatus.UNDER_REVIEW,
     });
 
     // Guardar
@@ -61,17 +61,11 @@ export class RequestsService {
     // 3. Mapear estado de request a estado de reserva
     const reserve = updatedRequest.reserve;
     switch (status) {
-      case requestStatus.RESERVED:
+      case RequestStatus.APPROVED:
         reserve.status = reserveStatus.RESERVED;
         break;
-      case requestStatus.REJECTED:
+      case RequestStatus.REJECTED:
         reserve.status = reserveStatus.REJECTED;
-        break;
-      case requestStatus.CANCELLED:
-        reserve.status = reserveStatus.CANCELLED;
-        break;
-      case requestStatus.FINISHED:
-        reserve.status = reserveStatus.FINISHED;
         break;
       default:
         break;

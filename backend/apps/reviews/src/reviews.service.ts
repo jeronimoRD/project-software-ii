@@ -32,15 +32,15 @@ export class ReviewsService implements ReviewServiceInterface {
       return uuidRegex.test(uuid);
   }
 
-  async createReview(reviewDto: CreateReviewDto): Promise<Review> {
+  async createReview(userId: string, reviewDto: CreateReviewDto): Promise<Review> {
     // Validar UUIDs
-    if (!this.isValidUUID(reviewDto.hotelId) || !this.isValidUUID(reviewDto.userId)) {
+    if (!this.isValidUUID(reviewDto.hotelId) || !this.isValidUUID(userId)) {
       throw new BadRequestException('IDs de hotel o usuario inválidos');
     }
 
     // Buscar entidades relacionadas
     const hotel = await this.hotelRepository.findOneBy({ id: reviewDto.hotelId });
-    const user = await this.userRepository.findOneBy({ id: reviewDto.userId });
+    const user = await this.userRepository.findOneBy({ id: userId });
 
     if (!hotel || !user) {
       throw new NotFoundException('Hotel o usuario no encontrado');

@@ -2,20 +2,23 @@ import {
     ConflictException,
     Injectable,
     NotFoundException,
-    BadRequestException 
+    BadRequestException, 
+    ForbiddenException
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, Between } from 'typeorm';
 import { CreateHotelsDto, FilterHotelsDto } from './dto/hotel.dto';
 import { HotelServiceInterface } from './interfaces/hotel.interface';
-import { Hotel, Review, Room } from '@entity/entities';
+import { Hotel, Review, Room, User, UserRole } from '@entity/entities';
 
 @Injectable()
 export class HotelsService implements HotelServiceInterface {
     constructor(
         @InjectRepository(Hotel)
         private hotelRepository: Repository<Hotel>,
+        @InjectRepository(User)
+        private userRepository: Repository<User>,
         @InjectRepository(Room)
         private roomRepository: Repository<Room>,
         @InjectRepository(Review) 
@@ -35,7 +38,14 @@ export class HotelsService implements HotelServiceInterface {
 
     async create(createDto: CreateHotelsDto): Promise<Hotel> {
 
-         const existingHotel = await this.hotelRepository
+        const user = await this.userRepository.findOne({ 
+            where: { id: createDto.user_id },
+            select: ['id', 'role'] 
+        });
+        if (!user) throw new NotFoundException(`Admin with ID "${createDto.user_id}" not found`);
+        if (user.role !== UserRole.ADMIN) throw new ForbiddenException('Solo los administradores pueden realizar esta acción');
+
+        const existingHotel = await this.hotelRepository
         .createQueryBuilder('hotel')
         .where('LOWER(hotel.name) = LOWER(:name)', { name: createDto.name })
         .getOne();
@@ -46,6 +56,7 @@ export class HotelsService implements HotelServiceInterface {
 
         const hotel = this.hotelRepository.create({
             ...createDto,
+            user: user,
             lower_price: 0,
             higher_price: 0,
             rating: 0,

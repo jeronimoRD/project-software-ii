@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Req,
 } from '@nestjs/common';
 
 import { RoomsService } from './rooms.service';
@@ -20,8 +21,8 @@ export class RoomsController {
   // admin - endpoints
   @Post()
   @AdminOnly()
-  async create(@Body() createRoomDto: CreateRoomDto) {
-    return this.roomsService.create(createRoomDto);
+  async create(@Body() createRoomDto: CreateRoomDto, @Req() req) {
+    return this.roomsService.create(req.user.id, createRoomDto);
   }
 
   // public - endpoints

@@ -13,6 +13,7 @@ import { Hotel } from '@entity/entities/hotel.entity';
 import { ChangeStatusDto, CreateRoomDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
 import { RoomServiceInterface } from './interface/room.interface';
 import { HotelsService } from 'apps/hotel/src/hotels.service';
+import { UserRole } from '@entity/entities';
 
 @Injectable()
 export class RoomsService implements RoomServiceInterface {
@@ -35,17 +36,24 @@ export class RoomsService implements RoomServiceInterface {
     return uuidRegex.test(uuid);
   }
 
-  async create(createRoomDto: CreateRoomDto): Promise<Room> {
+  async create(userId: string, createRoomDto: CreateRoomDto): Promise<Room> {
     // 1. Validación de UUID del hotel
     if (!this.isValidUUID(createRoomDto.hotel)) {
         throw new BadRequestException('ID de hotel inválido');
     }
-    // 2. Verificar existencia del hotel
-    const hotel = await this.hotelRepository.findOneBy({ 
-        id: createRoomDto.hotel 
+
+    const hotel = await this.hotelRepository.findOne({
+      where: { id: createRoomDto.hotel },
+      relations: ['user'],    
     });
     if (!hotel) {
-        throw new NotFoundException('Hotel no encontrado');
+      throw new NotFoundException('Hotel no encontrado');
+    }
+
+    if (hotel.user.id !== userId && hotel.user.role !== UserRole.DEV) {
+      throw new UnauthorizedException(
+        'Solo el administrador de este hotel puede crear habitaciones'
+      );
     }
 
     // 4. Crear nueva habitación

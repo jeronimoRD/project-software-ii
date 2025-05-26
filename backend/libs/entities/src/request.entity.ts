@@ -4,18 +4,15 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToOne,
   JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Reserve } from './reserve.entity';
 
-export enum requestStatus {
-  RESERVED = 'reserved',
-  REJECTED = 'rejected',
-  CANCELLED = 'cancelled',
-  FINISHED = 'finished',
-  PENDING = 'pending'
+export enum RequestStatus {
+  UNDER_REVIEW = 'under_review',
+  APPROVED = 'approved',
+  REJECTED = 'rejected'
 }
 
 @Entity()
@@ -23,24 +20,35 @@ export class Request {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.requests)
-  @JoinColumn({ name: 'admin_id' })
+  @ManyToOne(() => User, (user) => user.requests, { 
+    onDelete: 'CASCADE' 
+  })
+  @JoinColumn({ name: 'admin_id' }) 
   admin: User;
 
-  @OneToOne(() => Reserve, (reserve) => reserve.request)
-  @JoinColumn({ name: 'reserve_id' })
+  @ManyToOne(() => Reserve, (reserve) => reserve.requests, {
+    onDelete: 'CASCADE' 
+  })
+  @JoinColumn({ name: 'reserve_id' }) 
   reserve: Reserve;
 
   @Column({
     type: 'enum',
-    enum: requestStatus,
-    default: requestStatus.PENDING,
+    enum: RequestStatus,
+    default: RequestStatus.UNDER_REVIEW
   })
-  status: requestStatus;
+  status: RequestStatus;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP'
+  })
+  created_at: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  updatedAt?: Date;
+  @Column({
+    type: 'timestamp',
+    onUpdate: 'CURRENT_TIMESTAMP',
+    nullable: true
+  })
+  updated_at: Date | null;
 }

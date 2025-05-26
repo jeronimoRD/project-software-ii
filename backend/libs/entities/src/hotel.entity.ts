@@ -14,7 +14,7 @@ export class Hotel {
   @OneToMany(() => Review, (review) => review.hotel)
   reviews: Review[];
 
-  @Column({ length: 255 })
+  @Column({ length: 255, unique: true })
   name: string;
 
   @Column({ length: 255 })
@@ -42,6 +42,6 @@ export class Hotel {
   rating: number;
 
   @OneToOne(() => User, (user) => user.hotel) 
-  @JoinColumn() 
-  user: User
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

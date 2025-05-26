@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { ReservesService } from './reserves.service';
 import { AdminOnly } from '@auth/auth/decorators/admin.decorator';
 import { AuthGuard } from '@nestjs/passport';
@@ -8,9 +8,13 @@ import { AuthGuard } from '@nestjs/passport';
 export class ReservesController {
   constructor(private readonly reservesService: ReservesService) {}
 
+  // jwt - endpoint
+
   @Post()
-  createReserve(@Body() createReserveDto) {
-    return this.reservesService.createReserve(createReserveDto);
+  @UseGuards(AuthGuard('jwt'))
+  createReserve(@Body() createReserveDto, @Req() req) {
+    const userId = req.user.id;
+    return this.reservesService.createReserve(userId, createReserveDto);
   }
 
   @Post('update')

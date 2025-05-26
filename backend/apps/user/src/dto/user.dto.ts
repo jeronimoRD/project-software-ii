@@ -19,11 +19,11 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(6)
   lastName: string;
 
   @IsNotEmpty()
   @IsString()
+  @MinLength(4)
   username: string;
 
   @IsNotEmpty()
@@ -55,7 +55,7 @@ export class UpdateUserDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(6)
+  @MinLength(8)
   password?: string;
 }
 
@@ -82,6 +82,6 @@ export class ChangePasswordDto {
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(6)
+  @MinLength(8)
   newPassword: string;
 }

@@ -1,4 +1,4 @@
-import { requestStatus } from "@entity/entities";
+import { RequestStatus } from "@entity/entities";
 import { IsArray, IsEnum, IsNotEmpty, IsUUID } from "class-validator";
 
 export class CreateRequestDto {
@@ -16,6 +16,6 @@ export class ResponseRequestDto {
     @IsUUID()
     requestId: string;
 
-    @IsEnum(requestStatus)
-    status: requestStatus; 
+    @IsEnum(RequestStatus)
+    status: RequestStatus; 
 }

@@ -7,7 +7,8 @@ import {
     Column, 
     ManyToOne,
     JoinColumn,
-    OneToOne
+    OneToOne,
+    OneToMany
 } from 'typeorm';
 
 export enum reserveStatus {
@@ -44,6 +45,6 @@ export class Reserve {
   })
   status: string;
 
-  @OneToOne(() => Request, (request) => request.reserve)
-  request: Request;
+  @OneToMany(() => Request, (request) => request.reserve)
+  requests: Request[];
 }

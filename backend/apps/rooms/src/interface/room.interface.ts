@@ -11,7 +11,7 @@ export interface Room {
 }
 
 export interface RoomServiceInterface {
-  create(createRoomDto: CreateRoomDto): Promise<Room>;
+  create(userId: string, createRoomDto: CreateRoomDto): Promise<Room>;
   changeStatus(changeStatusDto: ChangeStatusDto): Promise<Room>;
   filterRoomsbyHotel(filter: FilterRoomsHotelDto): Promise<Room[]>;
   filterRoomsUniversal(filterRoomsUniversalDto: FilterRoomsUniversalDto): Promise<Room[]>;

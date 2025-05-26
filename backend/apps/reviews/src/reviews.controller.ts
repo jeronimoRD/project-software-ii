@@ -26,10 +26,8 @@ export class ReviewsController {
     @Body() reviewDto: CreateReviewDto,
     @Req() req
   ) {
-    return this.reviewsService.createReview({
-      ...reviewDto,
-      userId: req.user.id
-    });
+    const userId = req.user.id
+    return this.reviewsService.createReview(userId, reviewDto);
   }
 
   // public - endpoints

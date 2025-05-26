@@ -32,7 +32,7 @@ export class CreateHotelsDto {
 
   @IsNotEmpty()
   @IsUUID()
-  userId: string; 
+  user_id: string; 
 }
 
 export class FilterHotelsDto {
