@@ -17,4 +17,8 @@ import { Observable } from 'rxjs';
     filterHotels(hotel: any): Observable<any> {
       return this.http.post(`${this.apiUrl}/filter`, hotel);
     }
+    
+    createHotel(hotelData: any) {
+    return this.http.post(this.apiUrl, hotelData, { observe: 'response' });
+  }
 }

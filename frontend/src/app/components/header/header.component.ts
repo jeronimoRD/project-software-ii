@@ -35,6 +35,9 @@ export class HeaderComponent {
   navigateToReserve() {
     this.router.navigate(['/hotel/1/reserves']);
   }
+  navigateToAdminHotel() {
+    this.router.navigate(['/adminHotel']);
+  }
 
   changeLanguage(lang: string) {
     this.selectedLanguage = lang;

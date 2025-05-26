@@ -40,4 +40,10 @@ export class LoginComponent {
       }
     });
   }
+
+  logout() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    alert('Usuario desconectado exitosamente');
+  }
 }

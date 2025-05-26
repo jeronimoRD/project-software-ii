@@ -7,7 +7,7 @@ import { User } from '@entity/entities/user.entity';
 import { UsersModule } from 'apps/user/src/users.module';
 import { RoomsModule } from 'apps/rooms/src/rooms.module';
 import { Room, Request } from '@entity/entities';
-
+import { EmailModule } from '@email/email/email.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Reserve, User, Room, Request]),

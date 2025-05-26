@@ -3,6 +3,7 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRequestDto, ResponseRequestDto } from './dto/request.dto';
+import { EmailService } from '@email/email/email.service';
 
 @Injectable()
 export class RequestsService {
@@ -13,6 +14,7 @@ export class RequestsService {
     private reserveRepository: Repository<Reserve>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private emailService: EmailService,
   ) {}
 
   private sanitizeRequest(request: Request): Request {
@@ -40,7 +42,6 @@ export class RequestsService {
 
     // Guardar
     const saved = await this.requestRepository.save(request);
-
     return this.sanitizeRequest(saved);
   }
 
@@ -78,6 +79,12 @@ export class RequestsService {
         break;
       default:
         break;
+    }
+    if (reserve.status === reserveStatus.REJECTED) {
+      await this.emailService.sendReserveRejectionEmail(reserve.user.email, reserve.user.firstName);
+    }
+    if (reserve.status === reserveStatus.RESERVED) {
+      await this.emailService.sendReserveConfirmationEmail(reserve.user.email, reserve.user.firstName);
     }
     await this.reserveRepository.save(reserve);
   }

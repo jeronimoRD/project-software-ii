@@ -1,0 +1,55 @@
+<div class="page">
+  <div class="section">
+    <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()" class="hotel-form">
+      <div class="form-card">
+        <h2>Crear Nuevo Hotel</h2>
+        
+        <div class="form-group">
+          <label>Nombre del Hotel:</label>
+          <input type="text" formControlName="name">
+          <div *ngIf="hotelForm.get('name')?.errors?.['required'] && hotelForm.get('name')?.touched" class="error">
+            Nombre es requerido
+          </div>
+          <div *ngIf="hotelForm.get('name')?.errors?.['maxlength']" class="error">
+            Máximo 255 caracteres
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ubicación:</label>
+          <input type="text" formControlName="location">
+          <div *ngIf="hotelForm.get('location')?.errors?.['required'] && hotelForm.get('location')?.touched" class="error">
+            Ubicación es requerida
+          </div>
+          <div *ngIf="hotelForm.get('location')?.errors?.['maxlength']" class="error">
+            Máximo 255 caracteres
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>URL de la Foto (opcional):</label>
+          <input type="url" formControlName="photo">
+          <div *ngIf="hotelForm.get('photo')?.errors?.['pattern']" class="error">
+            Debe ser una URL válida
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Descripción (opcional):</label>
+          <textarea formControlName="description" rows="4"></textarea>
+          <div *ngIf="hotelForm.get('description')?.errors?.['maxlength']" class="error">
+            Máximo 2000 caracteres
+          </div>
+        </div>
+
+        <div class="messages">
+          <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        </div>
+
+        <button type="submit" [disabled]="hotelForm.invalid">Crear Hotel</button>
+      </div>
+    </form>
+    <img src="asensorista/asensoristacompu.png" alt="Hotel Cowtel" class="image">
+  </div>
+</div>

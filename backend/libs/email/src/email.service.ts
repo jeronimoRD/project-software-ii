@@ -74,7 +74,7 @@ export class EmailService {
     const mailOptions = {
       from: `"${this.appName}" <${this.configService.get('EMAIL_USER')}>`,
       to: email,
-      subject: 'Tu reserva ha sido aceptada',
+      subject: 'Reserva por aprobar',
       html: this.getReserveNotificationEmailTemplate(name, reservation),
     };
     await this.transporter.sendMail(mailOptions);

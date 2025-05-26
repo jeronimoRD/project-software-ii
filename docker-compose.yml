@@ -18,20 +18,20 @@ services:
   
   #Add new containers
 
-  frontend-software2:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - 4200:4200
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    depends_on: #New nest projects
-      - backend
-    networks:
-      - network-software2
+  #frontend-software2:
+    #container_name: frontend
+    #build:
+      #context: ./frontend
+      #dockerfile: Dockerfile
+    #ports:
+      #- 4200:4200
+    #volumes:
+      #- ./frontend:/app
+      #- /app/node_modules
+    #depends_on: #New nest projects
+      #- backend
+    #networks:
+      #- network-software2
 
   mysql:
     container_name: mysql

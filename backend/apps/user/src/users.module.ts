@@ -5,6 +5,7 @@ import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '@entity/entities/user.entity';
 import { JwtStrategy } from '@auth/auth/strategies/jwt.strategy';
+import { EmailModule } from '@email/email/email.module';
 
 @Module({
   imports: [

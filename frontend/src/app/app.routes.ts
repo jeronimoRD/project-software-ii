@@ -7,12 +7,14 @@ import { RecommendationsComponent } from './pages/hotel/recommendations/recommen
 import { RoomsComponent } from './pages/hotel/rooms/rooms.component';
 import { ReviewsComponent } from './pages/hotel/reviews/reviews.component';
 import { ReserveComponent } from './pages/reserve/reserve.component';
+import { AmdinHotelComponent } from './pages/amdin-hotel/amdin-hotel.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'adminHotel', component: AmdinHotelComponent },
   { path: 'hotel/:id', component: HotelComponent},
   { path: 'hotel/:id/reserves', component: ReserveComponent,
     children: [

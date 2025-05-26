@@ -8,6 +8,7 @@ import { Room } from '@entity/entities/room.entity';
 import { Repository } from 'typeorm';
 import { Reserve as ReserveInterface } from './interfaces/reserve.interface';
 import { Request, RequestStatus } from '@entity/entities';
+import { EmailService } from '@email/email/email.service';
 
 @Injectable()
 export class ReservesService implements ReserveServiceInterface {
@@ -92,7 +93,8 @@ export class ReservesService implements ReserveServiceInterface {
       status: RequestStatus.UNDER_REVIEW,
     });
     await this.requestRepository.save(req);
-
+    await this.emailService.sendReserveCreationEmail( savedReserve.user.email, savedReserve.user.firstName);
+    await this.emailService.sendReserveNotificationEmail( hotelAdmin.email, hotelAdmin.firstName, savedReserve);
     // 6. Devolver la reserva "sanitizada"
     return this.sanitizeReserve(savedReserve);
   }
