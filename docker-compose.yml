@@ -1,11 +1,11 @@
 services:
-  backend:
-    container_name: backend
+  backend-user:
+    container_name: backend-user
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: apps/user/Dockerfile
     ports:
-      - 3000:3000
+      - 3001:3000
     env_file:
       - ./backend/.env 
     volumes:
@@ -15,7 +15,6 @@ services:
       - mysql
     networks:
       - network-software2
-  
   #Add new containers
 
   frontend-software2:
@@ -29,7 +28,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     depends_on: #New nest projects
-      - backend
+      - backend-user
     networks:
       - network-software2
 

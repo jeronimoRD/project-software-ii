@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root', 
   })
   export class HotelService {
-    private apiUrl = 'http://localhost:3000/hotels'; //URL Backend
+    private apiUrl = 'http://localhost:3001/hotels'; //URL Backend
   
     constructor(private http: HttpClient) {}
  
