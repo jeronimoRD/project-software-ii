@@ -8,6 +8,7 @@ import { RoomsComponent } from './pages/hotel/rooms/rooms.component';
 import { ReviewsComponent } from './pages/hotel/reviews/reviews.component';
 import { ReserveComponent } from './pages/reserve/reserve.component';
 import { AmdinHotelComponent } from './pages/amdin-hotel/amdin-hotel.component';
+import { AdminRoomsComponent } from './pages/admin-rooms/admin-rooms.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'adminHotel', component: AmdinHotelComponent },
+  { path: 'adminRooms', component: AdminRoomsComponent },
   { path: 'hotel/:id', component: HotelComponent},
   { path: 'hotel/:id/reserves', component: ReserveComponent,
     children: [

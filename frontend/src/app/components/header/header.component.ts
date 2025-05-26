@@ -38,6 +38,9 @@ export class HeaderComponent {
   navigateToAdminHotel() {
     this.router.navigate(['/adminHotel']);
   }
+  navigateToRooms() {
+    this.router.navigate(['/adminRooms']);
+  }
 
   changeLanguage(lang: string) {
     this.selectedLanguage = lang;
