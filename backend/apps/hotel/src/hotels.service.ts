@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, Between } from 'typeorm';
 import { CreateHotelsDto, FilterHotelsDto } from './dto/hotel.dto';
 import { HotelServiceInterface } from './interfaces/hotel.interface';
-import { Hotel, Review, Room, User, UserRole } from '@entity/entities';
+import { Hotel, Review, User, UserRole } from '@entity/entities';
 
 @Injectable()
 export class HotelsService implements HotelServiceInterface {
@@ -19,8 +19,6 @@ export class HotelsService implements HotelServiceInterface {
         private hotelRepository: Repository<Hotel>,
         @InjectRepository(User)
         private userRepository: Repository<User>,
-        @InjectRepository(Room)
-        private roomRepository: Repository<Room>,
         @InjectRepository(Review) 
         private reviewRepository: Repository<Review>,
         private configService: ConfigService,

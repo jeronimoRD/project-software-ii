@@ -12,6 +12,7 @@ import { MatButtonModule    } from '@angular/material/button';
 import { MatIconModule      } from '@angular/material/icon';
 import { ReviewsService } from '../../../services/reviews.serivce';
 import { ActivatedRoute } from '@angular/router';
+import { HotelService } from '../../../services/hotel.service';
 
 @Component({
   selector: 'app-reviews',
@@ -39,7 +40,8 @@ export class ReviewsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private reviewsSvc: ReviewsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private hotelService: HotelService
   ) {
     this.reviewForm = this.fb.group({
       title:   ['', Validators.required],
@@ -71,6 +73,7 @@ export class ReviewsComponent implements OnInit {
     this.reviewsSvc.createReview(payload).subscribe({
       next: () => {
         this.reviewForm.reset({ rating: 5 });
+        this.hotelService.updateRating(this.hotelId)
         this.loadReviews();
       },
       error: err => console.error('Error creando reseña', err)

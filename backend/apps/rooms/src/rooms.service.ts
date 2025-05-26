@@ -12,7 +12,6 @@ import { Room, RoomType } from '@entity/entities/room.entity';
 import { Hotel } from '@entity/entities/hotel.entity';
 import { ChangeStatusDto, CreateRoomDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
 import { RoomServiceInterface } from './interface/room.interface';
-import { HotelsService } from 'apps/hotel/src/hotels.service';
 import { UserRole } from '@entity/entities';
 
 @Injectable()
@@ -22,7 +21,6 @@ export class RoomsService implements RoomServiceInterface {
     private roomRepository: Repository<Room>,
     @InjectRepository(Hotel)
     private hotelRepository: Repository<Hotel>,
-    private readonly hotelsService: HotelsService, 
     private configService: ConfigService,
   ) {}
 
@@ -65,9 +63,6 @@ export class RoomsService implements RoomServiceInterface {
 
     //Salvar room
     await this.roomRepository.save(room)
-
-    //Actualizar min y max
-    await this.hotelsService.updateHotelPrices(hotel.id);
 
     return this.sanitizeRoom(room);
   }

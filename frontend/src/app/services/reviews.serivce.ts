@@ -12,7 +12,7 @@ export interface CreateReview {
 
 @Injectable({ providedIn: 'root' })
 export class ReviewsService {
-  private apiUrl = 'http://localhost:3000/reviews';
+  private apiUrl = 'http://localhost:3004/reviews';
 
   constructor(private http: HttpClient) {}
 
