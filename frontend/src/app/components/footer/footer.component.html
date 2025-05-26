@@ -1,0 +1,32 @@
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>Nuestra Compañía</h3>
+      <p>Hecha con ❤️ por Cowtel</p>
+    </div>
+
+    <div class="footer-section links">
+      <h3>Enlaces Rápidos</h3>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Acerca de</a></li>
+        <li><a href="#">Servicios</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section social">
+      <h3>Síguenos</h3>
+      <div class="social-icons">
+        <a *ngFor="let link of socialLinks" [href]="link.url" target="_blank">
+          <i [class]="link.icon"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{currentYear}} Nombre de la compañía. Todos los derechos reservados</p>
+    <button class="back-to-top" (click)="scrollToTop()">↑</button>
+  </div>
+</footer>
