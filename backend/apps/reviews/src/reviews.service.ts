@@ -8,6 +8,7 @@ import { CreateReviewDto } from './dto/review.dto';
 import { Repository } from 'typeorm';
 import { ReviewServiceInterface } from './interfaces/review.interface';
 import { Hotel, User, Review } from '@entity/entities';
+import { HotelsService } from 'apps/hotel/src/hotels.service';
 
 @Injectable()
 export class ReviewsService implements ReviewServiceInterface {
@@ -16,6 +17,7 @@ export class ReviewsService implements ReviewServiceInterface {
     private reviewRepository: Repository<Review>,
     @InjectRepository(Hotel) 
     private hotelRepository: Repository<Hotel>,
+    private readonly hotelsService: HotelsService,
     @InjectRepository(User)  
     private userRepository: Repository<User>,
   ) {}
@@ -50,6 +52,9 @@ export class ReviewsService implements ReviewServiceInterface {
       hotel,
       user
     });
+
+    //Actualizar rating
+    await this.hotelsService.updateHotelPrices(hotel.id);
 
     const savedReview = await this.reviewRepository.save(newReview);
     return this.sanitizeReview(savedReview);

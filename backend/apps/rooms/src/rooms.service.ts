@@ -10,8 +10,9 @@ import { ConfigService } from '@nestjs/config';
 import { Repository, Like, In, Between } from 'typeorm';
 import { Room } from '@entity/entities/room.entity';
 import { Hotel } from '@entity/entities/hotel.entity';
-import { ChangeStatusDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
+import { ChangeStatusDto, CreateRoomDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
 import { RoomServiceInterface } from './interface/room.interface';
+import { HotelsService } from 'apps/hotel/src/hotels.service';
 
 @Injectable()
 export class RoomsService implements RoomServiceInterface {
@@ -20,6 +21,7 @@ export class RoomsService implements RoomServiceInterface {
     private roomRepository: Repository<Room>,
     @InjectRepository(Hotel)
     private hotelRepository: Repository<Hotel>,
+    private readonly hotelsService: HotelsService, 
     private configService: ConfigService,
   ) {}
 
@@ -31,6 +33,32 @@ export class RoomsService implements RoomServiceInterface {
   private isValidUUID(uuid: string): boolean {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidRegex.test(uuid);
+  }
+
+  async create(createRoomDto: CreateRoomDto): Promise<Room> {
+    // 1. Validación de UUID del hotel
+    if (!this.isValidUUID(createRoomDto.hotel)) {
+        throw new BadRequestException('ID de hotel inválido');
+    }
+    // 2. Verificar existencia del hotel
+    const hotel = await this.hotelRepository.findOneBy({ 
+        id: createRoomDto.hotel 
+    });
+    if (!hotel) {
+        throw new NotFoundException('Hotel no encontrado');
+    }
+
+    // 4. Crear nueva habitación
+    const room = this.roomRepository.create({
+        ...createRoomDto,
+        hotel: hotel,
+        isOccupied: false
+    });
+
+    //Actualizar min y max
+    await this.hotelsService.updateHotelPrices(hotel.id);
+
+    return this.roomRepository.save(room);
   }
 
   async changeStatus(changeStatusDto: ChangeStatusDto): Promise<Room> {

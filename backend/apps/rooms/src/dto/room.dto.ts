@@ -1,5 +1,24 @@
 import { RoomType } from '@entity/entities';
-import { IsString, IsOptional, IsNumber, Min, IsUUID, IsBoolean, IsNotEmpty } from 'class-validator';
+import { IsString, IsOptional, IsNumber, Min, IsUUID, IsBoolean, IsNotEmpty, IsEnum } from 'class-validator';
+
+export class CreateRoomDto {
+  @IsNotEmpty()
+  @IsUUID()
+  hotel: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  capacity: number;
+
+  @IsNotEmpty()
+  @IsEnum(RoomType)
+  type: RoomType;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  price: number;
+}
 
 export class ChangeStatusDto {
   @IsNotEmpty()
@@ -10,7 +29,6 @@ export class ChangeStatusDto {
   @IsBoolean()
   isOccupied: boolean;
 }
-
 
 export class FilterRoomsHotelDto {
   @IsString()

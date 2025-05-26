@@ -1,4 +1,4 @@
-import { ChangeStatusDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from '../dto/room.dto';
+import { ChangeStatusDto, CreateRoomDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from '../dto/room.dto';
 import { Hotel } from '@entity/entities/hotel.entity'
 
 export interface Room {
@@ -11,6 +11,7 @@ export interface Room {
 }
 
 export interface RoomServiceInterface {
+  create(createRoomDto: CreateRoomDto): Promise<Room>;
   changeStatus(changeStatusDto: ChangeStatusDto): Promise<Room>;
   filterRoomsbyHotel(filter: FilterRoomsHotelDto): Promise<Room[]>;
   filterRoomsUniversal(filterRoomsUniversalDto: FilterRoomsUniversalDto): Promise<Room[]>;

@@ -3,9 +3,37 @@ import {
     IsOptional,
     IsNumber,
     Min,
+    MaxLength,
+    IsNotEmpty,
+    IsUrl,
+    IsUUID,
 } from 'class-validator';
 
-export class CreateHotelsDto {} //Future to Admin
+export class CreateHotelsDto {
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(255)
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(255)
+  location: string;
+
+  @IsUrl()
+  @IsOptional()
+  @MaxLength(500)
+  photo?: string;
+
+  @IsOptional()
+  @MaxLength(2000)
+  @IsString()
+  description?: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  userId: string; 
+}
 
 export class FilterHotelsDto {
     @IsOptional()
