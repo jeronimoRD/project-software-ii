@@ -155,11 +155,8 @@ export class UsersService implements UserServiceInterface {
     await this.userRepository.update(id, { password: hashedPassword });
   }
 
-  private async getTokens(
-    userId: string,
-    email: string,
-    role: string
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  private async getTokens(userId: string, email: string, role: string): Promise<{ accessToken: string; refreshToken: string }> {
+    
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         { sub: userId, email, role},

@@ -11,13 +11,20 @@ import {
 } from '@nestjs/common';
 
 import { RoomsService } from './rooms.service';
-import { FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
+import { CreateRoomDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
+import { AdminOnly } from '@auth/auth';
 
 @Controller('rooms')
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
+  // admin - endpoints
+  @Post()
+  @AdminOnly()
+  async create(@Body() createRoomDto: CreateRoomDto) {
+    return this.roomsService.create(createRoomDto);
+  }
 
-  //endpoints
+  // public - endpoints
   @Post('filter')
   async findRooms(@Body() findRoomsDto: FilterRoomsHotelDto) {
     return this.roomsService.filterRoomsbyHotel(findRoomsDto);

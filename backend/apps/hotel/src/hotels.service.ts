@@ -60,24 +60,29 @@ export class HotelsService implements HotelServiceInterface {
             throw new BadRequestException('ID de hotel inválido');
         }
 
-        const hotel = await this.hotelRepository.findOneBy({ id: hotelId });
+        // Obtener hotel con relaciones
+        const hotel = await this.hotelRepository.findOne({
+            where: { id: hotelId },
+            relations: ['reviews']
+        });
+
         if (!hotel) {
             throw new NotFoundException('Hotel no encontrado');
         }
 
         // Calcular promedio de ratings
-        const ratingResult = await this.reviewRepository
-            .createQueryBuilder('review')
-            .select('AVG(review.rating)', 'averageRating')
-            .where('review.hotel = :hotelId', { hotelId })
-            .getRawOne();
+        const result = await this.reviewRepository
+        .createQueryBuilder('review')
+        .select('ROUND(AVG(review.rating), 2)', 'average')
+        .where('review.hotel_id = :hotelId', { hotelId }) 
+        .getRawOne();
 
-        // Actualizar el rating del hotel
-        hotel.rating = ratingResult.averageRating 
-            ? parseFloat(parseFloat(ratingResult.averageRating).toFixed(2)) 
-            : 0;
-
-        await this.hotelRepository.save(hotel);
+        // 3. Actualizar y guardar con transacción
+        await this.hotelRepository.manager.transaction(async manager => {
+            await manager.update(Hotel, hotelId, {
+                rating: result.average || 0
+            });
+        });
     }
 
     async updateHotelPrices(hotelId: string): Promise<void> {
@@ -87,24 +92,34 @@ export class HotelsService implements HotelServiceInterface {
         }
 
         // Obtener el hotel
-        const hotel = await this.hotelRepository.findOneBy({ id: hotelId });
+        const hotel = await this.hotelRepository.findOne({
+            where: { id: hotelId },
+            relations: ['rooms'] // Cargar habitaciones relacionadas
+        });
         if (!hotel) {
             throw new NotFoundException('Hotel no encontrado');
         }
 
         // Calcular precios usando una sola consulta
-        const prices = await this.roomRepository
-            .createQueryBuilder('room')
-            .select('MIN(room.price)', 'minPrice')
-            .addSelect('MAX(room.price)', 'maxPrice')
-            .where('room.hotel = :hotelId', { hotelId })
-            .getRawOne();
+        if (hotel.rooms && hotel.rooms.length > 0) {
+        const prices = hotel.rooms.reduce((acc, room) => {
+            acc.min = Math.min(acc.min, room.price);
+            acc.max = Math.max(acc.max, room.price);
+            return acc;
+        }, { min: Infinity, max: -Infinity });
 
+            hotel.lower_price = prices.min === Infinity ? 0 : prices.min;
+            hotel.higher_price = prices.max === -Infinity ? 0 : prices.max;
+        } else {
+            hotel.lower_price = 0;
+            hotel.higher_price = 0;
+        }
+        
         // Actualizar los precios del hotel
-        hotel.lower_price = prices.minPrice ? Number(prices.minPrice) : 0;
-        hotel.higher_price = prices.maxPrice ? Number(prices.maxPrice) : 0;
-
-        await this.hotelRepository.save(hotel);
+        await this.hotelRepository.update(hotelId, {
+            lower_price: hotel.lower_price,
+            higher_price: hotel.higher_price
+        });
     }
 
 

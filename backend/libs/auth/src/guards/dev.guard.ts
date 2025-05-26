@@ -11,7 +11,6 @@ export class DevGuard implements CanActivate {
       throw new UnauthorizedException('Debes iniciar sesión para realizar esta acción');
     }
 
-    console.log(user.role);
     if (user.role !== UserRole.DEV) {
       throw new ForbiddenException('Solo los desarolladores pueden realizar esta acción');
     }

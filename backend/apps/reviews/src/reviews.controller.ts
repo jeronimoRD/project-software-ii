@@ -19,7 +19,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
-  // reviews.controller.ts
+  // jwt - endpoints
   @Post()
   @UseGuards(AuthGuard('jwt'))
   async createReview(
@@ -32,6 +32,7 @@ export class ReviewsController {
     });
   }
 
+  // public - endpoints
   @Get('hotel/:hotelId')
   async getByHotel(@Param('hotelId') hotelId: string) {
     return this.reviewsService.getReviewsByHotel(hotelId);

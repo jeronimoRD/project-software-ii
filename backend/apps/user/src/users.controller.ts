@@ -17,6 +17,7 @@ import {
     RefreshTokenDto,
     ChangePasswordDto,
   } from './dto/user.dto';
+import { DevOnly } from '@auth/auth';
   
   @Controller('users')
   export class UsersController {
@@ -41,6 +42,7 @@ import {
     }
   
     @Get()
+    @DevOnly()
     async findAll() {
       return this.userService.findAll();
     }

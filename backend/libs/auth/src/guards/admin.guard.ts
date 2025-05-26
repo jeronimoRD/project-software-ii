@@ -11,9 +11,8 @@ export class AdminGuard implements CanActivate {
       throw new UnauthorizedException('Debes iniciar sesión para realizar esta acción');
     }
 
-    console.log(user.role);
-    if (user.role !== UserRole.ADMIN) {
-      throw new ForbiddenException('Solo los administradores pueden realizar esta acción');
+    if (user.role !== UserRole.ADMIN && user.role !== UserRole.DEV) {
+      throw new ForbiddenException('Solo los administradores o desarolladores pueden realizar esta acción');
     }
 
     return true;

@@ -4,8 +4,8 @@ import { User } from './user.entity';
 
 @Entity()
 export class Review {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   title: string;
@@ -13,14 +13,23 @@ export class Review {
   @Column()
   content: string;
 
-  @Column()
+  @Column({ 
+    type: 'decimal', 
+    precision: 3, 
+    scale: 2,
+    default: 0,
+    transformer: {
+        to: (value: number) => value,
+        from: (value: string) => parseFloat(value)
+    }
+  })
   rating: number;
 
   @ManyToOne(() => Hotel, hotel => hotel.reviews)
-  @JoinColumn()
+  @JoinColumn({ name: 'hotel_id' })
   hotel: Hotel;
 
   @ManyToOne(() => User, user => user.reviews)
-  @JoinColumn()
-  user:User;
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

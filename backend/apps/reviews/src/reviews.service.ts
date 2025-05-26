@@ -53,10 +53,11 @@ export class ReviewsService implements ReviewServiceInterface {
       user
     });
 
-    //Actualizar rating
-    await this.hotelsService.updateHotelPrices(hotel.id);
-
     const savedReview = await this.reviewRepository.save(newReview);
+
+    //Actualizar rating
+    await this.hotelsService.updateHotelRating(hotel.id);
+
     return this.sanitizeReview(savedReview);
   }
 

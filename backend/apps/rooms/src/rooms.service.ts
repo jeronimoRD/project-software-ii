@@ -8,7 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Repository, Like, In, Between } from 'typeorm';
-import { Room } from '@entity/entities/room.entity';
+import { Room, RoomType } from '@entity/entities/room.entity';
 import { Hotel } from '@entity/entities/hotel.entity';
 import { ChangeStatusDto, CreateRoomDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
 import { RoomServiceInterface } from './interface/room.interface';
@@ -25,8 +25,8 @@ export class RoomsService implements RoomServiceInterface {
     private configService: ConfigService,
   ) {}
 
-  private sanitizeRoom(room: Room): Omit<Room, 'createdAt' | 'updatedAt'> {
-    const { ...sanitized } = room;
+  private sanitizeRoom(room: Room): Room {
+    const sanitized  = { ...room };
     return sanitized;
   }
 
@@ -55,10 +55,13 @@ export class RoomsService implements RoomServiceInterface {
         isOccupied: false
     });
 
+    //Salvar room
+    await this.roomRepository.save(room)
+
     //Actualizar min y max
     await this.hotelsService.updateHotelPrices(hotel.id);
 
-    return this.roomRepository.save(room);
+    return this.sanitizeRoom(room);
   }
 
   async changeStatus(changeStatusDto: ChangeStatusDto): Promise<Room> {
