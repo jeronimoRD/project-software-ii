@@ -19,19 +19,18 @@ import { AuthGuard } from '@nestjs/passport';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
-  // reviews.controller.ts
+  // jwt - endpoints
   @Post()
   @UseGuards(AuthGuard('jwt'))
   async createReview(
     @Body() reviewDto: CreateReviewDto,
     @Req() req
   ) {
-    return this.reviewsService.createReview({
-      ...reviewDto,
-      userId: req.user.id
-    });
+    const userId = req.user.id
+    return this.reviewsService.createReview(userId, reviewDto);
   }
 
+  // public - endpoints
   @Get('hotel/:hotelId')
   async getByHotel(@Param('hotelId') hotelId: string) {
     return this.reviewsService.getReviewsByHotel(hotelId);

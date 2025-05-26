@@ -4,8 +4,7 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '@entity/entities/user.entity';
-import { JwtStrategy } from './strategies/jwt.strategy';
-import { EmailModule } from '@email/email/email.module';
+import { JwtStrategy } from '@auth/auth/strategies/jwt.strategy';
 
 @Module({
   imports: [

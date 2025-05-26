@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -7,10 +8,12 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Repository, Like, In, Between } from 'typeorm';
-import { Room } from '@entity/entities/room.entity';
+import { Room, RoomType } from '@entity/entities/room.entity';
 import { Hotel } from '@entity/entities/hotel.entity';
-import { FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
+import { ChangeStatusDto, CreateRoomDto, FilterRoomsHotelDto, FilterRoomsUniversalDto } from './dto/room.dto';
 import { RoomServiceInterface } from './interface/room.interface';
+import { HotelsService } from 'apps/hotel/src/hotels.service';
+import { UserRole } from '@entity/entities';
 
 @Injectable()
 export class RoomsService implements RoomServiceInterface {
@@ -19,16 +22,74 @@ export class RoomsService implements RoomServiceInterface {
     private roomRepository: Repository<Room>,
     @InjectRepository(Hotel)
     private hotelRepository: Repository<Hotel>,
+    private readonly hotelsService: HotelsService, 
+    private configService: ConfigService,
   ) {}
 
-  private sanitizeRoom(room: Room): Omit<Room, 'createdAt' | 'updatedAt'> {
-    const { ...sanitized } = room;
+  private sanitizeRoom(room: Room): Room {
+    const sanitized  = { ...room };
     return sanitized;
   }
 
   private isValidUUID(uuid: string): boolean {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidRegex.test(uuid);
+  }
+
+  async create(userId: string, createRoomDto: CreateRoomDto): Promise<Room> {
+    // 1. Validación de UUID del hotel
+    if (!this.isValidUUID(createRoomDto.hotel)) {
+        throw new BadRequestException('ID de hotel inválido');
+    }
+
+    const hotel = await this.hotelRepository.findOne({
+      where: { id: createRoomDto.hotel },
+      relations: ['user'],    
+    });
+    if (!hotel) {
+      throw new NotFoundException('Hotel no encontrado');
+    }
+
+    if (hotel.user.id !== userId && hotel.user.role !== UserRole.DEV) {
+      throw new UnauthorizedException(
+        'Solo el administrador de este hotel puede crear habitaciones'
+      );
+    }
+
+    // 4. Crear nueva habitación
+    const room = this.roomRepository.create({
+        ...createRoomDto,
+        hotel: hotel,
+        isOccupied: false
+    });
+
+    //Salvar room
+    await this.roomRepository.save(room)
+
+    //Actualizar min y max
+    await this.hotelsService.updateHotelPrices(hotel.id);
+
+    return this.sanitizeRoom(room);
+  }
+
+  async changeStatus(changeStatusDto: ChangeStatusDto): Promise<Room> {
+    const { roomId, isOccupied } = changeStatusDto;
+
+    if (!this.isValidUUID(roomId)) {
+      throw new BadRequestException(`El ID '${roomId}' no es un UUID válido.`);
+    }
+
+    // 2. Buscar la habitación
+    const room = await this.roomRepository.findOne({ where: { id: roomId } });
+    if (!room) {
+      throw new NotFoundException(`No existe la habitación con ID '${roomId}'.`);
+    }
+
+    // 3. Actualizar y guardar
+    room.isOccupied = isOccupied;
+    const updated = await this.roomRepository.save(room);
+
+    return this.sanitizeRoom(updated);
   }
 
   async filterRoomsbyHotel(filterRoomsHotelDto: FilterRoomsHotelDto): Promise<Room[]> {

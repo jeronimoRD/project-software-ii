@@ -1,4 +1,5 @@
 import {
+    CreateHotelsDto,
     FilterHotelsDto
 } from '../dto/hotel.dto';
   
@@ -14,6 +15,9 @@ export interface Hotel {
 }
   
 export interface HotelServiceInterface {
+    create(createHotelDto: CreateHotelsDto): Promise<Hotel>;
+    updateHotelPrices(hotelId: string): Promise<void>;
+    updateHotelRating(hotelId: string): Promise<void>;
     findHotelById(id: string): Promise<Hotel>;
     filterHotels(findHotelsDto: FilterHotelsDto): Promise<Hotel[]>;
 }

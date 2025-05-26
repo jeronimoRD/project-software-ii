@@ -1,6 +1,7 @@
-import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, OneToMany, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { Room } from './room.entity'
 import { Review } from './review.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Hotel {
@@ -13,7 +14,7 @@ export class Hotel {
   @OneToMany(() => Review, (review) => review.hotel)
   reviews: Review[];
 
-  @Column({ length: 255 })
+  @Column({ length: 255, unique: true })
   name: string;
 
   @Column({ length: 255 })
@@ -40,4 +41,7 @@ export class Hotel {
   @Column({ type: 'decimal', precision: 3, scale: 2, default: 0 })
   rating: number;
 
+  @OneToOne(() => User, (user) => user.hotel) 
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

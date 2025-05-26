@@ -28,6 +28,8 @@ export class LoginComponent {
 
     this.userService.login(user).subscribe({
       next: (response) => {
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
         console.log('Usuario logueado exitosamente:', response);
         alert('Usuario logueado exitosamente');
       },

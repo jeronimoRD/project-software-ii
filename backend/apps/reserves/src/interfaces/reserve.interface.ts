@@ -1,7 +1,6 @@
 import {
   CreateReserveDto,
-  UpdateReserveDto,
-  ApproveorRejectReserveDto,
+  UpdateReserveDto
 } from '../dto/reserve.dto';
 
 export interface Reserve {
@@ -14,9 +13,6 @@ export interface Reserve {
 }
 
 export interface ReserveServiceInterface {
-  createReserve(createReserveDto: CreateReserveDto): Promise<Reserve>;
+  createReserve(userId: string, createReserveDto: CreateReserveDto): Promise<Reserve>;
   updateReserve(updateReserveDto: UpdateReserveDto): Promise<Reserve>;
-  adminApproveOrRejectReserve(
-    ApproveorRejectReserveDto: ApproveorRejectReserveDto,
-  ): Promise<Reserve>;
 }

@@ -1,3 +1,4 @@
+import { RequestStatus } from '@entity/entities';
 import {
   IsEmail,
   IsNotEmpty,
@@ -5,6 +6,8 @@ import {
   MinLength,
   IsOptional,
   IsPhoneNumber,
+  IsUUID,
+  IsEnum,
 } from 'class-validator';
 
 export enum UserRole {
@@ -19,11 +22,11 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(6)
   lastName: string;
 
   @IsNotEmpty()
   @IsString()
+  @MinLength(4)
   username: string;
 
   @IsNotEmpty()
@@ -55,7 +58,7 @@ export class UpdateUserDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(6)
+  @MinLength(8)
   password?: string;
 }
 
@@ -82,6 +85,6 @@ export class ChangePasswordDto {
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(6)
+  @MinLength(8)
   newPassword: string;
 }

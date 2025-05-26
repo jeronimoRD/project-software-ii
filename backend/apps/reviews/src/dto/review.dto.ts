@@ -3,10 +3,6 @@ import { IsNotEmpty, IsString, IsNumber, IsOptional, Length, Min, Max } from 'cl
 export class CreateReviewDto {
   @IsNotEmpty()
   @IsString()
-  userId: string;
-
-  @IsNotEmpty()
-  @IsString()
   hotelId: string;
 
   @IsNotEmpty()
