@@ -69,4 +69,4 @@ import { DevOnly } from '@auth/auth';
     ) {
       return this.userService.changePassword(id, changePasswordDto);
     }
-  }
+}

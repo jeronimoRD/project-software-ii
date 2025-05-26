@@ -1,5 +1,5 @@
 import { RequestStatus, Reserve, User, Request, reserveStatus } from '@entity/entities';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRequestDto, ResponseRequestDto } from './dto/request.dto';
@@ -44,15 +44,24 @@ export class RequestsService {
     return this.sanitizeRequest(saved);
   }
 
-  async updateStatus(responseRequestDto: ResponseRequestDto): Promise<void> {
+  async updateStatus(user_id, responseRequestDto: ResponseRequestDto): Promise<void> {
     const { requestId, status } = responseRequestDto;
 
-    // 1. Buscar la request con la reserva relacionada
+    // 1) Buscar la request con reserva y admin
     const request = await this.requestRepository.findOne({
       where: { id: requestId },
-      relations: ['reserve'],
+      relations: ['reserve', 'admin'],  
     });
-    if (!request) throw new NotFoundException(`Request con ID ${requestId} no encontrada`);
+    if (!request) {
+      throw new NotFoundException(`Request con ID ${requestId} no encontrada`);
+    }
+
+    // 2) Verificar que el userId coincida con el admin de la request
+    if (request.admin.id !== user_id) {
+      throw new UnauthorizedException(
+        'Solo el administrador asignado a esta solicitud puede responderla',
+      );
+    }
 
     // 2. Actualizar estado de la request
     request.status = status;
@@ -71,5 +80,24 @@ export class RequestsService {
         break;
     }
     await this.reserveRepository.save(reserve);
+  }
+
+  async findByAdmin(adminId: string): Promise<Request[]> {
+    const requests = await this.requestRepository.find({
+      where: { admin: { id: adminId } },
+      relations: ['admin', 'reserve'],
+      order: { created_at: 'DESC' },
+    });
+    return requests.map(r => this.sanitizeRequest(r));
+  }
+
+  // -----------------------------------------------------
+  // Encuentra todas las Requests (solo para DEV)
+  async findAll(): Promise<Request[]>{
+    const requests = await this.requestRepository.find({
+      relations: ['admin', 'reserve'],
+      order: { created_at: 'DESC' },
+    });
+    return requests.map(r => this.sanitizeRequest(r));
   }
 }

@@ -1,3 +1,4 @@
+import { RequestStatus } from '@entity/entities';
 import {
   IsEmail,
   IsNotEmpty,
@@ -5,6 +6,8 @@ import {
   MinLength,
   IsOptional,
   IsPhoneNumber,
+  IsUUID,
+  IsEnum,
 } from 'class-validator';
 
 export enum UserRole {

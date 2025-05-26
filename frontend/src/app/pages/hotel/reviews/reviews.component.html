@@ -1,0 +1,58 @@
+<!-- reviews.component.html -->
+<div class="reviews-container">
+  <div *ngIf="!userLogged" class="login-prompt">
+    Debes <a routerLink="/login">iniciar sesión</a> para dejar una reseña.
+  </div>
+
+  <form *ngIf="userLogged" [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Título" formControlName="title" required>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Contenido" formControlName="content" required></textarea>
+    </mat-form-field>
+    <div class="rating">
+      <label *ngFor="let r of [1,2,3,4,5]">
+        <input type="radio" [value]="r" formControlName="rating"> {{r}} ⭐
+      </label>
+    </div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="reviewForm.invalid">
+      Enviar reseña
+    </button>
+  </form>
+
+  <div class="review-list">
+    <div *ngIf="loading" class="loading">Cargando reseñas...</div>
+    
+    <div *ngIf="!loading && reviews.length === 0" class="no-reviews">
+      <mat-icon>rate_review</mat-icon>
+      <p>Este hotel aún no tiene reseñas</p>
+    </div>
+
+    <div *ngFor="let review of reviews" class="review-card">
+      <div class="user-info">
+        <img [src]="review.user.avatar || '/default-avatar.jpg'" 
+             alt="Avatar de usuario" 
+             class="user-avatar">
+        <div class="user-details">
+          <h3 class="user-name">{{ review.user.name }}</h3>
+          <div class="review-rating">
+            <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                     [class.filled]="star <= review.rating">
+              {{ star <= review.rating ? 'star' : 'star_border' }}
+            </mat-icon>
+          </div>
+        </div>
+      </div>
+      
+      <h4 class="review-title">{{ review.title }}</h4>
+      <p class="review-content">{{ review.content }}</p>
+      
+      <div class="review-footer">
+        <span class="review-date">
+          {{ review.createdAt | date:'dd MMM yyyy' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

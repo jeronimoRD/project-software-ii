@@ -16,6 +16,7 @@ export class ResponseRequestDto {
     @IsUUID()
     requestId: string;
 
+    @IsNotEmpty()
     @IsEnum(RequestStatus)
     status: RequestStatus; 
 }

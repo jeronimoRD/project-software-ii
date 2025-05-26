@@ -1,0 +1,83 @@
+/* reviews.component.css */
+.reviews-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.review-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details {
+  flex-grow: 1;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.review-rating {
+  color: #ffc107;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.review-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.review-content {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+}
+
+.review-footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.loading, .no-reviews {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.no-reviews mat-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  color: #ccc;
+}
