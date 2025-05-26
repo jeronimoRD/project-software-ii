@@ -1,66 +1,73 @@
+/* Contenedor general */
 .header-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #d8ccf4;
+  justify-content: space-between;
+  background-color: #6c3f75; /* púrpura suave */
+  padding: 0.5rem 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  
-  .app-name {
-    font-size: 2.1rem;
-    font-weight: 700;
-    color: #531a4a;
-    text-decoration: none;
-    
-    &:hover {
-      cursor: pointer;
-      color: #8e4d84;
-    }
-  }
-
-  .nav-section {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-
-    .dropdown-container {
-      position: relative;
-      
-      button {
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-        color: #2d3436;
-      }
-    }
-
-    .favorites-btn {
-      color: #e84393;
-    }
-
-    .login-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: linear-gradient(135deg, #c285b9, #915487);
-    }
-  }
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-@media (max-width: 768px) {
-  .header-container {
-    padding: 1rem;
-    
-    .nav-section {
-      gap: 0.8rem;
-      
-      .login-btn span {
-        display: none;
-      }
-    }
-    
-    .app-name {
-      font-size: 1.2rem;
-    }
-  }
+/* Logo / nombre */
+.logo-section .app-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+/* Agrupación de botones */
+.nav-section {
+  display: flex;
+  align-items: center;
+}
+
+/* Botones con texto */
+.nav-btn {
+  color: white;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Icon buttons (sin texto) */
+.nav-icon-btn {
+  color: white;
+  margin: 0 0.25rem;
+}
+
+/* Login button destacado */
+.login-btn {
+  margin-left: 1rem;
+  text-transform: none;
+}
+
+/* Dropdown containers (idioma / moneda) */
+.dropdown-container {
+  position: relative;
+  margin-right: 0.5rem;
+}
+
+/* Ajuste de badge */
+.mat-badge-content {
+  font-size: 0.75rem;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+}
+
+/* Hover y focus */
+.nav-btn:hover,
+.nav-icon-btn:hover,
+.login-btn:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* Ajustes de iconos */
+mat-icon {
+  vertical-align: middle;
 }

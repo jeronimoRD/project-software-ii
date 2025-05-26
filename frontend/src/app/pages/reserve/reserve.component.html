@@ -1,1 +1,45 @@
 
+<div class="reserves-page">
+  <h2>Mis Reservas</h2>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && reserves.length === 0" class="no-reserves">
+    <mat-icon>info</mat-icon>
+    <p>No tienes reservas activas.</p>
+  </div>
+
+  <div class="reserves-grid" *ngIf="!loading && reserves.length > 0">
+    <mat-card *ngFor="let r of reserves" class="reserve-card">
+      <mat-card-header>
+        <mat-card-title>Reserva #{{ r.id | slice:0:8 }}</mat-card-title>
+        <mat-chip 
+          [ngClass]="{
+            'chip-pending': r.status==='PENDING',
+            'chip-confirmed': r.status==='CONFIRMED',
+            'chip-cancelled': r.status==='CANCELLED'
+          }"
+          selected="true"
+        >
+          {{ r.status }}
+        </mat-chip>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p><strong>Habitación:</strong> {{ r.room.id | slice:0:8 }}</p>
+        <p><strong>Precio noche:</strong> {{ r.room.price | currency:'COP':'symbol':'1.0-0' }}</p>
+        <p><strong>Desde:</strong> {{ r.startDate | date:'dd MMM y' }}</p>
+        <p><strong>Hasta:</strong> {{ r.endDate | date:'dd MMM y' }}</p>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-button color="warn">
+          <mat-icon>cancel</mat-icon>
+          Cancelar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -1,28 +1,47 @@
 <header class="header-container">
+  <!-- Logo / nombre -->
   <div class="logo-section">
     <a routerLink="/" class="app-name" (click)="navigateToHome()">{{ appName }}</a>
   </div>
-  
+
+  <!-- Botones de navegación principales -->
   <nav class="nav-section">
-    <button mat-button class="admin-btn" (click)="navigateToAdminHotel()">
-      <mat-icon>Hotel</mat-icon>
+
+    <!-- Admin Hotel -->
+    <button mat-button class="nav-btn" (click)="navigateToAdminHotel()">
+      <mat-icon>hotel</mat-icon>
+      Admin Hotel
     </button>
-  </nav>
-  <nav class="nav-section">
-    <!-- Icono corregido -->
-    <button mat-icon-button class="favorites-btn" (click)="navigateToReserve()">
-      <mat-icon>
-        favorite_border</mat-icon>
+
+    <!-- Mis Reservas -->
+    <button mat-button class="nav-btn" (click)="navigateToReserves()">
+      <mat-icon>book_online</mat-icon>
+      Mis Reservas
+    </button>
+
+    <!-- Solicitudes pendientes -->
+    <button mat-icon-button
+            matBadge="{{ pendingCount }}"
+            matBadgeColor="warn"
+            [matBadgeHidden]="pendingCount === 0"
+            class="nav-icon-btn"
+            (click)="navigateToRequests()"
+    >
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    <!-- Favoritos -->
+    <button mat-icon-button class="nav-icon-btn" (click)="navigateToFavorites()">
+      <mat-icon>favorite_border</mat-icon>
     </button>
 
     <!-- Menú de idioma -->
     <div class="dropdown-container">
-      <button mat-button [matMenuTriggerFor]="languageMenu"> <!-- Corregido J por T -->
+      <button mat-button [matMenuTriggerFor]="languageMenu" class="nav-btn">
         {{ selectedLanguage }}
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
       <mat-menu #languageMenu="matMenu">
-        <!-- *ngFor con sintaxis correcta -->
         <button mat-menu-item *ngFor="let lang of languages" (click)="changeLanguage(lang)">
           {{ lang }}
         </button>
@@ -31,7 +50,7 @@
 
     <!-- Menú de moneda -->
     <div class="dropdown-container">
-      <button mat-button [matMenuTriggerFor]="currencyMenu"> <!-- Corregido J por T -->
+      <button mat-button [matMenuTriggerFor]="currencyMenu" class="nav-btn">
         {{ selectedCurrency }}
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
@@ -42,10 +61,11 @@
       </mat-menu>
     </div>
 
-    <!-- Botón de login -->
+    <!-- Iniciar sesión / Usuario -->
     <button mat-raised-button color="primary" class="login-btn" (click)="navigateToLogin()">
       <mat-icon>account_circle</mat-icon>
       Iniciar sesión
     </button>
+
   </nav>
 </header>

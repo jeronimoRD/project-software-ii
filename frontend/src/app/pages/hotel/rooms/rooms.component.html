@@ -1,34 +1,56 @@
 <div class="container">
-    <h2>Habitaciones Disponibles</h2>
-    
-    <!-- Estado de carga -->
-    <div *ngIf="loading" class="loading">
-      <div class="spinner"></div>
-      <p>Cargando habitaciones...</p>
+  <h2>Habitaciones Disponibles</h2>
+  
+  <!-- Pickers globales de fecha -->
+  <div class="date-filter">
+    <label>
+      Desde:
+      <input type="date" [(ngModel)]="startDate">
+    </label>
+    <label>
+      Hasta:
+      <input type="date" [(ngModel)]="endDate">
+    </label>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando habitaciones...</p>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Listado de habitaciones -->
+  <div *ngIf="!loading && !error">
+    <div *ngIf="rooms.length === 0" class="no-rooms">
+      No hay habitaciones disponibles en este momento.
     </div>
-  
-    <!-- Mensaje de error -->
-    <div *ngIf="error" class="error-message">
-      {{ error }}
-    </div>
-  
-    <!-- Listado de habitaciones -->
-    <div *ngIf="!loading && !error">
-      <div *ngIf="rooms.length === 0" class="no-rooms">
-        No hay habitaciones disponibles en este momento.
-      </div>
-  
-      <div class="room-grid">
-        <div *ngFor="let room of rooms" class="room-card">
-          <h3>Habitación #{{ room.id | slice:0:8 }}</h3>
-          <div class="room-details">
-            <p>👤 {{ room.capacity }} personas</p>
-            <p>💰 {{ room.price | currency:'COP':'symbol':'1.0-0' }}</p>
-            <p [class.available]="!room.isOccupied" [class.occupied]="room.isOccupied">
-              {{ room.isOccupied ? 'Ocupada' : 'Disponible' }}
-            </p>
-          </div>
+
+    <div class="room-grid">
+      <div *ngFor="let room of rooms" class="room-card">
+        <h3>Habitación #{{ room.id | slice:0:8 }}</h3>
+        <div class="room-details">
+          <p>👤 {{ room.capacity }} personas</p>
+          <p>💰 {{ room.price | currency:'COP':'symbol':'1.0-0' }}</p>
+          <p [class.available]="!room.isOccupied" [class.occupied]="room.isOccupied">
+            {{ room.isOccupied ? 'Ocupada' : 'Disponible' }}
+          </p>
         </div>
+
+        <!-- Botón de reservar -->
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="room.isOccupied || !startDate || !endDate"
+          (click)="reserveRoom(room.id)"
+        >
+          Reservar
+        </button>
       </div>
     </div>
   </div>
+</div>

@@ -51,7 +51,7 @@ export class RequestsService {
     // 1) Buscar la request con reserva y admin
     const request = await this.requestRepository.findOne({
       where: { id: requestId },
-      relations: ['reserve', 'admin'],  
+      relations: ['reserve', 'reserve.user', 'admin'],
     });
     if (!request) {
       throw new NotFoundException(`Request con ID ${requestId} no encontrada`);

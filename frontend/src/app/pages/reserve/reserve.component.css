@@ -1,70 +1,51 @@
-.reserva-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-}
-
-h2 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-}
-
-.form-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-label {
-  font-weight: 600;
-  color: #34495e;
-}
-
-input, select {
-  padding: 0.8rem;
-  border: 1px solid #bdc3c7;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.date-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.errors {
-  color: #e74c3c;
-  font-size: 0.9rem;
-  margin-top: 0.3rem;
-}
-
-.submit-btn {
-  background: #27ae60;
-  color: white;
+.reserves-page {
   padding: 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background 0.3s;
 }
 
-.submit-btn:hover {
-  background: #219a52;
+.reserves-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.submit-btn:disabled {
-  background: #7f8c8d;
-  cursor: not-allowed;
+.reserve-card {
+  position: relative;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-chip {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.chip-pending {
+  background-color: #FFF3CD;
+  color: #856404;
+}
+
+.chip-confirmed {
+  background-color: #D4EDDA;
+  color: #155724;
+}
+
+.chip-cancelled {
+  background-color: #F8D7DA;
+  color: #721C24;
+}
+
+.loading, .no-reserves {
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+}
+
+.no-reserves mat-icon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
 }
