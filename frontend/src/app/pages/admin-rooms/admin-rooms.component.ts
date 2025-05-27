@@ -1,98 +1,90 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HotelService } from '../../services/hotel.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { HotelService } from '../../services/hotel.service';
 import { RoomService } from '../../services/rooms.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface Room {
   id: string;
-  room_number: string;
+  capacity: number;      // antes room_number
   type: string;
   price: number;
-  amenities: string[];
-  is_available: boolean;
+  isOccupied: boolean; 
 }
 
 interface Hotel {
   id: string;
   name: string;
   location: string;
-  rooms: Room[];
+  rooms: Room[];         // siempre un array
 }
 
 @Component({
   selector: 'app-admin-rooms',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin-rooms.component.html',
-  styleUrl: './admin-rooms.component.css'
+  styleUrls: ['./admin-rooms.component.css']
 })
 export class AdminRoomsComponent implements OnInit {
-    searchForm: FormGroup;
-  addRoomForm: FormGroup;
   hotel: Hotel | null = null;
-  errorMessage: string = '';
-  successMessage: string = '';
+  addRoomForm: FormGroup;
+  errorMessage = '';
+  successMessage = '';
 
   constructor(
     private fb: FormBuilder,
-    private hotelService: HotelService,
-    private roomService: RoomService
+    private hotelSvc: HotelService,
+    private roomSvc: RoomService,
+    private hotelService: HotelService
   ) {
-    this.searchForm = this.fb.group({
-      hotelName: ['', [Validators.required, Validators.maxLength(255)]]
-    });
-
     this.addRoomForm = this.fb.group({
-      hotel: ['', [Validators.required, Validators.maxLength(255)]],
-      room: ['', [Validators.required, Validators.maxLength(10)]],
-      type: ['', [Validators.required]],
-      price: ['', [Validators.required, Validators.min(1)]],
-      amenities: [''],
-      is_available: [true]
+      capacity: [1, [Validators.required, Validators.min(1)]],
+      type:     ['standard', [Validators.required]],
+      price:    [1, [Validators.required, Validators.min(1)]],
     });
   }
 
-  ngOnInit(): void {}
-
-  searchHotel() {
-    if (this.searchForm.invalid) return;
-
-    const hotelName = this.searchForm.value.hotelName;
-    this.hotelService.filterHotels(hotelName).subscribe({
-      next: (hotel) => {
-        this.hotel = hotel;
-        this.errorMessage = '';
+  ngOnInit() {
+    this.hotelSvc.getHotelByAdmin().subscribe({
+      next: hotels => {
+        // nos aseguramos de que rooms siempre exista
+        this.hotel = { ...hotels[0], rooms: hotels[0].rooms || [] };
       },
       error: (err: HttpErrorResponse) => {
-        this.hotel = null;
-        this.errorMessage = err.error?.message || 'Error al buscar el hotel';
+        this.errorMessage = err.error?.message || 'No se pudo cargar el hotel';
       }
     });
   }
 
   addRoom() {
-    if (this.addRoomForm.invalid || !this.hotel) return;
-    this.addRoomForm.setValue({ hotel: this.hotel.id });
-    const roomData = this.addRoomForm.value;
-    roomData.amenities = roomData.amenities.split(',').map((a: string) => a.trim());
+    if (!this.hotel || this.addRoomForm.invalid) return;
+      const dto = {
+        hotel:    this.hotel.id,                       
+        capacity: this.addRoomForm.value.capacity,
+        price:    this.addRoomForm.value.price,
+        type:     this.addRoomForm.value.type,    
+      };
 
-    const Token = localStorage.getItem('accessToken');
-    if (!Token) {
-      this.errorMessage = 'Debes estar logueado para crear una habitación';
-      return;
-    }
-    this.roomService.createRoom(roomData).subscribe({
-      next: (newRoom) => {
-        this.hotel?.rooms.push(newRoom);
-        this.addRoomForm.reset();
-        this.successMessage = 'Habitación agregada exitosamente!';
-        setTimeout(() => this.successMessage = '', 3000);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.errorMessage = err.error?.message || 'Error al agregar habitación';
-      }
-    });
+      this.roomSvc.createRoom(dto).subscribe({
+        next: (room: Room) => {
+          // de nuevo, garantizamos que rooms existe
+          this.hotel!.rooms = this.hotel!.rooms || [];
+          this.hotel!.rooms.push(room);
+
+          this.successMessage = 'Habitación creada exitosamente';
+          this.errorMessage = '';
+          this.addRoomForm.reset({ capacity: 1, type: 'Estándar', price: 1 });
+          setTimeout(() => this.successMessage = '', 3000);
+          this.hotelService.updatePrice(this.hotel!.id).subscribe(() => {
+            this.ngOnInit();
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorMessage = err.error?.message || 'Error al crear habitación';
+          this.successMessage = '';
+        }
+      });
   }
 }

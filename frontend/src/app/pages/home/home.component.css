@@ -137,3 +137,107 @@
   }
   
 }
+
+/* Contenedor general de hoteles */
+.hotels-section {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+/* Título de sección con icono */
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #f7d1ff;
+}
+.section-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5rem;
+}
+
+/* Grid responsivo */
+.hotels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Tarjeta de hotel */
+.hotel-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.hotel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Imagen de portada */
+.hotel-image {
+  width: 100%;
+  padding-top: 56.25%; /* ratio 16:9 */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Contenido */
+.hotel-info {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nombre y ubicación */
+.hotel-name {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+.hotel-location {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+.hotel-location mat-icon {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+
+/* Metadatos: precio y rating */
+.hotel-meta {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.price {
+  font-weight: bold;
+  color: #6c3f75;
+}
+.rating mat-icon {
+  font-size: 1rem;
+  color: #fbc02d;
+}
+
+/* Responsivo móvil */
+@media (max-width: 600px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+  .hotel-name {
+    font-size: 1.1rem;
+  }
+}

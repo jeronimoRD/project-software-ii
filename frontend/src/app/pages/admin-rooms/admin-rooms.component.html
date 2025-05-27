@@ -1,89 +1,67 @@
-<div class="container">
-  <!-- Búsqueda de Hotel -->
-  <div class="search-section">
-    <h2>Buscar Hotel</h2>
-    <form [formGroup]="searchForm" (ngSubmit)="searchHotel()">
+<div class="container" *ngIf="hotel">
+  <h2>{{ hotel.name }} — {{ hotel.location }}</h2>
+
+  <!-- Listado de habitaciones -->
+  <section class="rooms-list">
+    <h3>Todas las habitaciones</h3>
+    <div *ngIf="hotel.rooms.length === 0" class="no-rooms">
+      No hay habitaciones aún.
+    </div>
+    <div class="room-card" *ngFor="let r of hotel.rooms">
+      <div class="room-header">
+        <span>Capacidad: {{ r.capacity }} personas</span>
+        <span [class.free]="!r.isOccupied"
+              [class.busy]="r.isOccupied">
+          {{ r.isOccupied ? 'Ocupada' : 'Libre' }}
+        </span>
+      </div>
+      <div class="room-details">
+        <p>Tipo: {{ r.type }}</p>
+        <p>Precio: {{ r.price | currency:'COP':'symbol':'1.0-0' }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formulario para crear habitación -->
+  <section class="add-room">
+    <h3>Crear nueva habitación</h3>
+    <form [formGroup]="addRoomForm" (ngSubmit)="addRoom()">
+
       <div class="form-group">
-        <label>nombre del Hotel:</label>
-        <input type="text" formControlName="hotelName">
-        <div class="error" *ngIf="searchForm.get('hotelName')?.errors?.['required'] && searchForm.get('hotelName')?.touched">
-          nombre requerido
+        <label>Capacidad (personas)</label>
+        <input type="number" formControlName="capacity" min="1">
+        <div class="error" 
+             *ngIf="addRoomForm.get('capacity')?.invalid && addRoomForm.get('capacity')?.touched">
+          Debe ser al menos 1 persona
         </div>
       </div>
-      <button type="submit" [disabled]="searchForm.invalid">Buscar</button>
+
+      <div class="form-group">
+        <label>Tipo</label>
+        <select formControlName="type">
+        <option value="standard">Estándar</option>
+        <option value="suite">Suite</option>
+        <option value="familiar">Familiar</option>
+      </select>
+      </div>
+
+      <div class="form-group">
+        <label>Precio por noche</label>
+        <input type="number" formControlName="price" min="1">
+        <div class="error" 
+             *ngIf="addRoomForm.get('price')?.invalid && addRoomForm.get('price')?.touched">
+          Debe ser mayor a 0
+        </div>
+      </div>
+
+      <div class="messages">
+        <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+        <div *ngIf="errorMessage"   class="error">{{ errorMessage }}</div>
+      </div>
+
+      <button type="submit" [disabled]="addRoomForm.invalid">
+        Agregar Habitación
+      </button>
     </form>
-  </div>
-
-  <!-- Resultados y gestión de habitaciones -->
-  <div *ngIf="hotel" class="hotel-details">
-    <h2>{{ hotel.name }} - {{ hotel.location }}</h2>
-    <div class="rooms-section">
-      <h3>Habitaciones Existentes</h3>
-      <div *ngIf="hotel.rooms.length === 0" class="no-rooms">
-        No hay habitaciones registradas
-      </div>
-      <div class="room-card" *ngFor="let room of hotel.rooms">
-        <div class="room-header">
-          <span>Habitación #{{ room.room_number }}</span>
-          <span [class.available]="room.is_available" class="status">
-            {{ room.is_available ? 'Disponible' : 'Ocupada' }}
-          </span>
-        </div>
-        <div class="room-details">
-          <p>Tipo: {{ room.type }}</p>
-          <p>Precio: ${{ room.price | number }}</p>
-          <p *ngIf="room.amenities.length > 0">Servicios: {{ room.amenities.join(', ') }}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Formulario para añadir habitación -->
-    <div class="add-room-section">
-      <h3>Añadir Nueva Habitación</h3>
-      <form [formGroup]="addRoomForm" (ngSubmit)="addRoom()">
-        <div class="form-group">
-          <label>Número de Habitación:</label>
-          <input type="text" formControlName="room_number">
-          <div class="error" *ngIf="addRoomForm.get('room_number')?.errors?.['required']">
-            Campo requerido
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Tipo:</label>
-          <select formControlName="type">
-            <option value="Estándar">Estándar</option>
-            <option value="Deluxe">Deluxe</option>
-            <option value="Suite">Suite</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Precio por noche:</label>
-          <input type="number" formControlName="price">
-          <div class="error" *ngIf="addRoomForm.get('price')?.errors?.['min']">
-            El precio debe ser mayor a 0
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Servicios (separados por comas):</label>
-          <input type="text" formControlName="amenities">
-        </div>
-
-        <div class="form-group">
-          <label>
-            <input type="checkbox" formControlName="is_available"> Disponible
-          </label>
-        </div>
-
-        <div class="messages">
-          <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
-          <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-        </div>
-
-        <button type="submit" [disabled]="addRoomForm.invalid">Agregar Habitación</button>
-      </form>
-    </div>
-  </div>
+  </section>
 </div>

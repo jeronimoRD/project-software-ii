@@ -63,6 +63,23 @@ export class HotelsService implements HotelServiceInterface {
         const saved = await this.hotelRepository.save(hotel);
         return this.sanitizeHotel(saved);
     }
+
+    async findHotelsByAdminId(adminId: string): Promise<Hotel[]> {
+        if (!this.isValidUUID(adminId)) {
+            throw new BadRequestException('ID de administrador inválido');
+        }
+
+        const hotels = await this.hotelRepository.find({
+            where: { user: { id: adminId } },
+            relations: ['user', 'rooms'], 
+        });
+
+        if (!hotels || hotels.length === 0) {
+            throw new NotFoundException('No se encontraron hoteles para este administrador');
+        }
+
+        return hotels.map(hotel => this.sanitizeHotel(hotel));
+    }
     
     async updateHotelRating(hotelId: string): Promise<void> {
         if (!this.isValidUUID(hotelId)) {
@@ -130,7 +147,6 @@ export class HotelsService implements HotelServiceInterface {
             higher_price: hotel.higher_price
         });
     }
-
 
     async findHotelById(id: string): Promise<Hotel> {
         if (!this.isValidUUID(id)) {

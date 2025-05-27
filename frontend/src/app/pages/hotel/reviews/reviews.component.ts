@@ -73,7 +73,9 @@ export class ReviewsComponent implements OnInit {
     this.reviewsSvc.createReview(payload).subscribe({
       next: () => {
         this.reviewForm.reset({ rating: 5 });
-        this.hotelService.updateRating(this.hotelId)
+        this.hotelService.updateRating(this.hotelId).subscribe(() => {
+          this.ngOnInit();
+        });
         this.loadReviews();
       },
       error: err => console.error('Error creando reseña', err)

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
-import { ReservesService } from '../../services/reserves.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
+import { ReservesService } from '../../services/reserves.service';
 
 interface Reserve {
   id: string;
@@ -25,7 +25,7 @@ interface Reserve {
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule, 
+    MatProgressSpinnerModule,
     MatChipsModule
   ],
   templateUrl: './reserve.component.html',
@@ -38,15 +38,21 @@ export class ReservesComponent implements OnInit {
   constructor(private reservesService: ReservesService) {}
 
   ngOnInit() {
+    this.load();
+  }
+
+  load() {
+    this.loading = true;
     this.reservesService.findReserves().subscribe({
-      next: (data) => {
-        this.reserves = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Error al cargar reservas', err);
-        this.loading = false;
-      }
+      next: data => { this.reserves = data; this.loading = false; },
+      error: () => { this.loading = false; }
     });
+  }
+
+  cancel(reserveId: string) {
+    //this.reservesService.cancelReserve(reserveId).subscribe({
+    //  next: () => this.load(),
+    //  error: err => console.error('Error cancelando', err)
+    //});
   }
 }

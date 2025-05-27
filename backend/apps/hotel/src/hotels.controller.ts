@@ -8,10 +8,11 @@ import {
     Patch,
     HttpCode,
     HttpStatus,
+    Req,
 } from '@nestjs/common';
 import { HotelsService } from './hotels.service';
 import { CreateHotelsDto, FilterHotelsDto } from './dto/hotel.dto';
-import { DevOnly } from '@auth/auth';
+import { AdminOnly, DevOnly } from '@auth/auth';
 
 @Controller('hotels')
 export class HotelsController {
@@ -20,7 +21,14 @@ constructor(private readonly hotelsService: HotelsService) {}
   @Post()
   @DevOnly()
   async create(@Body() createHotelstDto: CreateHotelsDto) { 
-  return this.hotelsService.create(createHotelstDto);
+    return this.hotelsService.create(createHotelstDto);
+  }
+
+  //admin - endpoints
+  @Get('admin/my-hotels')
+  @AdminOnly()
+  async findHotelByAdmin(@Req() req) { 
+    return this.hotelsService.findHotelsByAdminId(req.user.id);
   }
 
   //public - endpoints
@@ -41,7 +49,7 @@ constructor(private readonly hotelsService: HotelsService) {}
     await this.hotelsService.updateHotelRating(id);
   }
 
-  @Patch(':update-prices/:id')
+  @Patch('update-prices/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async updatePrices(@Param('id') id: string): Promise<void> {
     await this.hotelsService.updateHotelPrices(id);

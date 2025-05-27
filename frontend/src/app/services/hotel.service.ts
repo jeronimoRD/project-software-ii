@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -23,10 +23,16 @@ import { Observable } from 'rxjs';
   }
 
     updatePrice(hotel: any): Observable<any> {
-      return this.http.patch(`${this.apiUrl}/update-prices`, hotel);
+      return this.http.patch(`${this.apiUrl}/update-prices/${hotel}`, null);
     }
 
     updateRating(hotel: any): Observable<any> {
-      return this.http.patch(`${this.apiUrl}/update-rating`, hotel);
+      return this.http.patch(`${this.apiUrl}/update-rating/${hotel}`, null);
+    }
+
+    getHotelByAdmin(): Observable<any> {
+      const token = localStorage.getItem('accessToken')!;
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+      return this.http.get(`${this.apiUrl}/admin/my-hotels`, { headers });
     }
 }

@@ -66,18 +66,38 @@
   </form>
 
   <!-- Hotels list -->
-  <app-horizontal-grid title="Hoteles" iconUrl="/asensorista/asensoristalupa.png">
-    <div class="hotel-grid-content">
-      <app-vertical-grid
+  <section class="hotels-section">
+    <h2 class="section-title">
+      <img src="/asensorista/asensoristalupa.png" alt="Buscar" class="section-icon">
+      Hoteles
+    </h2>
+
+    <div class="hotels-grid">
+      <div 
+        class="hotel-card" 
         *ngFor="let hotel of hotels"
-        [id]="hotel.id"
-        (cardClicked)="navigateToHotel($event)"
-        [title]="hotel.name"
-        [location]="hotel.location"
-        [lower_price]="hotel.lower_price"
-        [higher_price]="hotel.higher_price"
-        [rating]="hotel.rating"
-      ></app-vertical-grid>
+        (click)="navigateToHotel(hotel.id)"
+      >
+        <div class="hotel-image" [style.backgroundImage]="'url('+hotel.photo?.[0]+' )'"></div>
+        <div class="hotel-info">
+          <h3 class="hotel-name">{{ hotel.name }}</h3>
+          <p class="hotel-location">
+            <mat-icon>place</mat-icon> {{ hotel.location }}
+          </p>
+          <div class="hotel-meta">
+            <span class="price">
+              {{ hotel.lower_price | currency:'COP':'symbol':'1.0-0' }}
+              —
+              {{ hotel.higher_price | currency:'COP':'symbol':'1.0-0' }}
+            </span>
+            <span class="rating">
+              <mat-icon *ngFor="let i of [1,2,3,4,5]">
+                {{ i <= hotel.rating ? 'star' : 'star_border' }}
+              </mat-icon>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
-  </app-horizontal-grid>
+  </section>
 </div>

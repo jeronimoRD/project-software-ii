@@ -23,14 +23,17 @@ export class ReservesService implements ReserveServiceInterface {
     private roomRepository: Repository<Room>,
     private emailService: EmailService,
   ) {}
-  private sanitizeReserve(reserve: Reserve): ReserveInterface {
+  
+  private sanitizeReserve(reserve: Reserve): any {
     return {
       id: reserve.id,
-      roomId: reserve.room.id,
-      userId: reserve.user.id,
-      startDate: reserve.startDate,
-      endDate: reserve.endDate,
-      status: reserve.status,
+      room: { 
+        id: reserve.room.id, 
+        price: reserve.room.price 
+      },
+      startDate: reserve.startDate.toISOString(),
+      endDate:   reserve.endDate.toISOString(),
+      status:    reserve.status,
     };
   }
 
