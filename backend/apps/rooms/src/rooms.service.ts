@@ -35,9 +35,9 @@ export class RoomsService implements RoomServiceInterface {
   }
 
   async create(userId: string, createRoomDto: CreateRoomDto): Promise<Room> {
-    // 1. Validación de UUID del hotel
+    // 1. Validate the hotel UUID
     if (!this.isValidUUID(createRoomDto.hotel)) {
-        throw new BadRequestException('ID de hotel inválido');
+        throw new BadRequestException('Invalid hotel ID');
     }
 
     const hotel = await this.hotelRepository.findOne({
@@ -45,23 +45,23 @@ export class RoomsService implements RoomServiceInterface {
       relations: ['user'],    
     });
     if (!hotel) {
-      throw new NotFoundException('Hotel no encontrado');
+      throw new NotFoundException('Hotel not found');
     }
 
     if (hotel.user.id !== userId && hotel.user.role !== UserRole.DEV) {
       throw new UnauthorizedException(
-        'Solo el administrador de este hotel puede crear habitaciones'
+        'Only the administrator of this hotel can create rooms'
       );
     }
 
-    // 4. Crear nueva habitación
+    // 4. Create a new room
     const room = this.roomRepository.create({
         ...createRoomDto,
         hotel: hotel,
         isOccupied: false
     });
 
-    //Salvar room
+    // Save the room
     await this.roomRepository.save(room)
 
     return this.sanitizeRoom(room);
@@ -71,16 +71,16 @@ export class RoomsService implements RoomServiceInterface {
     const { roomId, isOccupied } = changeStatusDto;
 
     if (!this.isValidUUID(roomId)) {
-      throw new BadRequestException(`El ID '${roomId}' no es un UUID válido.`);
+      throw new BadRequestException(`The ID '${roomId}' is not a valid UUID.`);
     }
 
-    // 2. Buscar la habitación
+    // 2. Find the room
     const room = await this.roomRepository.findOne({ where: { id: roomId } });
     if (!room) {
-      throw new NotFoundException(`No existe la habitación con ID '${roomId}'.`);
+      throw new NotFoundException(`No room exists with ID '${roomId}'.`);
     }
 
-    // 3. Actualizar y guardar
+    // 3. Update and save
     room.isOccupied = isOccupied;
     const updated = await this.roomRepository.save(room);
 
@@ -89,7 +89,7 @@ export class RoomsService implements RoomServiceInterface {
 
   async filterRoomsbyHotel(filterRoomsHotelDto: FilterRoomsHotelDto): Promise<Room[]> {
     if (!this.isValidUUID(filterRoomsHotelDto.hotel)) {
-      throw new NotFoundException('Hotel inválido');
+      throw new NotFoundException('Invalid hotel');
     }
 
     const hotel = await this.hotelRepository.findOneBy({ 
@@ -97,7 +97,7 @@ export class RoomsService implements RoomServiceInterface {
     });
 
     if (!hotel) {
-      throw new NotFoundException('Hotel no encontrado');
+      throw new NotFoundException('Hotel not found');
     }
 
     const query: any = {

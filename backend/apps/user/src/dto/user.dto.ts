@@ -10,81 +10,88 @@ import {
   IsEnum,
 } from 'class-validator';
 
+// Enum to define user roles
 export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
+  ADMIN = 'admin', // Role for administrative users
+  USER = 'user',   // Role for regular users
 }
+
+// Data Transfer Object for creating a new user
 export class CreateUserDto {
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(6)
+  @IsNotEmpty() // Ensures firstName is not empty
+  @IsString()   // Ensures firstName is a string
+  @MinLength(6) // Ensures firstName has a minimum length of 6 characters
   firstName: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty() // Ensures lastName is not empty
+  @IsString()   // Ensures lastName is a string
   lastName: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(4)
+  @IsNotEmpty() // Ensures username is not empty
+  @IsString()   // Ensures username is a string
+  @MinLength(4) // Ensures username has a minimum length of 4 characters
   username: string;
 
-  @IsNotEmpty()
-  @IsEmail()
+  @IsNotEmpty() // Ensures email is not empty
+  @IsEmail()    // Ensures email is a valid email format
   email: string;
 
-  @IsNotEmpty()
-  @IsPhoneNumber()
+  @IsNotEmpty() // Ensures phone is not empty
+  @IsPhoneNumber() // Ensures phone is a valid phone number format
   phone: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(8)
+  @IsNotEmpty() // Ensures password is not empty
+  @IsString()   // Ensures password is a string
+  @MinLength(8) // Ensures password has a minimum length of 8 characters
   password: string;
 }
 
+// Data Transfer Object for updating user information
 export class UpdateUserDto {
-  @IsOptional()
-  @IsString()
+  @IsOptional() // Indicates that username is optional
+  @IsString()   // Ensures username is a string
   username?: string;
 
-  @IsOptional()
-  @IsString()
+  @IsOptional() // Indicates that phone is optional
+  @IsString()   // Ensures phone is a string
   phone?: string;
 
-  @IsOptional()
-  @IsEmail()
+  @IsOptional() // Indicates that email is optional
+  @IsEmail()    // Ensures email is a valid email format
   email?: string;
 
-  @IsOptional()
-  @IsString()
-  @MinLength(8)
+  @IsOptional() // Indicates that password is optional
+  @IsString()   // Ensures password is a string
+  @MinLength(8) // Ensures password has a minimum length of 8 characters
   password?: string;
 }
 
+// Data Transfer Object for user login
 export class LoginDto {
-  @IsNotEmpty()
-  @IsEmail()
+  @IsNotEmpty() // Ensures email is not empty
+  @IsEmail()    // Ensures email is a valid email format
   email: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty() // Ensures password is not empty
+  @IsString()   // Ensures password is a string
   password: string;
 }
 
+// Data Transfer Object for refreshing tokens
 export class RefreshTokenDto {
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty() // Ensures refreshToken is not empty
+  @IsString()   // Ensures refreshToken is a string
   refreshToken: string;
 }
 
+// Data Transfer Object for changing user passwords
 export class ChangePasswordDto {
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty() // Ensures currentPassword is not empty
+  @IsString()   // Ensures currentPassword is a string
   currentPassword: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(8)
+  @IsNotEmpty() // Ensures newPassword is not empty
+  @IsString()   // Ensures newPassword is a string
+  @MinLength(8) // Ensures newPassword has a minimum length of 8 characters
   newPassword: string;
 }

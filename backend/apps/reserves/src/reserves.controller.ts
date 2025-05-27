@@ -8,21 +8,23 @@ import { AuthGuard } from '@nestjs/passport';
 export class ReservesController {
   constructor(private reservesService: ReservesService) {}
 
-  // jwt - endpoint
+  // Endpoint to retrieve all reserves for the authenticated user
   @Get()
   @UseGuards(AuthGuard('jwt'))
   findByUser(@Req() req) {
-    const userId = req.user.id;
+    const userId = req.user.id; // Extracting user ID from the request object
     return this.reservesService.findAllReservesByUser(userId);
   }
 
+  // Endpoint to create a new reserve for the authenticated user
   @Post()
   @UseGuards(AuthGuard('jwt'))
   createReserve(@Body() createReserveDto, @Req() req) {
-    const userId = req.user.id;
+    const userId = req.user.id; // Extracting user ID from the request object
     return this.reservesService.createReserve(userId, createReserveDto);
   }
 
+  // Endpoint to update an existing reserve
   @Post('update')
   updateReserve(@Body() updateReserveDto) {
     return this.reservesService.updateReserve(updateReserveDto);

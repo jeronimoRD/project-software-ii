@@ -11,7 +11,6 @@ interface Room {
   room_number: string;
   type: string;
   price: number;
-  amenities: string[];
   is_available: boolean;
 }
 
@@ -49,7 +48,6 @@ export class AdminRoomsComponent implements OnInit {
       room: ['', [Validators.required, Validators.maxLength(10)]],
       type: ['', [Validators.required]],
       price: ['', [Validators.required, Validators.min(1)]],
-      amenities: [''],
       is_available: [true]
     });
   }
@@ -76,7 +74,6 @@ export class AdminRoomsComponent implements OnInit {
     if (this.addRoomForm.invalid || !this.hotel) return;
     this.addRoomForm.setValue({ hotel: this.hotel.id });
     const roomData = this.addRoomForm.value;
-    roomData.amenities = roomData.amenities.split(',').map((a: string) => a.trim());
 
     const Token = localStorage.getItem('accessToken');
     if (!Token) {

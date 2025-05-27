@@ -2,21 +2,21 @@ import { RequestStatus } from "@entity/entities";
 import { IsArray, IsEnum, IsNotEmpty, IsUUID } from "class-validator";
 
 export class CreateRequestDto {
-    @IsNotEmpty()
-    @IsUUID()
+    @IsNotEmpty() // Valida que el campo adminId no esté vacío
+    @IsUUID() // Valida que el campo adminId sea un UUID válido
     adminId: string;
 
-    @IsNotEmpty()
-    @IsUUID()
+    @IsNotEmpty() // Valida que el campo reserveId no esté vacío
+    @IsUUID() // Valida que el campo reserveId sea un UUID válido
     reserveId: string;
 }
 
 export class ResponseRequestDto {
-    @IsNotEmpty()
-    @IsUUID()
+    @IsNotEmpty() // Valida que el campo requestId no esté vacío
+    @IsUUID() // Valida que el campo requestId sea un UUID válido
     requestId: string;
 
-    @IsNotEmpty()
-    @IsEnum(RequestStatus)
+    @IsNotEmpty() // Valida que el campo status no esté vacío
+    @IsEnum(RequestStatus) // Valida que el campo status sea un valor del enum RequestStatus
     status: RequestStatus; 
 }

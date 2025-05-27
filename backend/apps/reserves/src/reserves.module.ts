@@ -10,25 +10,29 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from '@auth/auth';
 import { EmailModule } from '@email/email/email.module';
+
 @Module({
   imports: [
+    // Registering Passport module with JWT as the default strategy
     PassportModule.register({ defaultStrategy: 'jwt' }),
 
+    // Configuring JWT module asynchronously with secret and expiration options
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (cs: ConfigService) => ({
-        secret: cs.get<string>('JWT_ACCESS_SECRET'),
+        secret: cs.get<string>('JWT_ACCESS_SECRET'), // Fetching JWT secret from configuration
         signOptions: {
-          expiresIn: cs.get<string | number>('JWT_ACCESS_EXPIRATION'),
+          expiresIn: cs.get<string | number>('JWT_ACCESS_EXPIRATION'), // Setting token expiration time
         },
       }),
     }),    
 
+    // Importing TypeORM module for Reserve, User, Room, and Request entities
     TypeOrmModule.forFeature([Reserve, User, Room, Request]),
-    EmailModule
+    EmailModule // Importing Email module for email functionalities
   ],
-  controllers: [ReservesController],
-  providers: [ReservesService, JwtStrategy] //Needed User to JwtStrategy
+  controllers: [ReservesController], // Specifying the controller for this module
+  providers: [ReservesService, JwtStrategy] // Registering service and strategy providers
 })
 export class ReservesModule {}

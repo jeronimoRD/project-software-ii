@@ -23,6 +23,7 @@ export class ReservesService implements ReserveServiceInterface {
     private roomRepository: Repository<Room>,
     private emailService: EmailService,
   ) {}
+
   private sanitizeReserve(reserve: Reserve): ReserveInterface {
     return {
       id: reserve.id,
@@ -46,25 +47,25 @@ export class ReservesService implements ReserveServiceInterface {
   async createReserve(userId: string, dto: CreateReserveDto): Promise<ReserveInterface> {
     const { roomId, startDate, endDate } = dto;
 
-    // 1. Validaciones básicas
+    // 1. Basic validations
     if (new Date(startDate) >= new Date(endDate)) {
-      throw new BadRequestException('La fecha de inicio debe ser anterior a la de fin');
+      throw new BadRequestException('Start date must be before end date');
     }
 
     const user = await this.userRepository.findOneBy({ id: userId });
-    if (!user) throw new NotFoundException(`Usuario con ID ${userId} no encontrado`);
+    if (!user) throw new NotFoundException(`User with ID ${userId} not found`);
 
-    // trae la habitación junto con su hotel y el usuario (admin) del hotel
+    // Fetch the room along with its hotel and the hotel admin
     const room = await this.roomRepository.findOne({
       where: { id: roomId },
       relations: ['hotel', 'hotel.user'],
     });
-    if (!room) throw new NotFoundException(`Habitación con ID ${roomId} no encontrada`);
+    if (!room) throw new NotFoundException(`Room with ID ${roomId} not found`);
     if (room.isOccupied) {
-      throw new ConflictException('La habitación ya está marcada como ocupada');
+      throw new ConflictException('The room is already marked as occupied');
     }
 
-    // 2. Comprobar solapamiento de fechas
+    // 2. Check for date overlap
     const overlap = await this.reserveRepository
       .createQueryBuilder('r')
       .innerJoin('r.room', 'room')
@@ -73,10 +74,10 @@ export class ReservesService implements ReserveServiceInterface {
       .andWhere('r.endDate >= :startDate', { startDate })
       .getOne();
     if (overlap) {
-      throw new ConflictException('Ya existe una reserva solapada en ese rango de fechas');
+      throw new ConflictException('There is already an overlapping reservation in that date range');
     }
 
-    // 3. Crear y guardar la reserva
+    // 3. Create and save the reservation
     const reserve = this.reserveRepository.create({
       room,
       user,
@@ -86,15 +87,15 @@ export class ReservesService implements ReserveServiceInterface {
     });
     const savedReserve = await this.reserveRepository.save(reserve);
 
-    // 4. Marcar la habitación como ocupada
+    // 4. Mark the room as occupied
     room.isOccupied = true;
     await this.roomRepository.save(room);
 
-    // 5. Crear la Request para el admin del hotel
+    // 5. Create the Request for the hotel admin
     const hotelAdmin = room.hotel.user;
     if (!hotelAdmin) {
-      // por si alguien no ha asignado admin al hotel
-      throw new NotFoundException('Este hotel no tiene un admin asignado');
+      // In case no admin has been assigned to the hotel
+      throw new NotFoundException('This hotel does not have an assigned admin');
     }
     const req = this.requestRepository.create({
       admin: hotelAdmin,
@@ -102,9 +103,9 @@ export class ReservesService implements ReserveServiceInterface {
       status: RequestStatus.UNDER_REVIEW,
     });
     await this.requestRepository.save(req);
-    await this.emailService.sendReserveCreationEmail( savedReserve.user.email, savedReserve.user.firstName);
-    await this.emailService.sendReserveNotificationEmail( hotelAdmin.email, hotelAdmin.firstName, savedReserve);
-    // 6. Devolver la reserva "sanitizada"
+    await this.emailService.sendReserveCreationEmail(savedReserve.user.email, savedReserve.user.firstName);
+    await this.emailService.sendReserveNotificationEmail(hotelAdmin.email, hotelAdmin.firstName, savedReserve);
+    // 6. Return the "sanitized" reservation
     return this.sanitizeReserve(savedReserve);
   }
 

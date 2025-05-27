@@ -5,16 +5,16 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  //Validations
+  // Validaciones: Se aplica un pipe global para validar y transformar las solicitudes entrantes
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true, 
     }),
   );
 
-  //CORS configuration
+  // Configuración de CORS: Permite solicitudes desde el frontend Angular en localhost
   app.enableCors({
-    origin: 'http://localhost:4200', //frontend Angular
+    origin: 'http://localhost:4200', // frontend Angular
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, 
   });

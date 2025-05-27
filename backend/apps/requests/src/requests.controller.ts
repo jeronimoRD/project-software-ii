@@ -7,9 +7,11 @@ import { AdminOnly, DevOnly } from '@auth/auth';
 @Controller('requests')
 export class RequestsController {
   constructor(private readonly requestsService: RequestsService) {}
+
   @Post()
   async create(
-    @Body() createDto: CreateRequestDto):Promise<Request>{
+    @Body() createDto: CreateRequestDto): Promise<Request> {
+    // Calls the service to create a new request using the provided DTO
     return this.requestsService.create(createDto);
   }
 
@@ -18,19 +20,22 @@ export class RequestsController {
   async updateStatus(
     @Body() dto: ResponseRequestDto,
     @Req() req
-  ):Promise<void>{
+  ): Promise<void> {
+    // Updates the status of a request based on the user's ID and the provided DTO
     return this.requestsService.updateStatus(req.user.id, dto);
   }
 
   @Get("admin")
   @AdminOnly()
   async findByAdmin(@Req() req) {
+    // Retrieves requests associated with the admin user
     return this.requestsService.findByAdmin(req.user.id);
   }
 
   @Get()
   @DevOnly()
   async findAll() {
+    // Fetches all requests for development purposes
     return this.requestsService.findAll();
   }
 }

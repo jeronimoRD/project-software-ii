@@ -20,18 +20,18 @@ export class ReviewsController {
 
   // jwt - endpoints
   @Post()
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt')) // Protects the route with JWT authentication
   async createReview(
     @Body() reviewDto: CreateReviewDto,
     @Req() req
   ) {
-    const userId = req.user.id
-    return this.reviewsService.createReview(userId, reviewDto);
+    const userId = req.user.id; // Extracts the user ID from the request object
+    return this.reviewsService.createReview(userId, reviewDto); // Calls the service to create a review
   }
 
   // public - endpoints
   @Get('hotel/:hotelId')
   async getByHotel(@Param('hotelId') hotelId: string) {
-    return this.reviewsService.getReviewsByHotel(hotelId);
+    return this.reviewsService.getReviewsByHotel(hotelId); // Retrieves reviews for a specific hotel
   }
 }

@@ -21,52 +21,52 @@ export class ReviewsService implements ReviewServiceInterface {
   ) {}
 
   private sanitizeReview(review: Review): Review {
-    const sanitized = { ...review };
-    return sanitized;
+    const sanitized = { ...review }; // Create a copy of the review object to avoid mutating the original
+    return sanitized; // Return the sanitized review object
   }
 
   private isValidUUID(uuid: string): boolean {
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-      return uuidRegex.test(uuid);
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i; // Regular expression to validate UUID format
+      return uuidRegex.test(uuid); // Test the UUID against the regex and return the result
   }
 
   async createReview(userId: string, reviewDto: CreateReviewDto): Promise<Review> {
-    // Validar UUIDs
+    // Validate UUIDs
     if (!this.isValidUUID(reviewDto.hotelId) || !this.isValidUUID(userId)) {
-      throw new BadRequestException('IDs de hotel o usuario inválidos');
+      throw new BadRequestException('Invalid hotel or user IDs'); // Throw an exception if the UUIDs are invalid
     }
 
-    // Buscar entidades relacionadas
-    const hotel = await this.hotelRepository.findOneBy({ id: reviewDto.hotelId });
-    const user = await this.userRepository.findOneBy({ id: userId });
+    // Fetch related entities
+    const hotel = await this.hotelRepository.findOneBy({ id: reviewDto.hotelId }); // Retrieve the hotel entity by ID
+    const user = await this.userRepository.findOneBy({ id: userId }); // Retrieve the user entity by ID
 
     if (!hotel || !user) {
-      throw new NotFoundException('Hotel o usuario no encontrado');
+      throw new NotFoundException('Hotel or user not found'); // Throw an exception if either entity is not found
     }
 
-    // Crear nueva review
+    // Create new review
     const newReview = this.reviewRepository.create({
       ...reviewDto,
       hotel,
       user
-    });
+    }); // Create a new review object with the provided data and associated entities
 
-    const savedReview = await this.reviewRepository.save(newReview);
+    const savedReview = await this.reviewRepository.save(newReview); // Save the new review to the database
 
-    return this.sanitizeReview(savedReview);
+    return this.sanitizeReview(savedReview); // Return the sanitized version of the saved review
   }
 
   async getReviewsByHotel(hotelId: string): Promise<Review[]> {
     if (!this.isValidUUID(hotelId)) {
-      throw new BadRequestException('ID de hotel inválido');
+      throw new BadRequestException('Invalid hotel ID'); // Throw an exception if the hotel ID is invalid
     }
 
     const reviews = await this.reviewRepository.find({
-      where: { hotel: { id: hotelId } },
-      relations: ['user'], 
-      order: { id: 'DESC' }
+      where: { hotel: { id: hotelId } }, // Find reviews associated with the specified hotel ID
+      relations: ['user'], // Include user relation in the result
+      order: { id: 'DESC' } // Order reviews by ID in descending order
     });
 
-    return reviews.map(review => this.sanitizeReview(review));
+    return reviews.map(review => this.sanitizeReview(review)); // Return an array of sanitized reviews
   }
 }

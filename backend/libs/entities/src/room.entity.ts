@@ -15,36 +15,36 @@ export enum RoomType {
   FAMILIAR = 'familiar',
 }
 
-@Entity()
+@Entity() // Decorator to define the class as a database entity
 export class Room {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn('uuid') // Automatically generates a unique identifier for the room
     id: string;
 
-    @ManyToOne(() => Hotel, (hotel) => hotel.rooms)
-    @JoinColumn({ name: 'hotel_id' }) 
+    @ManyToOne(() => Hotel, (hotel) => hotel.rooms) // Establishes a many-to-one relationship with the Hotel entity
+    @JoinColumn({ name: 'hotel_id' }) // Specifies the foreign key column in the Room table
     hotel: Hotel;
 
-    @OneToMany(() => Reserve, (reserve) => reserve.room)
+    @OneToMany(() => Reserve, (reserve) => reserve.room) // Establishes a one-to-many relationship with the Reserve entity
     reserves: Reserve[];
     
-    @Column({ type: 'int' })
+    @Column({ type: 'int' }) // Defines the capacity of the room as an integer
     capacity: number;
 
     @Column({
-        type: 'enum',
-        enum: RoomType,
-        default: RoomType.STANDARD
+        type: 'enum', // Specifies that the type is an enumeration
+        enum: RoomType, // Links the enum RoomType to this column
+        default: RoomType.STANDARD // Sets the default value to STANDARD
     })
     type: RoomType;
 
     @Column({ 
-        type: 'decimal', 
-        precision: 10, 
-        scale: 2,
-        default: 0 
+        type: 'decimal', // Defines the price as a decimal type
+        precision: 10, // Total number of digits
+        scale: 2, // Number of digits after the decimal point
+        default: 0 // Sets the default price to 0
     })
     price: number;
 
-    @Column({ default: false })
+    @Column({ default: false }) // Indicates whether the room is occupied, defaulting to false
     isOccupied: boolean;
 }

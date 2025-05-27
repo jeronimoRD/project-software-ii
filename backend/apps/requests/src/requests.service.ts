@@ -34,13 +34,13 @@ export class RequestsService {
     });
     if (!reserve) throw new NotFoundException(`Reserve con ID ${reserveId} no encontrada`);
 
-    // Asignar admin y reserva
+    // Assign admin and reserve to the request
     const request = this.requestRepository.create({
       ...createRequestDto,
       status: RequestStatus.UNDER_REVIEW,
     });
 
-    // Guardar
+    // Save the newly created request to the database
     const saved = await this.requestRepository.save(request);
     return this.sanitizeRequest(saved);
   }
@@ -48,7 +48,7 @@ export class RequestsService {
   async updateStatus(user_id, responseRequestDto: ResponseRequestDto): Promise<void> {
     const { requestId, status } = responseRequestDto;
 
-    // 1) Buscar la request con reserva y admin
+    // 1) Find the request along with its reserve and admin
     const request = await this.requestRepository.findOne({
       where: { id: requestId },
       relations: ['reserve', 'reserve.user', 'admin'],
@@ -57,18 +57,18 @@ export class RequestsService {
       throw new NotFoundException(`Request con ID ${requestId} no encontrada`);
     }
 
-    // 2) Verificar que el userId coincida con el admin de la request
+    // 2) Verify that the userId matches the admin of the request
     if (request.admin.id !== user_id) {
       throw new UnauthorizedException(
         'Solo el administrador asignado a esta solicitud puede responderla',
       );
     }
 
-    // 2. Actualizar estado de la request
+    // 2. Update the status of the request
     request.status = status;
     const updatedRequest = await this.requestRepository.save(request);
 
-    // 3. Mapear estado de request a estado de reserva
+    // 3. Map the request status to the reserve status
     const reserve = updatedRequest.reserve;
     switch (status) {
       case RequestStatus.APPROVED:
@@ -99,7 +99,7 @@ export class RequestsService {
   }
 
   // -----------------------------------------------------
-  // Encuentra todas las Requests (solo para DEV)
+  // Find all Requests (only for DEV)
   async findAll(): Promise<Request[]>{
     const requests = await this.requestRepository.find({
       relations: ['admin', 'reserve'],
